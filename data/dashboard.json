@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23T11:22+03:00",
+ "updated": "2026-11-23T11:29+03:00",
  "channel": {
   "subscribers": 21,
   "views": 16529,
@@ -457,6 +457,16 @@
   "gain": 4278,
   "since": "2026-11-22",
   "days": 1
+ },
+ "by_type": {
+  "short": {
+   "n": 18,
+   "avg_per_day": 478.1
+  },
+  "long": {
+   "n": 5,
+   "avg_per_day": 22.3
+  }
  },
  "comments": {
   "threads": 7,
