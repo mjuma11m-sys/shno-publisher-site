@@ -207,14 +207,17 @@ window.addEventListener("resize",resize);resize();
 const v=new THREE.Vector3();const clk=new THREE.Clock();
 function frame(){const t=clk.getElapsedTime();
  if(auto)theta+=0.0012;
- if(tour){tourT+=0.0035;const r=agents[Math.floor(tourT)%agents.length];target.lerp(new THREE.Vector3(r.g.position.x,0.8,r.g.position.z),0.04);rad+=(20-rad)*0.03;theta+=0.003;if(Math.floor(tourT)!==Math.floor(tourT-0.0035))select(r),tour=true}
+ if(tour){const st=RM?0.004:0.0035;tourT+=st;const r=agents[Math.floor(tourT)%agents.length];const goal=new THREE.Vector3(r.g.position.x,0.8,r.g.position.z);
+  if(RM){target.copy(goal);rad=20}else{target.lerp(goal,0.04);rad+=(20-rad)*0.03;theta+=0.003}
+  if(Math.floor(tourT)!==Math.floor(tourT-st))select(r),tour=true}
  placeCam();
  agents.forEach(r=>{const w=r.a.status==="working";if(!RM){if(w){r.armL.position.y=0.62+Math.sin(t*14+r.phase)*0.03;r.armR.position.y=0.62+Math.cos(t*14+r.phase)*0.03;r.head.rotation.y=Math.sin(t*0.8+r.phase)*0.15}
    else{r.p.rotation.y=Math.sin(t*0.4+r.phase)*0.12}r.bc.position.y=2.35+Math.sin(t*3+r.phase)*0.05}
   v.set(r.g.position.x,2.65,r.g.position.z-0.3).project(cam);const x=(v.x+1)/2*stage.clientWidth,y=(1-v.y)/2*stage.clientHeight;
   r.tg.style.left=x+"px";r.tg.style.top=y+"px";r.tg.style.opacity=v.z<1?1:0;r.tg.style.zIndex=Math.round((1-v.z)*1000)});
  if(chromeRec&&chromeRec.a.status==="working"&&!RM){const u=(t*0.04)%1;const p=curve.getPointAt(u),q=curve.getPointAt((u+0.01)%1);walker.position.copy(p);walker.lookAt(q.x,0,q.z);walker.position.y=Math.abs(Math.sin(t*8))*0.05;walker.visible=true}else walker.visible=false;
- renderer.render(scene,cam);requestAnimationFrame(frame)}
+ renderer.render(scene,cam);if(!document.hidden)requestAnimationFrame(frame);else paused=true}
+let paused=false;document.addEventListener("visibilitychange",()=>{if(!document.hidden&&paused){paused=false;requestAnimationFrame(frame)}});
 frame();
 fetch("data/office.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d){window.OFFICE=d;panels(d)}}).catch(()=>{});
 })();
