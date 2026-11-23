@@ -67,19 +67,8 @@ def mmss(s):
     return f"{s // 60}:{s % 60:02d}" if s < 3600 else f"{s // 3600}:{s % 3600 // 60:02d}:{s % 60:02d}"
 
 
-src = open("index.html").read()
-head, rest = src.split("<main>", 1)
-foot = "</main>" + rest.split("</main>", 1)[1]
-
-
-def shell(title, desc, canon, current, ld):
-    h = re.sub(r"<title>.*?</title>", f"<title>{html.escape(title)}</title>", head, count=1)
-    h = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{html.escape(desc)}">', h, count=1)
-    h = re.sub(r'<link rel="canonical" href="[^"]*">', f'<link rel="canonical" href="{canon}">', h, count=1)
-    h = re.sub(r'<script type="application/ld\+json">.*?</script>', "", h, flags=re.S)
-    h = h.replace("</head>", f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>\n</head>', 1)
-    h = h.replace(' aria-current="page"', "")
-    return h.replace(f'<a href="{current}">', f'<a href="{current}" aria-current="page">', 1)
+sys.path.insert(0, "tools")
+from shell import page
 
 
 CSS = """<style>
@@ -145,17 +134,27 @@ def build():
 </div>
 </article></div>"""
         title = f"{e['title']} · شنو السالفة؟"
-        open(f"episode-{e['id']}.html", "w").write(shell(title, summary[:155], url, "episodes.html", ld) + "<main>" + body + foot)
+        page(f"episode-{e['id']}.html", title, summary[:155], body, nav="episodes.html", image=thumb, og_type="video.other", ld=ld)
     cards = "".join(f'<a class="card3" href="episode-{e["id"]}.html"><img src="https://i.ytimg.com/vi/{e["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><b>{e_(e["title"])}</b><small>{ardate(e["published"])} · {mmss(e["secs"])} دقيقة</small></div></a>' for e in eps)
     ld = {"@context": "https://schema.org", "@type": "ItemList", "name": "حلقات شنو السالفة؟",
           "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": f"{BASE}episode-{e['id']}.html"} for i, e in enumerate(eps)]}
     body = f"""{CSS}<div class="wrap"><section class="ep"><div><h1>الحلقات</h1><p style="color:var(--mut);margin:6px 0 0">كل حلقات «شنو السالفة؟» الطويلة: الملخص والفصول ومصادر كل حلقة.</p></div><div class="grid">{cards}</div></section></div>"""
-    open("episodes.html", "w").write(shell("الحلقات · شنو السالفة؟", "كل حلقات «شنو السالفة؟» الطويلة باللهجة البحرينية: الملخص والفصول والمصادر.", BASE + "episodes.html", "episodes.html", ld) + "<main>" + body + foot)
+    page("episodes.html", "الحلقات · شنو السالفة؟", "كل حلقات «شنو السالفة؟» الطويلة باللهجة البحرينية: الملخص والفصول والمصادر.", body, nav="episodes.html", ld=ld)
+    # RSS feed
+    from email.utils import format_datetime
+    import datetime as dt
+    items = "".join(
+        f"<item><title>{e_(x['title'])}</title><link>{BASE}episode-{x['id']}.html</link><guid isPermaLink=\"true\">{BASE}episode-{x['id']}.html</guid>"
+        f"<pubDate>{format_datetime(dt.datetime.fromisoformat(x['published'].replace('Z', '+00:00')))}</pubDate>"
+        f"<description>{e_(parse(x['description'])[0])}</description></item>" for x in eps)
+    open("feed.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>'
+        f'<title>حلقات شنو السالفة؟</title><link>{BASE}episodes.html</link><description>حلقات «شنو السالفة؟» الطويلة باللهجة البحرينية</description><language>ar</language>'
+        f'<atom:link href="{BASE}feed.xml" rel="self" type="application/rss+xml"/>{items}</channel></rss>\n')
     # sitemap
     sm = open("sitemap.xml").read()
-    sm = re.sub(r"<url><loc>[^<]*(?:episodes|episode-)[^<]*</loc>.*?</url>", "", sm)
+    sm = re.sub(r"<url><loc>[^<]*(?:episodes|episode-|en\\.html)[^<]*</loc>.*?</url>", "", sm)
     add = "".join(f"<url><loc>{BASE}{p}</loc><lastmod>{d}</lastmod></url>" for p, d in
-                  [("episodes.html", eps[0]["published"][:10])] + [(f"episode-{e['id']}.html", e["published"][:10]) for e in eps])
+                  [("episodes.html", eps[0]["published"][:10]), ("en.html", "2026-11-23")] + [(f"episode-{e['id']}.html", e["published"][:10]) for e in eps])
     open("sitemap.xml", "w").write(sm.replace("</urlset>", add + "</urlset>"))
     print("built", len(eps), "episode pages")
 

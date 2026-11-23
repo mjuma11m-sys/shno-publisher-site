@@ -1,0 +1,54 @@
+<style>
+.en{direction:ltr;text-align:left;padding-block:28px 8px;display:grid;gap:20px;max-width:900px;font-family:"Inter","Segoe UI",system-ui,sans-serif}
+.en h1{margin:0;font:800 clamp(1.6rem,3.4vw,2.4rem)/1.25 "Inter","Segoe UI",system-ui,sans-serif;text-wrap:balance}
+.en .lead{font-size:1.08rem;line-height:1.75;color:var(--mut);margin:8px 0 0;max-width:65ch}
+.en section{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 22px;min-width:0}
+.en h2{margin:0 0 10px;font-size:1.12rem}
+.en p,.en li{line-height:1.75;max-width:70ch}.en p{margin:0}
+.en ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.en code{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:.88em}
+.en .scroll{overflow-x:auto}
+.en table{border-collapse:collapse;width:100%;font-size:.92rem}
+.en th,.en td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.en th{color:var(--mut);font-weight:600}
+.en .links2{display:flex;gap:10px;flex-wrap:wrap}
+.en .links2 a{border:1px solid var(--line);border-radius:999px;padding:8px 16px;color:var(--fg);text-decoration:none;background:var(--bg2)}
+.en .links2 a:hover{color:var(--ac)}
+</style>
+<div class="wrap"><article class="en" lang="en" dir="ltr">
+ <div><h1>Salfa Studio</h1><p class="lead">Salfa Studio is the in-house publishing tool of «شنو السالفة؟» (Shno Alsalfa), a Bahraini explainer channel. It uploads the channel's own finished videos to the channel's own YouTube and TikTok accounts on a fixed schedule. It is not offered to other users.</p></div>
+
+ <section><h2>What it does</h2>
+  <ul>
+   <li>Reads the next video from the channel's publishing queue (a file in our private repository).</li>
+   <li>Uploads it with its title and caption to the channel's YouTube account and its TikTok account.</li>
+   <li>Records the result so the same video is never posted twice.</li>
+  </ul>
+ </section>
+
+ <section><h2>Accounts and permissions</h2>
+  <div class="scroll"><table>
+   <thead><tr><th>Platform</th><th>Scope</th><th>Why</th></tr></thead>
+   <tbody>
+    <tr><td>YouTube Data API</td><td><code>youtube.upload</code></td><td>Upload the channel's own videos.</td></tr>
+    <tr><td>TikTok Content Posting API</td><td><code>video.publish</code></td><td>Post the channel's own videos to @shnoalsalfa_bh.</td></tr>
+    <tr><td>TikTok Login Kit</td><td><code>user.info.basic</code></td><td>Confirm the connected account is @shnoalsalfa_bh.</td></tr>
+   </tbody>
+  </table></div>
+  <p style="margin-top:12px">Only the channel owner signs in. Tokens are stored as encrypted secrets in the repository's CI settings and are never shown on this site.</p>
+ </section>
+
+ <section><h2>Data</h2>
+  <p>Salfa Studio does not collect data from viewers, does not use cookies or trackers, and does not sell or share data. Use of information received from Google APIs adheres to the Google API Services User Data Policy, including the Limited Use requirements. Full details: <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a> · <a href="data-deletion.html">Data Deletion</a>.</p>
+ </section>
+
+ <section><h2>Editorial standards</h2>
+  <ul>
+   <li>Every number in an episode is checked against two published sources, listed under each video.</li>
+   <li>AI-generated voice, music and illustrations are disclosed in every video.</li>
+   <li>Images are public domain or Creative Commons, credited to their authors.</li>
+  </ul>
+ </section>
+
+ <div class="links2"><a href="index.html" hreflang="ar" lang="ar">العربية</a><a href="episodes.html" hreflang="ar">Episodes (Arabic)</a><a href="https://www.youtube.com/@shnoalsalfa_bh" target="_blank" rel="noopener">YouTube</a><a href="https://www.tiktok.com/@shnoalsalfa_bh" target="_blank" rel="noopener">TikTok</a></div>
+</article></div>
