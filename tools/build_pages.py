@@ -17,6 +17,7 @@ page("about.html", "من نحن · شنو السالفة؟", "«شنو السا�
 page("en.html", "Salfa Studio · About in English", "Salfa Studio is the in-house tool that publishes the Bahraini channel «شنو السالفة؟» videos to its own YouTube and TikTok accounts. Scopes, data handling and policies.",
      open("en.src.html").read(), nav="en.html")
 page("contact.html", "تواصل معنا · شنو السالفة؟", "تواصل مع قناة «شنو السالفة؟»: تصحيح معلومة، سؤال، أو فكرة حلقة.", open("contact.src.html").read())
+page("ideas.html", "أفكار الحلقات · شنو السالفة؟", "اقترح موضوع حلقة لقناة «شنو السالفة؟» وصوّت للأفكار اللي تعجبك.", open("ideas.src.html").read(), nav="ideas.html")
 stamp_index()
 print("pages built")
 page("studio.html", "النشر على تيك توك · Salfa Studio", "صفحة صاحب قناة «شنو السالفة؟» لنشر فيديوهات القناة على تيك توك بعد مراجعتها.",

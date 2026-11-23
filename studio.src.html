@@ -72,6 +72,7 @@
     <div class="row"><button class="btn2" id="go" type="submit" disabled>انشر على تيك توك</button><button class="btn2" id="dr" type="button" hidden style="background:var(--bg2);color:var(--fg);border:1px solid var(--line)">أرسل كمسودة لتطبيق تيك توك</button><span class="msg" id="msg" role="status" aria-live="polite"></span></div>
    </div>
   </form>
+  <section class="sbox" id="ideasbox"><h2>أفكار الحلقات <span class="hint" id="idn"></span></h2><p class="hint" style="margin-bottom:10px">من <a href="ideas.html">صفحة الأفكار</a>. الفكرة الجديدة ما تطلع للناس إلا لما تضغط «انشرها».</p><div id="idl" style="display:grid;gap:10px"></div></section>
   <section class="sbox" id="inbox"><h2>رسائل الزوار <span class="hint" id="inbn"></span></h2><p class="hint" style="margin-bottom:10px">من <a href="contact.html">صفحة التواصل</a>. التصحيحات تطلع أول.</p><div id="inbl" style="display:grid;gap:10px"></div></section>
   <section class="sbox" id="hist" hidden><h2>آخر المنشورات من هالصفحة</h2><div style="overflow-x:auto"><table class="ht"><thead><tr><th>الوقت</th><th>الفيديو</th><th>منو يشوفه</th><th>الحالة</th></tr></thead><tbody id="hb"></tbody></table></div></section>
  </div>
@@ -109,7 +110,7 @@ async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").
  const c=S.creator;$("nick").textContent=c.creator_nickname||"";$("user").textContent=c.creator_username?"@"+c.creator_username:"";
  $("av").innerHTML=c.creator_avatar_url?`<img src="${esc(c.creator_avatar_url)}" alt="">`:"؟";
  let locked=false;for(const k of ["comment","duet","stitch"]){const d=!!c[k+"_disabled"];$("c-"+k).disabled=d;$("t-"+k).setAttribute("aria-disabled",d);locked=locked||d}$("lockhint").hidden=!locked;
- renderHistory(S.history||[]);loadInbox();$("dr").hidden=!S.drafts;show()}
+ renderHistory(S.history||[]);loadInbox();loadIdeas();$("dr").hidden=!S.drafts;show()}
 async function startTT(errEl){const a=new Uint8Array(24);crypto.getRandomValues(a);const st="studio-"+Array.from(a,b=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b%62]).join("");
  try{sessionStorage.setItem("tt_state",st)}catch(e){}try{const j=await call({action:"auth_url",state:st});location.href=j.url}catch(e){errEl.className="msg err";errEl.textContent=e.message==="SETUP"?"الإعداد ما خلص: ناقص "+(e.missing||[]).join("، "):e.message}}
 async function boot(){
@@ -131,6 +132,12 @@ $("out").addEventListener("click",async()=>{try{localStorage.removeItem("salfa_s
 $("f").addEventListener("input",e=>{if(e.target.id!=="pick")refresh()});
 $("pick").addEventListener("change",e=>show(e.target.value));
 const MS={new:"جديدة",seen:"انقرت",done:"خلصت"};
+const IS={pending:"تنطر موافقتك",open:"منشورة",planned:"بنسويها",done:"انتشرت"};
+async function loadIdeas(){try{const j=await call({action:"ideas"});const a=j.ideas||[];const ord={pending:0,open:1,planned:2,done:3};a.sort((x,y)=>ord[x.status]-ord[y.status]||y.votes-x.votes);
+ $("idn").textContent=a.filter(x=>x.status==="pending").length+" تنطر موافقتك";
+ const btn=(x,st,t)=>`<button class="btn3" type="button" data-iid="${x.id}" data-ist="${st}">${t}</button>`;
+ $("idl").innerHTML=a.length?a.map(x=>`<div class="note" style="display:grid;gap:6px"><div class="row" style="justify-content:space-between"><b>${esc(x.title)}</b><span class="hint">👍 ${x.votes} · ${IS[x.status]||esc(x.status)}</span></div>${x.details?`<div style="white-space:pre-wrap;color:var(--mut)">${esc(x.details)}</div>`:""}<div class="row">${x.status==="pending"?btn(x,"open","انشرها")+btn(x,"rejected","ارفضها"):""}${x.status==="open"?btn(x,"planned","بنسويها"):""}${x.status==="planned"?btn(x,"done","انتشرت"):""}<button class="btn3" type="button" data-iid="${x.id}" data-idel="1">احذف</button></div></div>`).join(""):"<p class='hint'>ما في أفكار للحين.</p>"}catch(e){$("idl").innerHTML="<p class='hint'>ما قدرنا نجيب الأفكار: "+esc(e.message)+"</p>"}}
+$("idl").addEventListener("click",async e=>{const b=e.target.closest("button[data-iid]");if(!b)return;b.disabled=true;try{await call(b.dataset.idel?{action:"idea_set",id:b.dataset.iid,delete:true}:{action:"idea_set",id:b.dataset.iid,status:b.dataset.ist});loadIdeas()}catch(x){b.disabled=false}});
 async function loadInbox(){try{const j=await call({action:"messages"});const m=(j.messages||[]).slice().sort((a,b)=>(b.message.startsWith("[تصحيح")-a.message.startsWith("[تصحيح"))||(a.status==="done")-(b.status==="done"));
  $("inbn").textContent=m.filter(x=>x.status==="new").length+" جديدة";
  $("inbl").innerHTML=m.length?m.map(x=>`<div class="note" style="display:grid;gap:6px${x.status==="done"?";opacity:.6":""}"><div class="row" style="justify-content:space-between"><b>${esc(x.name)} · <span dir="ltr">${esc(x.contact)}</span></b><span class="hint">${new Date(x.created_at).toLocaleString("ar-BH",{dateStyle:"short",timeStyle:"short"})} · ${MS[x.status]||esc(x.status)}</span></div><div style="white-space:pre-wrap">${esc(x.message)}</div><div class="row">${x.status!=="done"?`<button class="btn3" type="button" data-id="${x.id}" data-st="done">علّمها خلصت</button>`:""}<button class="btn3" type="button" data-id="${x.id}" data-del="1">احذف</button></div></div>`).join(""):"<p class='hint'>ما في رسائل للحين.</p>";
