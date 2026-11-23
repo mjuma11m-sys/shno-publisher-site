@@ -36,6 +36,7 @@
 .ls{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
 .ls li{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.9rem}
 .ls li b{color:var(--ac);font-size:.8rem;display:block;margin-bottom:2px}
+.qp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.qp h3{margin:0 0 6px;font-size:.95rem;display:flex;justify-content:space-between}.qp h3 span{color:var(--mut);font-weight:400;font-size:.82rem;font-variant-numeric:tabular-nums}.qp ol{margin:8px 0 0;padding-inline-start:18px;display:flex;flex-direction:column;gap:6px;font-size:.88rem}.qp ol li::marker{color:var(--mut)}@media (max-width:640px){.qp{grid-template-columns:1fr}}
 .cal{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
 .cal li{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center}
 .cal .d{background:var(--bg2);border:1px solid var(--line);border-radius:12px;text-align:center;padding:6px 0;line-height:1.1}
@@ -54,6 +55,7 @@
    <div class="card2"><h2>الموافقات</h2><p class="sub">النشر المباشر من «سالفة ستوديو»</p><div class="appr" id="ap"></div></div>
   </div>
  </div>
+ <div class="card2"><h2>طابور النشر</h2><p class="sub">الشورتات اللي بينشرها الطيار الآلي، بالترتيب · ينتقل لـ «سالفة ستوديو» بعد الموافقات</p><div class="qp" id="qp"></div></div>
  <div class="row2">
   <div class="card2"><h2>دروس الأكاديمية</h2><p class="sub">اللي تعلّمه الفريق من الأرقام</p><ul class="ls" id="ls"></ul></div>
   <div class="card2"><h2>الجدول</h2><p class="sub">اللي نازل قريب</p><ul class="cal" id="cal"></ul></div>
@@ -74,6 +76,7 @@ function draw(D){
  const mx=Math.max(...D.topics.map(t=>t.views));document.getElementById("tp").innerHTML=D.topics.map(t=>`<div class="bar"><span class="lbl">${t.name} <span class="tag">${t.n}</span></span><span class="num">${fmt(t.views)}</span><div class="track"><div class="fill" style="width:${(t.views/mx*100).toFixed(1)}%;background:${ZC[t.name]||"#94a3b8"}"></div></div></div>`).join("");
  document.getElementById("ap").innerHTML=D.approvals.map(a=>`<div><i style="background:${AS[a.state][1]};color:#fff">${AS[a.state][0]}</i><span><b>${a.name}</b><small>${a.note}</small></span></div>`).join("");
  document.getElementById("ls").innerHTML=D.lessons.length?D.lessons.slice().reverse().map(l=>`<li><b>${{shorts:"صانع الشورتات",showrunner:"المنتج المنفذ",publisher:"الناشر",writer:"الكاتب",researcher:"الباحث",factchecker:"المدقق",standards:"مراجع المعايير",designer:"المصمم",editor:"المونتير",sound:"مهندس الصوت",analyst:"المحلل",illustrator:"الرسام"}[l.agent]||l.agent}</b>${l.text}</li>`).join(""):"<li>ما في دروس للحين.</li>";
+ document.getElementById("qp").innerHTML=(D.queue||[]).map(q=>`<div><h3>${q.label}<span>${q.done} من ${q.total} منشور</span></h3><div class="track" style="height:10px;border-radius:999px;background:var(--bg2);overflow:hidden"><div style="height:100%;width:${(q.done/q.total*100).toFixed(1)}%;background:var(--ac);border-radius:999px"></div></div><ol>${q.next.map(n=>`<li>${n.text}</li>`).join("")||"<li>الطابور خلص</li>"}</ol></div>`).join("");
  const AR=["أحد","اثنين","ثلاثاء","أربعاء","خميس","جمعة","سبت"];
  document.getElementById("cal").innerHTML=D.schedule.map(s=>{const d=new Date(s.t.replace(" ","T")+":00+03:00");return`<li><div class="d"><small>${AR[d.getUTCDay()]||""}</small><b>${s.t.slice(8,10)}/${s.t.slice(5,7)}</b><small>${s.t.slice(11)}</small></div><span>${s.text}</span></li>`}).join("");
 }
