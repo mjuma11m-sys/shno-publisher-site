@@ -132,6 +132,13 @@ def parse_srt(path, chapters):
     return out
 
 
+def graph(main, crumbs):
+    """JSON-LD @graph: the page's main object plus a BreadcrumbList."""
+    m = {k: v for k, v in main.items() if k != "@context"}
+    bl = {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(crumbs)]}
+    return {"@context": "https://schema.org", "@graph": [m, bl]}
+
+
 def linkify(text):
     """Escape, then turn only URLs that are literally in the text into links (never invent one)."""
     out, last = [], 0
@@ -181,6 +188,7 @@ CSS = """<style>
 .tk li::before{content:counter(k);width:32px;height:32px;border-radius:50%;background:var(--ac);color:#1a1300;font:900 1rem/32px "Tajawal",sans-serif;text-align:center}
 .card3 small{color:var(--mut)}
 .share{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.share a,.share button{all:unset;cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;color:var(--fg)}.share a:hover,.share button:hover{color:var(--ac)}.share a:focus-visible,.share button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}.share input{width:min(100%,360px);font:inherit;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--fg)}.cpm{color:var(--mut);font-size:.85rem}
+.pwrap{display:grid;gap:6px}.pnote{margin:0;color:var(--mut);font-size:.8rem}.pnote a{color:var(--mut)}iframe.poster{width:100%;height:auto}
 .chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
 .chips button[aria-pressed="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac);font-weight:700}.chips button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
@@ -237,7 +245,8 @@ def build():
 <nav class="crumb" aria-label="مسار الصفحة"><a href="episodes.html">الحلقات</a> ‹ {e_(e['title'][:40])}</nav>
 <h1>{e_(e['title'])}</h1>
 <div class="meta"><span class="pill">{ardate(e['published'])}</span><span class="pill">{mmss(e['secs'])} دقيقة</span>{f'<a class="pill" href="topic-{TOPIC_PAGES[topic(e["title"])][0]}.html">{TOPIC_PAGES[topic(e["title"])][1]}</a>' if topic(e["title"]) in TOPIC_PAGES else '<span class="pill">باللهجة البحرينية</span>'}</div>
-<a class="poster" href="{watch}" target="_blank" rel="noopener"><img src="{thumb}" alt="غلاف حلقة {e_(e['title'])}" loading="eager" width="1280" height="720"><span>▶ شوف الحلقة على يوتيوب</span></a>
+<div class="pwrap"><a class="poster" href="{watch}" target="_blank" rel="noopener" data-yt="{e['id']}"><img src="{thumb}" alt="غلاف حلقة {e_(e['title'])}" loading="eager" width="1280" height="720"><span>▶ شغّل الحلقة هني</span></a><p class="pnote">التشغيل من يوتيوب ويبدأ لما تضغط بس · <a href="{watch}" target="_blank" rel="noopener">أو افتحها على يوتيوب</a></p></div>
+<script>document.querySelectorAll(".poster[data-yt]").forEach(a=>a.addEventListener("click",e=>{{if(e.ctrlKey||e.metaKey||e.shiftKey)return;e.preventDefault();const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+a.dataset.yt+"?autoplay=1&rel=0";f.title=a.querySelector("img").alt;f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;f.className="poster";f.style.border="0";a.replaceWith(f);f.focus()}}))</script>
 <div class="ecols">
  <div style="display:grid;gap:20px;align-content:start">
   <section class="box"><h2>شنو السالفة؟</h2><p class="lead">{e_(summary)}</p></section>
@@ -254,7 +263,11 @@ def build():
 <script>document.querySelectorAll(".share .cp").forEach(b=>b.addEventListener("click",async()=>{{const m=b.parentNode.querySelector(".cpm");try{{await navigator.clipboard.writeText(b.dataset.u);m.textContent="انسخ ✓"}}catch(e){{const i=document.createElement("input");i.value=b.dataset.u;b.after(i);i.select();m.textContent="انسخ الرابط من الخانة"}}}}))</script>
 </article></div>"""
         title = f"{e['title']} · شنو السالفة؟"
-        page(f"episode-{e['id']}.html", title, summary[:155], body, nav="episodes.html", image=thumb, og_type="video.other", ld=ld)
+        crumbs = [("الرئيسية", BASE), ("الحلقات", f"{BASE}episodes.html")]
+        if topic(e["title"]) in TOPIC_PAGES:
+            crumbs.append((TOPIC_PAGES[topic(e["title"])][1], f"{BASE}topic-{TOPIC_PAGES[topic(e['title'])][0]}.html"))
+        crumbs.append((e["title"], url))
+        page(f"episode-{e['id']}.html", title, summary[:155], body, nav="episodes.html", image=thumb, og_type="video.other", ld=graph(ld, crumbs))
     shorts_html = ""
     if shorts:
         used = [k for k in list(TOPICS) + ["أخرى"] if any(topic(x["title"]) == k for x in shorts)]
@@ -285,7 +298,8 @@ def build():
                  + '</section></div>')
         tld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": f"{name} · شنو السالفة؟", "description": intro,
                "hasPart": [{"@type": "VideoObject", "name": x["title"], "url": f"{BASE}episode-{x['id']}.html"} for x in te]}
-        page(f"topic-{slug}.html", f"{name} · شنو السالفة؟", intro, tbody, nav="episodes.html", ld=tld)
+        page(f"topic-{slug}.html", f"{name} · شنو السالفة؟", intro, tbody, nav="episodes.html",
+             ld=graph(tld, [("الرئيسية", BASE), ("الحلقات", f"{BASE}episodes.html"), (name, f"{BASE}topic-{slug}.html")]))
     if topic_links:
         hub = '<nav class="topics" aria-label="المواضيع">' + "".join(topic_links) + "</nav>"
         txt = open("episodes.html").read().replace('<div class="grid">', hub + '<div class="grid">', 1)
@@ -312,7 +326,8 @@ def build():
               f'<div style="display:grid;gap:16px"><section class="box"><h2>عن الشورت</h2><p class="lead">{e_(desc)}</p></section>'
               + (f'<a class="card3" href="episode-{parent["id"]}.html"><img src="https://i.ytimg.com/vi/{parent["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><small>الحلقة الكاملة</small><b>{e_(parent["title"])}</b></div></a>' if parent else "")
               + '</div></div></article></div><style>@media (max-width:640px){.scol{grid-template-columns:1fr!important}.scol .sh{max-width:260px}}</style>')
-        page(f"short-{x['id']}.html", f"{x['title']} · شنو السالفة؟", desc[:155], sb, nav="episodes.html", image=x["thumb"], og_type="video.other", ld=sld)
+        sc = [("الرئيسية", BASE), ("الحلقات", f"{BASE}episodes.html")] + ([(TOPIC_PAGES[k][1], f"{BASE}topic-{TOPIC_PAGES[k][0]}.html")] if k in TOPIC_PAGES else []) + [(x["title"], f"{BASE}short-{x['id']}.html")]
+        page(f"short-{x['id']}.html", f"{x['title']} · شنو السالفة؟", desc[:155], sb, nav="episodes.html", image=x["thumb"], og_type="video.other", ld=graph(sld, sc))
     # home page: latest episodes and shorts between <!--LATEST--> markers
     home = open("index.html").read()
     if "<!--LATEST-->" in home:
