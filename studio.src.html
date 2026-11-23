@@ -38,6 +38,7 @@
  <div id="app" hidden style="display:grid;gap:18px">
   <div class="row" style="justify-content:space-between"><div class="sbox who" style="flex:1 1 260px"><div class="av" id="av"></div><div><b id="nick"></b><span id="user"></span></div></div><button class="btn3" type="button" id="out">تسجيل خروج</button></div>
   <p class="msg err" id="gerr" role="alert"></p>
+  <div class="sbox" id="setup" hidden><h2>الإعداد ما خلص</h2><p class="hint">ناقص هالأسرار في Supabase (مشروع sports-hub ← Edge Functions ← Secrets). صاحب الحساب يحطها بنفسه:</p><ul id="miss" style="margin:8px 0 0;line-height:2"></ul></div>
   <div class="sbox" id="conn" hidden><h2>اربط حساب تيك توك</h2><p class="hint">مرة وحدة بس. تيك توك بيطلب منك توافق على صلاحية النشر، وبعدها ترجع لهالصفحة.</p><div class="row" style="margin-top:10px"><button class="btn2" type="button" id="cb">اربط تيك توك</button></div></div>
   <div id="empty" class="sbox" hidden><h2>الطابور خلص</h2><p class="hint">ما في فيديو جاهز لتيك توك.</p></div>
   <form id="f" class="sgrid2" novalidate hidden>
@@ -77,7 +78,7 @@ const AI="\n🤖 صوت بالذكاء الاصطناعي";
 const MUSIC='<a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener">Music Usage Confirmation</a>';
 const BRAND='<a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank" rel="noopener">Branded Content Policy</a>';
 let S=null,cur=null;
-async function call(body){const {data:{session}}=await SB.auth.getSession();const r=await fetch(FN,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+session.access_token,apikey:"sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla"},body:JSON.stringify(body)});const j=await r.json().catch(()=>({error:"رد غير مفهوم"}));if(!r.ok)throw new Error(j.error||("خطأ "+r.status));return j}
+async function call(body){const {data:{session}}=await SB.auth.getSession();const r=await fetch(FN,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+session.access_token,apikey:"sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla"},body:JSON.stringify(body)});const j=await r.json().catch(()=>({error:"رد غير مفهوم"}));if(!r.ok){const e=new Error(j.error||("خطأ "+r.status));e.missing=j.missing;throw e}return j}
 function refresh(){if(!cur)return;const priv=$("priv").value,disc=$("disc").checked,own=$("b-own").checked;$("discbox").hidden=!disc;const self=priv==="SELF_ONLY";$("b-paid").disabled=self;$("t-paid").setAttribute("aria-disabled",self);if(self)$("b-paid").checked=false;const paid=$("b-paid").checked;
  $("disclabel").textContent=disc?(paid?"بيطلع على الفيديو «شراكة مدفوعة» (Paid partnership).":own?"بيطلع على الفيديو «محتوى ترويجي» (Promotional content).":"اختار نوع واحد على الأقل."):"";
  $("consent").innerHTML="بالنشر، أنت توافق على "+(disc&&paid?BRAND+" و":"")+MUSIC+" من تيك توك.";
@@ -91,7 +92,7 @@ function show(id){cur=S.queue.find(q=>q.id===id)||S.queue[0];if(!cur){$("f").hid
  $("priv").innerHTML='<option value="" selected disabled>اختار…</option>'+S.creator.privacy_level_options.map(o=>`<option value="${o}">${PL[o]||o}</option>`).join("");
  for(const k of ["comment","duet","stitch"])$("c-"+k).checked=false;$("disc").checked=$("b-own").checked=$("b-paid").checked=false;$("msg").textContent="";refresh()}
 function renderHistory(h){$("hist").hidden=!h.length;$("hb").innerHTML=h.map(r=>`<tr><td>${new Date(r.created_at).toLocaleString("ar-BH",{dateStyle:"short",timeStyle:"short"})}</td><td>${esc(r.item_id)}</td><td>${PL[r.privacy]||esc(r.privacy)}</td><td>${ST[r.status]||esc(r.status)}</td></tr>`).join("")}
-async function load(){$("gerr").textContent="";$("conn").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;return}$("gerr").textContent=e.message;return}
+async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;return}$("gerr").textContent=e.message;return}
  const c=S.creator;$("nick").textContent=c.creator_nickname||"";$("user").textContent=c.creator_username?"@"+c.creator_username:"";
  $("av").innerHTML=c.creator_avatar_url?`<img src="${esc(c.creator_avatar_url)}" alt="">`:"؟";
  let locked=false;for(const k of ["comment","duet","stitch"]){const d=!!c[k+"_disabled"];$("c-"+k).disabled=d;$("t-"+k).setAttribute("aria-disabled",d);locked=locked||d}$("lockhint").hidden=!locked;

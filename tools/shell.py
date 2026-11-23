@@ -1,7 +1,7 @@
 """Shared page shell: takes index.html's header/footer and sets per-page title, description, canonical, Open Graph, hreflang and nav state."""
 import html, json, re
 
-BASE = "https://mjuma11m-sys.github.io/shno-publisher-site/"
+BASE = "https://salfa-studio.vercel.app/"
 _src = open("index.html").read()
 HEAD, _rest = _src.split("<main>", 1)
 FOOT = "</main>" + _rest.split("</main>", 1)[1]

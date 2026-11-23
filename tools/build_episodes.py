@@ -7,7 +7,7 @@ The API key is injected by the network proxy (header x-goog-api-key); nothing se
 """
 import html, json, os, re, sys, urllib.parse, urllib.request
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-BASE = "https://mjuma11m-sys.github.io/shno-publisher-site/"
+BASE = "https://salfa-studio.vercel.app/"
 API = "https://youtube.googleapis.com/youtube/v3/"
 
 
