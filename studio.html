@@ -54,7 +54,7 @@
   <img src="assets/icon-96.png" alt="" width="72" height="72" style="border-radius:20px">
   <div><h2 style="margin:0">شنو السالفة؟</h2><p class="hint">@shnoalsalfa_bh · صفحة صاحب القناة</p></div>
   <button class="btn2" type="button" id="ttl" style="display:flex;align-items:center;gap:10px;background:#000;color:#fff;padding:13px 26px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="#fff"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 1 1-2.59-2.59c.27 0 .53.04.77.12V9.79a5.68 5.68 0 1 0 4.91 5.62V9.01a7.34 7.34 0 0 0 4.3 1.38V7.3a4.3 4.3 0 0 1-3.24-1.48z"/></svg>سجّل دخول بتيك توك</button>
-  <button class="btn2" type="button" disabled style="display:flex;align-items:center;gap:10px;background:#fff;color:#111">▶ سجّل دخول بيوتيوب · قريباً</button>
+  <button class="btn2" type="button" id="ytl" style="display:flex;align-items:center;gap:10px;background:#fff;color:#111"><svg width="22" height="16" viewBox="0 0 28 20" aria-hidden="true"><rect width="28" height="20" rx="5" fill="#ff0000"/><path d="M11 5.5v9l8-4.5z" fill="#fff"/></svg>سجّل دخول بيوتيوب (Google)</button>
   <p class="msg" id="lm" role="status" aria-live="polite"></p>
   <details style="width:100%;max-width:420px;text-align:right"><summary class="hint" style="cursor:pointer">أو بالإيميل</summary>
    <form id="lf" class="row" novalidate style="margin-top:10px"><label class="f" style="flex:1 1 220px">الإيميل<input type="email" id="em" autocomplete="email" required></label><button class="btn2" type="submit" id="lb">أرسل رابط الدخول</button></form>
@@ -135,6 +135,8 @@ async function boot(){
   else{try{const j=await call({action:"login",code});try{localStorage.setItem("salfa_session",j.session);sessionStorage.removeItem("tt_state")}catch(e){}}catch(e){$("lm").className="msg err";$("lm").textContent=e.message}}}
  const {data:{session}}=await SB.auth.getSession();const ok=!!getTS()||!!session;$("login").hidden=ok;$("app").hidden=!ok;if(ok)load()}
 $("ttl").addEventListener("click",()=>startTT($("lm")));
+$("ytl").addEventListener("click",async()=>{const {error}=await SB.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+location.pathname,queryParams:{prompt:"select_account"}}});
+ if(error){$("lm").className="msg err";$("lm").textContent=/provider is not enabled|Unsupported provider/i.test(error.message)?"دخول يوتيوب ما تفعّل للحين في Supabase.":("ما اشتغل: "+error.message)}});
 $("cb").addEventListener("click",()=>startTT($("gerr")));
 $("lf").addEventListener("submit",async e=>{e.preventDefault();const em=$("em").value.trim();if(!em){$("lm").textContent="اكتب الإيميل";return}if($("lb").disabled)return;$("lb").disabled=true;
  const {error}=await SB.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+location.pathname,shouldCreateUser:false}});
