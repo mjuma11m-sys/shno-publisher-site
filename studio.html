@@ -16,6 +16,7 @@
 </head><body>
 <header class="top"><div class="wrap"><a class="brand" href="index.html"><img src="assets/icon-96.png" alt="" width="40" height="40"><span>سالفة ستوديو<small>Salfa Studio</small></span></a><nav class="links" aria-label="القائمة"><a href="episodes.html">الحلقات</a><a href="search.html">بحث</a><a href="dashboard.html">لوحة التحكم</a><a href="office.html">المكتب</a><a href="index.html">الرئيسية</a><a href="about.html">من نحن</a><a href="privacy.html">الخصوصية</a><a href="terms.html">الشروط</a><a href="en.html" lang="en" hreflang="en">English</a></nav></div></header>
 <main><style>
+.st [hidden]{display:none!important}
 .st{padding-block:28px 8px;display:grid;gap:18px}
 .st h1{margin:0;font:900 clamp(1.6rem,3vw,2.2rem)/1.2 "Tajawal",sans-serif}
 .st .muted{color:var(--mut);margin:4px 0 0}
@@ -49,11 +50,15 @@
 <div class="wrap"><section class="st" aria-labelledby="sth">
  <div><h1 id="sth">النشر على تيك توك</h1><p class="muted">صفحة صاحب القناة بس. كل فيديو تشوفه وتختار منو يشوفه وتأكد نشره بنفسك، حسب شروط تيك توك.</p></div>
 
- <div class="sbox" id="login" hidden>
-  <h2>تسجيل الدخول</h2>
-  <form id="lf" class="row" novalidate><label class="f" style="flex:1 1 240px">الإيميل<input type="email" id="em" autocomplete="email" required></label><button class="btn2" type="submit" id="lb">أرسل رابط الدخول</button></form>
-  <p class="hint" style="margin-top:8px">يوصلك رابط على الإيميل. افتحه من نفس الجهاز وترجع لهالصفحة وأنت داخل.</p>
+ <div class="sbox" id="login" hidden style="display:grid;gap:14px;justify-items:center;text-align:center;padding:28px 18px">
+  <img src="assets/icon-96.png" alt="" width="72" height="72" style="border-radius:20px">
+  <div><h2 style="margin:0">شنو السالفة؟</h2><p class="hint">@shnoalsalfa_bh · صفحة صاحب القناة</p></div>
+  <button class="btn2" type="button" id="ttl" style="display:flex;align-items:center;gap:10px;background:#000;color:#fff;padding:13px 26px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="#fff"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 1 1-2.59-2.59c.27 0 .53.04.77.12V9.79a5.68 5.68 0 1 0 4.91 5.62V9.01a7.34 7.34 0 0 0 4.3 1.38V7.3a4.3 4.3 0 0 1-3.24-1.48z"/></svg>سجّل دخول بتيك توك</button>
+  <button class="btn2" type="button" disabled style="display:flex;align-items:center;gap:10px;background:#fff;color:#111">▶ سجّل دخول بيوتيوب · قريباً</button>
   <p class="msg" id="lm" role="status" aria-live="polite"></p>
+  <details style="width:100%;max-width:420px;text-align:right"><summary class="hint" style="cursor:pointer">أو بالإيميل</summary>
+   <form id="lf" class="row" novalidate style="margin-top:10px"><label class="f" style="flex:1 1 220px">الإيميل<input type="email" id="em" autocomplete="email" required></label><button class="btn2" type="submit" id="lb">أرسل رابط الدخول</button></form>
+  </details>
  </div>
 
  <div id="app" hidden style="display:grid;gap:18px">
@@ -99,7 +104,9 @@ const AI="\n🤖 صوت بالذكاء الاصطناعي";
 const MUSIC='<a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener">Music Usage Confirmation</a>';
 const BRAND='<a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank" rel="noopener">Branded Content Policy</a>';
 let S=null,cur=null;
-async function call(body){const {data:{session}}=await SB.auth.getSession();const r=await fetch(FN,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+session.access_token,apikey:"sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla"},body:JSON.stringify(body)});const j=await r.json().catch(()=>({error:"رد غير مفهوم"}));if(!r.ok){const e=new Error(j.error||("خطأ "+r.status));e.missing=j.missing;throw e}return j}
+const getTS=()=>{try{return localStorage.getItem("salfa_session")}catch(e){return null}};
+async function call(body){const h={"Content-Type":"application/json",apikey:"sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla"};const ts=getTS();if(ts)h["X-Salfa-Session"]=ts;else{const {data:{session}}=await SB.auth.getSession();if(session)h.Authorization="Bearer "+session.access_token}
+ const r=await fetch(FN,{method:"POST",headers:h,body:JSON.stringify(body)});const j=await r.json().catch(()=>({error:"رد غير مفهوم"}));if(!r.ok){const e=new Error(j.error||("خطأ "+r.status));e.missing=j.missing;throw e}return j}
 function ovcap(){const t=$("cap").value.replace(AI,"").trim();const short=t.length>150?t.slice(0,150)+"… المزيد":t;$("ovc").innerHTML=esc(short).replace(/(#[^\s#]+)/g,'<span class="tg">$1</span>');$("ovn").textContent=S&&S.creator.creator_username?"@"+S.creator.creator_username:""}
 function refresh(){if(!cur)return;ovcap();const priv=$("priv").value,disc=$("disc").checked,own=$("b-own").checked;$("discbox").hidden=!disc;const self=priv==="SELF_ONLY";$("b-paid").disabled=self;$("t-paid").setAttribute("aria-disabled",self);if(self)$("b-paid").checked=false;const paid=$("b-paid").checked;
  $("disclabel").textContent=disc?(paid?"بيطلع على الفيديو «شراكة مدفوعة» (Paid partnership).":own?"بيطلع على الفيديو «محتوى ترويجي» (Promotional content).":"اختار نوع واحد على الأقل."):"";
@@ -114,25 +121,27 @@ function show(id){cur=S.queue.find(q=>q.id===id)||S.queue[0];if(!cur){$("f").hid
  $("priv").innerHTML='<option value="" selected disabled>اختار…</option>'+S.creator.privacy_level_options.map(o=>`<option value="${o}">${PL[o]||o}</option>`).join("");
  for(const k of ["comment","duet","stitch"])$("c-"+k).checked=false;$("disc").checked=$("b-own").checked=$("b-paid").checked=false;$("msg").textContent="";refresh()}
 function renderHistory(h){$("hist").hidden=!h.length;$("hb").innerHTML=h.map(r=>`<tr><td>${new Date(r.created_at).toLocaleString("ar-BH",{dateStyle:"short",timeStyle:"short"})}</td><td>${esc(r.item_id)}</td><td>${PL[r.privacy]||esc(r.privacy)}</td><td>${ST[r.status]||esc(r.status)}</td></tr>`).join("")}
-async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;return}$("gerr").textContent=e.message;return}
+async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="هالصفحة لصاحب القناة بس"&&getTS()){try{localStorage.removeItem("salfa_session")}catch(x){}boot();return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;return}$("gerr").textContent=e.message;return}
  const c=S.creator;$("nick").textContent=c.creator_nickname||"";$("user").textContent=c.creator_username?"@"+c.creator_username:"";
  $("av").innerHTML=c.creator_avatar_url?`<img src="${esc(c.creator_avatar_url)}" alt="">`:"؟";
  let locked=false;for(const k of ["comment","duet","stitch"]){const d=!!c[k+"_disabled"];$("c-"+k).disabled=d;$("t-"+k).setAttribute("aria-disabled",d);locked=locked||d}$("lockhint").hidden=!locked;
  renderHistory(S.history||[]);show()}
-async function boot(){const {data:{session}}=await SB.auth.getSession();$("login").hidden=!!session;$("app").hidden=!session;if(!session)return;
+async function startTT(errEl){const a=new Uint8Array(24);crypto.getRandomValues(a);const st="studio-"+Array.from(a,b=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b%62]).join("");
+ try{sessionStorage.setItem("tt_state",st)}catch(e){}try{const j=await call({action:"auth_url",state:st});location.href=j.url}catch(e){errEl.className="msg err";errEl.textContent=e.message==="SETUP"?"الإعداد ما خلص: ناقص "+(e.missing||[]).join("، "):e.message}}
+async function boot(){
  const u=new URLSearchParams(location.search),code=u.get("tt_code"),st=u.get("tt_state");
  if(code){window.history.replaceState(null,"",location.pathname);let saved=null;try{saved=sessionStorage.getItem("tt_state")}catch(e){}
-  if(!saved||saved!==st){$("gerr").textContent="رابط الربط غير صالح، جرّب مرة ثانية.";}
-  else{try{await call({action:"connect",code});try{sessionStorage.removeItem("tt_state")}catch(e){}}catch(e){$("gerr").textContent=e.message}}}
- load()}
-$("cb").addEventListener("click",async()=>{const a=new Uint8Array(24);crypto.getRandomValues(a);const st="studio-"+Array.from(a,b=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b%62]).join("");
- try{sessionStorage.setItem("tt_state",st)}catch(e){}try{const j=await call({action:"auth_url",state:st});location.href=j.url}catch(e){$("gerr").textContent=e.message}});
+  if(!saved||saved!==st){$("lm").className="msg err";$("lm").textContent="رابط الدخول غير صالح، جرّب مرة ثانية."}
+  else{try{const j=await call({action:"login",code});try{localStorage.setItem("salfa_session",j.session);sessionStorage.removeItem("tt_state")}catch(e){}}catch(e){$("lm").className="msg err";$("lm").textContent=e.message}}}
+ const {data:{session}}=await SB.auth.getSession();const ok=!!getTS()||!!session;$("login").hidden=ok;$("app").hidden=!ok;if(ok)load()}
+$("ttl").addEventListener("click",()=>startTT($("lm")));
+$("cb").addEventListener("click",()=>startTT($("gerr")));
 $("lf").addEventListener("submit",async e=>{e.preventDefault();const em=$("em").value.trim();if(!em){$("lm").textContent="اكتب الإيميل";return}if($("lb").disabled)return;$("lb").disabled=true;
  const {error}=await SB.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+location.pathname,shouldCreateUser:false}});
  $("lm").className="msg "+(error?"err":"ok");$("lm").textContent=error?("ما انرسل: "+error.message):"انرسل. افتح آخر إيميل وصلك واضغط الرابط. الرابط يشتغل مرة وحدة.";
  let n=60;const t=setInterval(()=>{n--;$("lb").textContent=n>0?("انتظر "+n+" ثانية"):"أرسل رابط الدخول";if(n<=0){clearInterval(t);$("lb").disabled=false}},1000)});
 (function(){const h=new URLSearchParams(location.hash.slice(1)),q=new URLSearchParams(location.search);const err=h.get("error_description")||q.get("error_description");if(err){$("lm").className="msg err";$("lm").textContent="الرابط ما اشتغل ("+err.replace(/\+/g," ")+"). أرسل رابط جديد وافتح آخر إيميل بس.";}})();
-$("out").addEventListener("click",async()=>{await SB.auth.signOut();boot()});
+$("out").addEventListener("click",async()=>{try{localStorage.removeItem("salfa_session")}catch(e){}await SB.auth.signOut();boot()});
 $("f").addEventListener("input",e=>{if(e.target.id!=="pick")refresh()});
 $("pick").addEventListener("change",e=>show(e.target.value));
 $("f").addEventListener("submit",async e=>{e.preventDefault();if($("go").disabled)return;$("go").disabled=true;$("msg").className="msg";$("msg").textContent="يرفع…";
