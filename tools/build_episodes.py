@@ -188,7 +188,7 @@ CSS = """<style>
 .tk li::before{content:counter(k);width:32px;height:32px;border-radius:50%;background:var(--ac);color:#1a1300;font:900 1rem/32px "Tajawal",sans-serif;text-align:center}
 .card3 small{color:var(--mut)}
 .share{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.share a,.share button{all:unset;cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;color:var(--fg)}.share a:hover,.share button:hover{color:var(--ac)}.share a:focus-visible,.share button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}.share input{width:min(100%,360px);font:inherit;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--fg)}.cpm{color:var(--mut);font-size:.85rem}
-.pwrap{display:grid;gap:6px}.pnote{margin:0;color:var(--mut);font-size:.8rem}.pnote a{color:var(--mut)}iframe.poster{width:100%;height:auto}
+.pwrap{display:grid;gap:6px}.pnote{margin:0;color:var(--mut);font-size:.8rem}.pnote a{color:var(--mut)}iframe.poster{width:100%;height:auto}iframe.sh{width:100%;height:auto}
 .chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
 .chips button[aria-pressed="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac);font-weight:700}.chips button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
@@ -322,7 +322,8 @@ def build():
               f'<div class="meta"><span>{ardate(x["published"])}</span>'
               + (f'<a href="topic-{TOPIC_PAGES[k][0]}.html">{TOPIC_PAGES[k][1]}</a>' if k in TOPIC_PAGES else "") + '</div>'
               f'<div style="display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:20px;align-items:start" class="scol">'
-              f'<a class="sh" href="{yurl}" target="_blank" rel="noopener"><img src="{x["thumb"]}" alt="غلاف شورت {e_(x["title"])}" width="480" height="360"><span>▶ شوف على يوتيوب</span></a>'
+              f'<div class="pwrap"><a class="sh" href="{yurl}" target="_blank" rel="noopener" data-yt="{x["id"]}"><img src="{x["thumb"]}" alt="غلاف شورت {e_(x["title"])}" width="480" height="360"><span>▶ شغّل هني</span></a><p class="pnote">التشغيل من يوتيوب ويبدأ لما تضغط · <a href="{yurl}" target="_blank" rel="noopener">أو على يوتيوب</a></p></div>'
+              '<script>document.querySelectorAll(".sh[data-yt]").forEach(a=>a.addEventListener("click",e=>{if(e.ctrlKey||e.metaKey||e.shiftKey)return;e.preventDefault();const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+a.dataset.yt+"?autoplay=1&rel=0";f.title=a.querySelector("img").alt;f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;f.className="sh";f.style.border="0";a.replaceWith(f);f.focus()}))</script>'
               f'<div style="display:grid;gap:16px"><section class="box"><h2>عن الشورت</h2><p class="lead">{e_(desc)}</p></section>'
               + (f'<a class="card3" href="episode-{parent["id"]}.html"><img src="https://i.ytimg.com/vi/{parent["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><small>الحلقة الكاملة</small><b>{e_(parent["title"])}</b></div></a>' if parent else "")
               + '</div></div></article></div><style>@media (max-width:640px){.scol{grid-template-columns:1fr!important}.scol .sh{max-width:260px}}</style>')
