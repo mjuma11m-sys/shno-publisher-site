@@ -8,17 +8,29 @@
 <header class="top"><div class="wrap"><a class="brand" href="index.html"><img src="assets/icon-512.png" alt="" width="40" height="40"><span>سالفة ستوديو<small>Salfa Studio</small></span></a><nav class="links" aria-label="القائمة"><a href="office.html" aria-current="page">المكتب</a><a href="index.html">الرئيسية</a><a href="privacy.html">الخصوصية</a><a href="terms.html">الشروط</a></nav></div></header>
 <main><style>
 .office{display:grid;grid-template-columns:1fr;gap:18px;padding-block:24px 8px}
-.stage{position:relative;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(180deg,#0f1930 0%,#0b1222 60%);min-width:0}
-.stage-top{position:absolute;inset-inline:0;top:0;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;z-index:2;pointer-events:none}
-.stage-top h2{margin:0;font:900 1.25rem/1.2 "Tajawal",sans-serif;color:var(--fg)}
-.stage-top h2 small{display:block;font:500 .8rem "IBM Plex Sans Arabic",sans-serif;color:var(--mut)}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip2{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(21,32,56,.85);border:1px solid var(--line);font-size:.85rem;color:var(--fg);backdrop-filter:blur(6px)}
-.chip2 i{width:8px;height:8px;border-radius:50%;display:inline-block}
-.live i{background:#4cc38a;box-shadow:0 0 0 0 rgba(76,195,138,.7);animation:ring 2s infinite}
+.stage3d{position:relative;height:min(72vh,720px);min-height:460px;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:#0b1222;touch-action:none}
+.stage3d canvas{display:block;width:100%;height:100%;cursor:grab}
+.stage3d canvas:active{cursor:grabbing}
+.hud{position:absolute;inset-inline:0;top:0;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:14px 18px;pointer-events:none;z-index:3}
+.hud h2{margin:0;font:900 1.3rem/1.2 "Tajawal",sans-serif;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+.hud h2 small{display:block;font:500 .8rem "IBM Plex Sans Arabic",sans-serif;color:#cbd5e1}
+.chips{display:flex;gap:8px;flex-wrap:wrap;pointer-events:auto}
+.chip2{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(11,18,34,.72);border:1px solid rgba(255,255,255,.12);font-size:.85rem;color:#fff;backdrop-filter:blur(8px)}
+.chip2 i{width:8px;height:8px;border-radius:50%;display:inline-block;background:#4cc38a;animation:ring 2s infinite}
+.chip2 button{all:unset;cursor:pointer}
 @keyframes ring{0%{box-shadow:0 0 0 0 rgba(76,195,138,.6)}70%{box-shadow:0 0 0 8px rgba(76,195,138,0)}100%{box-shadow:0 0 0 0 rgba(76,195,138,0)}}
-.stage svg{display:block;width:100%;height:auto}
-.stage .hint{position:absolute;inset-inline-start:18px;bottom:14px;color:var(--mut);font-size:.85rem}
+.tags{position:absolute;inset:0;pointer-events:none;z-index:2}
+.tag3{position:absolute;transform:translate(-50%,-100%);pointer-events:auto;cursor:pointer;display:flex;align-items:center;gap:7px;padding:5px 11px 5px 9px;border-radius:12px;background:rgba(255,255,255,.96);color:#0b1222;font:800 .82rem "Tajawal",sans-serif;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.25);border-inline-end:4px solid var(--z);transition:transform .15s,opacity .2s}
+.tag3:hover,.tag3.sel{transform:translate(-50%,-100%) scale(1.08);outline:2px solid #ffbe28}
+.tag3 .d{width:8px;height:8px;border-radius:50%}
+.tag3.working .d{animation:blink 1.4s infinite}
+.tag3::after{content:"";position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:rgba(255,255,255,.96);border-bottom:0}
+@keyframes blink{50%{opacity:.3}}
+.toast{position:absolute;inset-inline-start:18px;bottom:16px;z-index:3;display:flex;flex-direction:column;gap:8px;max-width:min(380px,80%)}
+.toast div{background:rgba(11,18,34,.8);border:1px solid rgba(255,255,255,.12);color:#e5e7eb;border-radius:12px;padding:8px 12px;font-size:.85rem;backdrop-filter:blur(8px);animation:pop .4s ease}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hint3{position:absolute;inset-inline-end:18px;bottom:16px;z-index:3;color:#cbd5e1;font-size:.8rem;background:rgba(11,18,34,.6);padding:6px 10px;border-radius:10px}
+.fallback{padding:24px;color:var(--mut)}
 .side{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px;min-width:0}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;min-width:0}
 .panel h3{margin:0 0 10px;font-size:1.02rem;display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -37,26 +49,18 @@
 .avatar{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font:900 1.2rem "Tajawal",sans-serif;color:#0b1222;flex:none}
 .agent-head p{margin:2px 0 0;color:var(--mut);font-size:.88rem}
 .task{margin:12px 0 0;padding:10px 12px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);font-size:.95rem}
-.desk{cursor:pointer;transition:transform .2s ease}
-.desk:hover{transform:translateY(-4px)}
-.desk.sel .tag rect.bg{stroke:#ffbe28;stroke-width:3}
-.desk:focus{outline:none}.desk:focus-visible .tag rect.bg{stroke:#ffbe28;stroke-width:3}
-@keyframes type{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
-.working .arms{animation:type .5s ease-in-out infinite}
-.working .screen{animation:blink 2.4s ease-in-out infinite}
-.st-working .sdot{animation:blink 1.4s ease-in-out infinite}
-@media (prefers-reduced-motion:reduce){.working .arms,.working .screen,.st-working .sdot,.live i{animation:none}.desk,.desk:hover{transition:none;transform:none}}
 @media (max-width:980px){.side{grid-template-columns:1fr}}
-@media (max-width:760px){.stage{overflow-x:auto}.stage svg{min-width:860px}.stage .hint{position:static;padding:0 16px 12px}.stage-top{position:static;flex-direction:column;align-items:flex-start}}
+@media (max-width:600px){.stage3d{height:64vh}.hud{padding:10px 12px;gap:6px}.hud h2{font-size:1.05rem}.hud h2 small,.hint3,.toast{display:none}.chips{gap:4px}.chip2{padding:4px 8px;font-size:.72rem}.chip2.opt{display:none}.tag3{font-size:.7rem;padding:3px 7px}}
+@media (prefers-reduced-motion:reduce){.chip2 i,.tag3.working .d,.toast div{animation:none}}
 </style>
 <div class="wrap">
-<section class="office" aria-label="مكتب سالفة ستوديو">
- <div class="stage">
-  <div class="stage-top"><h2>مكتب سالفة ستوديو<small>فريق وكلاء الذكاء الاصطناعي حق قناة «شنو السالفة؟»</small></h2>
-   <div class="chips"><span class="chip2 live"><i></i><span id="working"></span></span><span class="chip2" id="clock"></span></div></div>
-  <svg id="iso" viewBox="20 40 1360 900" role="img" aria-label="مخطط المكتب وفريق الوكلاء"></svg>
-  <div class="hint">اضغط على أي موظف تشوف شغله</div>
+<section class="office" aria-label="مكتب سالفة ستوديو ثلاثي الأبعاد">
+ <div class="stage3d" id="stage">
+  <div class="hud"><h2>مكتب سالفة ستوديو<small>فريق وكلاء الذكاء الاصطناعي حق قناة «شنو السالفة؟»</small></h2>
+   <div class="chips"><span class="chip2"><i></i><span id="working"></span></span><span class="chip2 opt" id="clock"></span><span class="chip2"><button id="tour" type="button">▶ جولة</button></span><span class="chip2 opt"><a href="office-2d.html" style="color:#fff;text-decoration:none">عرض مسطّح</a></span></div></div>
+  <div class="tags" id="tags"></div>
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <div class="hint3">اسحب للف · كبّر بالعجلة أو بإصبعين · اضغط على أي موظف</div>
  </div>
  <aside class="side">
   <div class="panel" id="agent"></div>
@@ -65,125 +69,147 @@
  </aside>
 </section>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 window.OFFICE={"updated": "2026-11-23T08:00:00+03:00", "zones": [{"id": "research", "name": "البحث والتحرير", "color": "#3b82f6"}, {"id": "production", "name": "الإنتاج", "color": "#f59e0b"}, {"id": "visual", "name": "الصورة والصوت", "color": "#10b981"}, {"id": "publish", "name": "النشر والتحليل", "color": "#8b5cf6"}], "agents": [{"id": "showrunner", "name": "المنتج المنفذ", "en": "Showrunner", "zone": "production", "x": 6, "y": 1, "status": "working", "task": "خطة حلقة «مثلث برمودا»"}, {"id": "autopilot", "name": "الطيار الآلي", "en": "Autopilot", "zone": "production", "x": 8, "y": 1, "status": "scheduled", "task": "شورت اليوم 2:41 م"}, {"id": "researcher", "name": "الباحث", "en": "Researcher", "zone": "research", "x": 1, "y": 1, "status": "working", "task": "مصدرين لكل رقم"}, {"id": "writer", "name": "الكاتب", "en": "Writer", "zone": "research", "x": 3, "y": 1, "status": "idle", "task": "سكربت باللهجة البحرينية"}, {"id": "factchecker", "name": "المدقق", "en": "Fact-checker", "zone": "research", "x": 1, "y": 3, "status": "working", "task": "مراجعة أرقام GTA 6"}, {"id": "standards", "name": "مراجع المعايير", "en": "Standards", "zone": "research", "x": 3, "y": 3, "status": "idle", "task": "حقوق الصور والأسماء"}, {"id": "illustrator", "name": "الرسام", "en": "Illustrator", "zone": "visual", "x": 1, "y": 6, "status": "blocked", "task": "ينتظر رصيد Higgsfield"}, {"id": "sound", "name": "مهندس الصوت", "en": "Sound", "zone": "visual", "x": 3, "y": 6, "status": "idle", "task": "موسيقى ومؤثرات لكل فصل"}, {"id": "designer", "name": "المصمم", "en": "Designer", "zone": "visual", "x": 1, "y": 8, "status": "working", "task": "أغلفة الحلقات بالصور الحقيقية"}, {"id": "editor", "name": "المونتير", "en": "Editor", "zone": "production", "x": 6, "y": 3, "status": "idle", "task": "رندر وفحص الجودة"}, {"id": "shorts", "name": "صانع الشورتات", "en": "Shorts", "zone": "production", "x": 8, "y": 3, "status": "idle", "task": "3–4 شورتس من كل حلقة"}, {"id": "publisher", "name": "الناشر", "en": "Publisher", "zone": "publish", "x": 6, "y": 6, "status": "working", "task": "جدولة يوتيوب وتيك توك"}, {"id": "chrome", "name": "كلود كروم", "en": "Browser agent", "zone": "publish", "x": 8, "y": 6, "status": "working", "task": "يوتيوب ستوديو: الأغلفة"}, {"id": "analyst", "name": "المحلل", "en": "Analyst", "zone": "publish", "x": 6, "y": 8, "status": "scheduled", "task": "التقرير الأسبوعي · السبت"}], "feed": [{"t": "2026-11-23 13:00", "k": "publish", "text": "«GTA 5 ضد GTA 6: أول يوم» على يوتيوب وتيك توك"}, {"t": "2026-11-23 14:41", "k": "auto", "text": "الطيار الآلي: شورت اليوم"}, {"t": "2026-11-25 21:00", "k": "publish", "text": "كرتون «شلون كان الغواص يطلّع اللؤلؤ؟»"}, {"t": "2026-11-28 11:23", "k": "report", "text": "التقرير الأسبوعي للقناة"}, {"t": "2026-12-04 20:00", "k": "publish", "text": "وثائقي «حيل المهربين في الكويت»"}, {"t": "2026-12-16 20:00", "k": "publish", "text": "«أشياء بدت بالبحرين أول»"}], "stats": {"subscribers": 19, "views": 13200, "videos": 23, "tiktok_views_7d": 59600}};
 (function(){
+const D0=window.OFFICE;
 const ST={working:["يشتغل الحين","#4cc38a"],idle:["جاهز","#a9b6cc"],scheduled:["مجدول","#ffbe28"],blocked:["موقف","#ef5350"]};
 const KC={publish:"#8b5cf6",auto:"#f59e0b",report:"#10b981"};
-const HAIR=["#2b1d16","#3d2a1e","#1a1a1a","#5a3b28","#20160f"],SKIN=["#f1c9a5","#e0ac84","#c68b5e","#f3d2b3","#d69d74"];
-const TW=128,TH=64,OX=700,OY=300,N=10,WH=170;
-const iso=(x,y,z=0)=>[OX+(x-y)*TW/2,OY+(x+y)*TH/2-z];
-const P=a=>a.map(p=>p.map(v=>Math.round(v*10)/10).join(",")).join(" ");
-const svg=document.getElementById("iso"),NS="http://www.w3.org/2000/svg";
-const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e};
-const mix=(h,f)=>{const n=parseInt(h.slice(1),16);const c=v=>Math.max(0,Math.min(255,Math.round(v*f)));return`rgb(${c(n>>16)},${c(n>>8&255)},${c(n&255)})`};
-// iso box: x,y footprint w,d at height z0..z0+h
-function box(g,x,y,w,d,z0,h,top,left,right){
- el("polygon",{points:P([iso(x,y+d,z0),iso(x+w,y+d,z0),iso(x+w,y+d,z0+h),iso(x,y+d,z0+h)]),fill:left},g);
- el("polygon",{points:P([iso(x+w,y,z0),iso(x+w,y+d,z0),iso(x+w,y+d,z0+h),iso(x+w,y,z0+h)]),fill:right},g);
- el("polygon",{points:P([iso(x,y,z0+h),iso(x+w,y,z0+h),iso(x+w,y+d,z0+h),iso(x,y+d,z0+h)]),fill:top},g);
-}
-function defs(){const d=el("defs",{});
- d.innerHTML=`<pattern id="wood" width="64" height="32" patternUnits="userSpaceOnUse" patternTransform="skewX(-63.4) scale(1,1)"><rect width="64" height="32" fill="#c99a62"/><rect y="15" width="64" height="2" fill="#b98a54"/><rect x="30" width="2" height="16" fill="#b98a54"/><rect x="10" y="16" width="2" height="16" fill="#b98a54"/></pattern>
- <linearGradient id="win" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe3ff"/><stop offset="1" stop-color="#6aa9e0"/></linearGradient>
- <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
- <filter id="lift" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity=".25"/></filter>`;}
-function room(D){
- // walls
- el("polygon",{points:P([iso(0,0),iso(N,0),iso(N,0,WH),iso(0,0,WH)]),fill:"#e9e4dc"});
- el("polygon",{points:P([iso(0,0),iso(0,N),iso(0,N,WH),iso(0,0,WH)]),fill:"#d8d2c8"});
- el("polygon",{points:P([iso(0,0,WH),iso(N,0,WH),iso(N,0,WH+10),iso(0,0,WH+10)]),fill:"#cfc8bd"});
- el("polygon",{points:P([iso(0,0,WH),iso(0,N,WH),iso(0,N,WH+10),iso(0,0,WH+10)]),fill:"#c4bcb0"});
- // windows on back-right wall
- for(let i=0.8;i<N-1;i+=2.2){const a=i,b=i+1.5;el("polygon",{points:P([iso(a,0,60),iso(b,0,60),iso(b,0,145),iso(a,0,145)]),fill:"url(#win)",stroke:"#8b8173","stroke-width":4});
-  el("line",{x1:iso((a+b)/2,0,60)[0],y1:iso((a+b)/2,0,60)[1],x2:iso((a+b)/2,0,145)[0],y2:iso((a+b)/2,0,145)[1],stroke:"#8b8173","stroke-width":3});}
- // left wall: logo sign + bookshelf + clock
- const s=[iso(0,1.2,95),iso(0,4.2,95),iso(0,4.2,140),iso(0,1.2,140)];el("polygon",{points:P(s),fill:"#0b1222"});
- const sc=iso(0,2.7,117);el("text",{x:0,y:7,fill:"#ffbe28","font-family":"Tajawal","font-weight":"900","font-size":"22","text-anchor":"middle",transform:`translate(${sc[0]} ${sc[1]}) skewY(-26.57)`}).textContent="سالفة ستوديو";
- const bs=[[0,5.4],[0,7.6]];box(svg,0,5.4,0.35,2.2,0,120,"#8a6a4a","#7a5b3d","#6b4f34");
- for(let r=0;r<4;r++){for(let k=0;k<7;k++){const cols=["#ef5350","#3b82f6","#ffbe28","#10b981","#8b5cf6"];const y0=5.55+k*0.29;el("polygon",{points:P([iso(0.36,y0,10+r*28),iso(0.36,y0+0.22,10+r*28),iso(0.36,y0+0.22,32+r*28),iso(0.36,y0,32+r*28)]),fill:cols[(r+k)%5]});}}
- const ck=iso(0,8.9,125);el("circle",{cx:ck[0],cy:ck[1],r:16,fill:"#fff",stroke:"#555","stroke-width":3});el("line",{x1:ck[0],y1:ck[1],x2:ck[0],y2:ck[1]-10,stroke:"#333","stroke-width":2});el("line",{x1:ck[0],y1:ck[1],x2:ck[0]+7,y2:ck[1]+3,stroke:"#333","stroke-width":2});
- // floor
- el("polygon",{points:P([iso(0,0),iso(N,0),iso(N,N),iso(0,N)]),fill:"#c99a62"});
- for(let i=0;i<=N*2;i++){const t=i/2;el("line",{x1:iso(t,0)[0],y1:iso(t,0)[1],x2:iso(t,N)[0],y2:iso(t,N)[1],stroke:"#b88852","stroke-width":1.2,opacity:.8});}
- // zone rugs with border
- const Z={research:[0.6,0.6,4.6,4.6],production:[5.4,0.6,9.4,4.6],visual:[0.6,5.4,4.6,9.4],publish:[5.4,5.4,9.4,9.4]};
- D.zones.forEach(z=>{const r=Z[z.id];if(!r)return;el("polygon",{points:P([iso(r[0],r[1]),iso(r[2],r[1]),iso(r[2],r[3]),iso(r[0],r[3])]),fill:z.color,opacity:.82,stroke:mix(z.color,.75),"stroke-width":5,"stroke-linejoin":"round"});
-  const c=iso(r[2]-0.15,(r[1]+r[3])/2);});
- // meeting table (center front) + plants
- el("ellipse",{cx:iso(5,5)[0],cy:iso(5,5)[1]+6,rx:40,ry:20,fill:"#000",opacity:.18,filter:"url(#soft)"});
-}
-function person(g,cx,cy,a,i,col){
- const skin=SKIN[i%SKIN.length],hair=HAIR[i%HAIR.length];
- // chair
- el("ellipse",{cx:cx,cy:cy+16,rx:20,ry:9,fill:"#000",opacity:.18},g);
- 
- el("rect",{x:cx-16,y:cy+2,width:32,height:9,rx:4,fill:"#353a47"},g);
- // body
- const b=el("g",{class:"body"},g);
- el("path",{d:`M${cx-13} ${cy+4} Q${cx-14} ${cy-22} ${cx} ${cy-24} Q${cx+14} ${cy-22} ${cx+13} ${cy+4} Z`,fill:col},b);
- el("circle",{cx:cx,cy:cy-36,r:12,fill:skin},b);
- el("path",{d:`M${cx-12.5} ${cy-34} Q${cx-13} ${cy-50} ${cx} ${cy-50} Q${cx+13} ${cy-50} ${cx+12.5} ${cy-34} Q${cx} ${cy-29} ${cx-12.5} ${cy-34} Z`,fill:hair},b);
- el("rect",{x:cx-4,y:cy-26,width:8,height:4,rx:2,fill:skin},b);
- const ar=el("g",{class:"arms"},g);
- el("path",{d:`M${cx-12} ${cy-14} Q${cx-18} ${cy-26} ${cx-10} ${cy-34}`,stroke:col,"stroke-width":6,fill:"none","stroke-linecap":"round"},ar);
- el("path",{d:`M${cx+12} ${cy-14} Q${cx+18} ${cy-26} ${cx+10} ${cy-34}`,stroke:col,"stroke-width":6,fill:"none","stroke-linecap":"round"},ar);
- el("rect",{x:cx-15,y:cy-20,width:30,height:24,rx:8,fill:"#2b2f3a",opacity:.92},g);
-}
-function desk(a,i,D,zc){
- const g=el("g",{class:"desk st-"+a.status+(a.status==="working"?" working":""),tabindex:0,role:"button","aria-label":a.name+": "+a.task});
- const x=a.x+0.25,y=a.y+0.45,w=1.5,d=0.75,H=30;
- // shadow
- const sh=iso(x+w/2,y+d/2);el("ellipse",{cx:sh[0],cy:sh[1]+6,rx:62,ry:22,fill:"#000",opacity:.16,filter:"url(#soft)"},g);
- // desk legs + top
- [[x+0.05,y+d-0.08],[x+w-0.12,y+d-0.08]].forEach(p=>box(g,p[0],p[1],0.07,0.07,0,H,"#9aa3b2","#8a93a3","#7a8394"));
- box(g,x,y,w,d,H,6,"#f7f8fa","#dfe3ea","#c9ced8");
- // monitor
- const mx=x+w/2-0.3,my=y+0.08;box(g,mx+0.27,my+0.05,0.06,0.06,H+6,14,"#555","#444","#333");
- const m=[iso(mx,my,H+20),iso(mx+0.6,my,H+20),iso(mx+0.6,my,H+52),iso(mx,my,H+52)];el("polygon",{points:P(m),fill:"#111827"},g);
- const m2=[iso(mx+0.04,my,H+23),iso(mx+0.56,my,H+23),iso(mx+0.56,my,H+49),iso(mx+0.04,my,H+49)];
- el("polygon",{class:"screen",points:P(m2),fill:a.status==="blocked"?"#7f1d1d":a.status==="idle"?"#334155":"#2563eb"},g);
- // keyboard + mug
- el("polygon",{points:P([iso(x+0.5,y+0.42,H+6),iso(x+1.0,y+0.42,H+6),iso(x+1.0,y+0.56,H+6),iso(x+0.5,y+0.56,H+6)]),fill:"#cfd4dc"},g);
- const mg=iso(x+1.3,y+0.45,H+6);el("rect",{x:mg[0]-5,y:mg[1]-12,width:10,height:12,rx:2,fill:zc},g);
- // person in front of the desk, back to the viewer
- const pc=iso(x+w/2-0.1,y+d+0.32);person(g,pc[0],pc[1],a,i,zc);
- // name tag
- const T=iso(x+w/2,y+0.2,118);const tg=el("g",{class:"tag",filter:"url(#lift)"},g);
- const nm=a.name,cw=Math.max(118,nm.length*14+46),ch=44,cx=T[0]-cw/2,cy=T[1]-ch;
- el("rect",{class:"bg",x:cx,y:cy,width:cw,height:ch,rx:12,fill:"#ffffff",stroke:"#e4e7ec","stroke-width":1},tg);
- el("rect",{x:cx,y:cy,width:6,height:ch,rx:3,fill:zc},tg);
- el("circle",{class:"sdot",cx:cx+18,cy:cy+15,r:5.5,fill:ST[a.status][1]},tg);
- el("text",{x:cx+cw/2+6,y:cy+20,fill:"#0b1222","font-family":"Tajawal","font-weight":"900","font-size":"16","text-anchor":"middle"},tg).textContent=nm;
- el("text",{x:cx+cw/2+6,y:cy+36,fill:"#64748b","font-family":"IBM Plex Sans Arabic","font-size":"11","text-anchor":"middle"},tg).textContent=ST[a.status][0];
- el("polygon",{points:P([[T[0]-7,T[1]],[T[0]+7,T[1]],[T[0],T[1]+8]]),fill:"#fff"},tg);
- const pick=()=>{document.querySelectorAll(".desk.sel").forEach(n=>n.classList.remove("sel"));g.classList.add("sel");show(a,D,zc)};
- g.addEventListener("click",pick);g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick()}});
- return g;
-}
-function plant(x,y){const q=iso(x,y);el("ellipse",{cx:q[0],cy:q[1]+4,rx:18,ry:8,fill:"#000",opacity:.18});el("path",{d:`M${q[0]-12} ${q[1]} L${q[0]+12} ${q[1]} L${q[0]+9} ${q[1]-22} L${q[0]-9} ${q[1]-22} Z`,fill:"#b5835a"});
- [[0,-44,16],[-12,-34,12],[12,-34,12],[0,-58,10]].forEach(c=>el("circle",{cx:q[0]+c[0],cy:q[1]+c[1],r:c[2],fill:"#2f9e5b"}));}
-function show(a,D,zc){const z=D.zones.find(z=>z.id===a.zone)||{};
- document.getElementById("agent").innerHTML=`<div class="agent-head"><div class="avatar" style="background:${zc}">${a.name.replace("ال","").slice(0,1)}</div><div><h3 style="margin:0">${a.name}</h3><p>${a.en} · ${z.name||""}</p></div></div>
- <div class="task"><span class="pill" style="margin-bottom:6px"><i style="background:${ST[a.status][1]};border-radius:50%"></i>${ST[a.status][0]}</span><div style="margin-top:6px">${a.task}</div></div>`;}
-function intro(D){document.getElementById("agent").innerHTML=`<h3>الفريق</h3><p style="margin:0;color:var(--mut)">${D.agents.length} وكيل ذكاء اصطناعي يشتغلون على القناة، وصاحب القناة يعتمد قبل النشر.</p>
- <div class="legend">${D.zones.map(z=>`<span class="pill"><i style="background:${z.color}"></i>${z.name}</span>`).join("")}</div>
- <div class="legend">${Object.entries(ST).map(([k,v])=>`<span class="pill"><i style="background:${v[1]};border-radius:50%"></i>${v[0]} · ${D.agents.filter(a=>a.status===k).length}</span>`).join("")}</div>`;}
-function render(D){
- svg.innerHTML="";defs();room(D);
- const zc={};D.zones.forEach(z=>zc[z.id]=z.color);
- const items=D.agents.map((a,i)=>({k:a.x+a.y,f:()=>desk(a,i,D,zc[a.zone]||"#888")}));
- [[9.5,0.4],[0.5,9.5],[9.5,9.5],[4.95,4.95]].forEach(p=>items.push({k:p[0]+p[1],f:()=>plant(p[0],p[1])}));
- items.sort((a,b)=>a.k-b.k).forEach(it=>it.f());
- intro(D);
+const stage=document.getElementById("stage"),tagsEl=document.getElementById("tags"),toastEl=document.getElementById("toast");
+const RM=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+function panels(D){
  document.getElementById("working").textContent=D.agents.filter(a=>a.status==="working").length+" يشتغلون الحين";
  const s=D.stats;document.getElementById("kpis").innerHTML=[[s.subscribers,"مشترك يوتيوب"],[s.views.toLocaleString("en"),"مشاهدة يوتيوب"],[s.videos,"فيديو منشور"],[(s.tiktok_views_7d/1000).toFixed(1)+"K","تيك توك · 7 أيام"]].map(k=>`<div class="kpi"><b>${k[0]}</b><span>${k[1]}</span></div>`).join("");
  document.getElementById("upd").textContent="تحديث "+D.updated.slice(5,10).split("-").reverse().join("/");
  document.getElementById("feed").innerHTML=D.feed.map(f=>`<li><span class="dot" style="background:${KC[f.k]||"#a9b6cc"}"></span><time>${f.t.slice(5,10).split("-").reverse().join("/")} · ${f.t.slice(11)}</time><span>${f.text}</span></li>`).join("");
+ intro(D);
 }
-function tick(){try{document.getElementById("clock").textContent="البحرين · "+new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Bahrain",hour:"2-digit",minute:"2-digit"}).format(new Date())}catch(e){}}
-render(window.OFFICE);tick();setInterval(tick,30000);
-fetch("data/office.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d){window.OFFICE=d;render(d)}}).catch(()=>{});
+function intro(D){document.getElementById("agent").innerHTML=`<h3>الفريق</h3><p style="margin:0;color:var(--mut)">${D.agents.length} وكيل ذكاء اصطناعي يشتغلون على القناة، وصاحب القناة يعتمد قبل النشر.</p>
+ <div class="legend">${D.zones.map(z=>`<span class="pill"><i style="background:${z.color}"></i>${z.name}</span>`).join("")}</div>
+ <div class="legend">${Object.entries(ST).map(([k,v])=>`<span class="pill"><i style="background:${v[1]};border-radius:50%"></i>${v[0]} · ${D.agents.filter(a=>a.status===k).length}</span>`).join("")}</div>`;}
+function show(a,D){const z=D.zones.find(z=>z.id===a.zone)||{};
+ document.getElementById("agent").innerHTML=`<div class="agent-head"><div class="avatar" style="background:${z.color}">${a.name.replace(/^ال/,"").slice(0,1)}</div><div><h3 style="margin:0">${a.name}</h3><p>${a.en} · ${z.name||""}</p></div></div>
+ <div class="task"><span class="pill"><i style="background:${ST[a.status][1]};border-radius:50%"></i>${ST[a.status][0]}</span><div style="margin-top:8px">${a.task}</div></div>`;}
+function clock(){try{document.getElementById("clock").textContent="البحرين · "+new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Bahrain",hour:"2-digit",minute:"2-digit"}).format(new Date())}catch(e){}}
+function bahrainHour(){try{return +new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Bahrain",hour:"2-digit",hour12:false}).format(new Date())}catch(e){return 12}}
+panels(D0);clock();setInterval(clock,30000);
+if(!window.THREE){stage.insertAdjacentHTML("beforeend",`<div class="fallback">ما قدرنا نحمّل العرض الثلاثي الأبعاد. <a href="office-2d.html">افتح العرض المسطّح</a>.</div>`);return;}
+let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){stage.insertAdjacentHTML("beforeend",`<div class="fallback">جهازك ما يدعم WebGL. <a href="office-2d.html">افتح العرض المسطّح</a>.</div>`);return;}
+renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputEncoding=THREE.sRGBEncoding;stage.prepend(renderer.domElement);
+const scene=new THREE.Scene();
+const cam=new THREE.PerspectiveCamera(36,1,0.1,200);
+// day / night by Bahrain time
+const h=bahrainHour(),night=(h>=19||h<6),dusk=(h>=17&&h<19);
+const sky=night?0x0b1430:dusk?0x3b2a4a:0xbcd7f2;scene.background=new THREE.Color(night?0x0b1222:0x101a30);
+scene.fog=new THREE.Fog(scene.background,40,80);
+const hemi=new THREE.HemisphereLight(0xffffff,0x3a2c1c,night?0.45:0.85);scene.add(hemi);
+const sun=new THREE.DirectionalLight(night?0x9fb4ff:0xfff1d6,night?0.35:1.0);sun.position.set(-12,22,10);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+Object.assign(sun.shadow.camera,{left:-16,right:16,top:16,bottom:-16,near:1,far:60});scene.add(sun);
+const M=(c,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:new THREE.Color(c).convertSRGBToLinear(),roughness:.75,metalness:.05},o));
+const box=(w,h,d,mat,x,y,z,p=scene,cast=true)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);m.castShadow=cast;m.receiveShadow=true;p.add(m);return m};
+const S=20,HALF=S/2;
+// floor (planks)
+const fc=document.createElement("canvas");fc.width=fc.height=512;const fx=fc.getContext("2d");fx.fillStyle="#c99a62";fx.fillRect(0,0,512,512);
+for(let i=0;i<16;i++){fx.fillStyle=i%2?"#c4945b":"#cfa16a";fx.fillRect(0,i*32,512,30);for(let j=0;j<4;j++){fx.fillStyle="#b4844d";fx.fillRect(((i*97+j*131)%512),i*32,2,30)}}
+const ft=new THREE.CanvasTexture(fc);ft.wrapS=ft.wrapT=THREE.RepeatWrapping;ft.repeat.set(3,3);ft.encoding=THREE.sRGBEncoding;
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(S,S),new THREE.MeshStandardMaterial({map:ft,roughness:.9}));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;scene.add(floor);
+// walls
+const wallM=M(0xece6dc),WHt=6;
+box(S,WHt,0.3,wallM,0,WHt/2,-HALF-0.15,scene,false);box(0.3,WHt,S,M(0xdfd8cc),-HALF-0.15,WHt/2,0,scene,false);
+// windows (glow) on back wall
+for(let i=-7;i<=7;i+=4.6){const g=new THREE.Mesh(new THREE.PlaneGeometry(3,2.6),new THREE.MeshBasicMaterial({color:new THREE.Color(sky).convertSRGBToLinear()}));g.position.set(i,3.4,-HALF+0.02);scene.add(g);
+ const fr=M(0x8b8173);box(3.2,0.15,0.12,fr,i,2.05,-HALF+0.06,scene,false);box(3.2,0.15,0.12,fr,i,4.75,-HALF+0.06,scene,false);box(0.12,2.8,0.12,fr,i,3.4,-HALF+0.06,scene,false);
+ if(!night){const l=new THREE.PointLight(0xfff3d6,.25,10);l.position.set(i,3.2,-HALF+1.5);scene.add(l)}}
+// wall sign (canvas text)
+const sc=document.createElement("canvas");sc.width=1024;sc.height=256;const sx=sc.getContext("2d");sx.fillStyle="#0b1222";sx.fillRect(0,0,1024,256);sx.fillStyle="#ffbe28";sx.font="900 120px Tajawal, 'IBM Plex Sans Arabic', sans-serif";sx.textAlign="center";sx.textBaseline="middle";sx.direction="rtl";sx.fillText("سالفة ستوديو",512,120);sx.fillStyle="#cbd5e1";sx.font="500 40px 'IBM Plex Sans Arabic', sans-serif";sx.fillText("Salfa Studio",512,210);
+const st=new THREE.CanvasTexture(sc);st.encoding=THREE.sRGBEncoding;const sign=new THREE.Mesh(new THREE.PlaneGeometry(5,1.25),new THREE.MeshBasicMaterial({map:st}));sign.rotation.y=Math.PI/2;sign.position.set(-HALF+0.02,4.1,-4.5);scene.add(sign);
+// bookshelf + plants
+const shelf=new THREE.Group();scene.add(shelf);box(0.6,3.2,3.2,M(0x7a5b3d),-HALF+0.35,1.6,2,shelf);
+const BC=[0xef5350,0x3b82f6,0xffbe28,0x10b981,0x8b5cf6];for(let r=0;r<4;r++)for(let k=0;k<8;k++)box(0.4,0.55,0.28,M(BC[(r+k)%5]),-HALF+0.45,0.45+r*0.75,0.85+k*0.33,shelf);
+function plant(x,z){box(0.6,0.7,0.6,M(0xb5835a),x,0.35,z);[[0,1.2,0,.55],[.3,1.0,.2,.4],[-.3,1.0,-.2,.4],[0,1.6,0,.35]].forEach(c=>{const s=new THREE.Mesh(new THREE.SphereGeometry(c[3],16,12),M(0x2f9e5b));s.position.set(x+c[0],c[1],z+c[2]);s.castShadow=true;scene.add(s)})}
+plant(HALF-0.8,-HALF+0.8);plant(-HALF+0.8,HALF-0.8);plant(HALF-0.8,HALF-0.8);
+// meeting table (round)
+
+// zones -> rug positions (world): map grid 0..10 to -9..9
+const W=(g)=>g*1.8-9;
+const ZR={research:[0.6,0.6,4.6,4.6],production:[5.4,0.6,9.4,4.6],visual:[0.6,5.4,4.6,9.4],publish:[5.4,5.4,9.4,9.4]};
+D0.zones.forEach(z=>{const r=ZR[z.id];if(!r)return;const w=(r[2]-r[0])*1.8,d=(r[3]-r[1])*1.8;const rc=new THREE.Color(z.color).lerp(new THREE.Color(0xd9d4cc),0.28);const rug=new THREE.Mesh(new THREE.BoxGeometry(w,0.04,d),M(rc,{roughness:1}));rug.position.set(W((r[0]+r[2])/2),0.02,W((r[1]+r[3])/2));rug.receiveShadow=true;scene.add(rug)});
+// agents
+const SK=[0xf1c9a5,0xe0ac84,0xc68b5e,0xf3d2b3,0xd69d74],HR=[0x2b1d16,0x3d2a1e,0x1a1a1a,0x5a3b28,0x20160f];
+const agents=[],clickables=[];
+D0.agents.forEach((a,i)=>{
+ const z=D0.zones.find(z=>z.id===a.zone)||{color:"#888"};const col=new THREE.Color(z.color);
+ const g=new THREE.Group();g.position.set(W(a.x+0.95),0,W(a.y+0.8));scene.add(g);
+ // desk
+ box(2.2,0.1,1.1,M(0xf7f8fa,{roughness:.4}),0,1.0,0,g);[[-1,-.45],[1,-.45],[-1,.45],[1,.45]].forEach(p=>box(0.08,1.0,0.08,M(0x9aa3b2),p[0],0.5,p[1],g));
+ // monitor + screen
+ box(0.08,0.35,0.08,M(0x444444),0,1.22,-0.3,g);box(1.0,0.62,0.06,M(0x111827),0,1.7,-0.32,g);
+ const scrC=a.status==="blocked"?0xb91c1c:a.status==="idle"?0x334155:a.status==="scheduled"?0xb7791f:0x2563eb;
+ const scr=new THREE.Mesh(new THREE.PlaneGeometry(0.9,0.52),new THREE.MeshBasicMaterial({color:scrC}));scr.position.set(0,1.7,-0.285);g.add(scr);
+ box(0.7,0.03,0.22,M(0xcfd4dc),0,1.07,0.15,g);box(0.14,0.18,0.14,M(z.color),0.8,1.14,0.1,g);
+ // chair
+ const chair=new THREE.Group();chair.position.set(0,0,0.95);g.add(chair);box(0.7,0.1,0.7,M(0x2b2f3a),0,0.62,0,chair);box(0.7,0.8,0.1,M(0x2b2f3a),0,1.05,0.33,chair);box(0.08,0.6,0.08,M(0x555b66),0,0.3,0,chair);
+ // person (back to camera)
+ const p=new THREE.Group();p.position.set(0,0.62,0.85);g.add(p);
+ const body=new THREE.Mesh(new THREE.CylinderGeometry(0.26,0.32,0.75,16),M(z.color));body.position.y=0.42;body.castShadow=true;p.add(body);
+ const head=new THREE.Mesh(new THREE.SphereGeometry(0.22,20,16),M(SK[i%5]));head.position.y=0.98;head.castShadow=true;p.add(head);
+ const hair=new THREE.Mesh(new THREE.SphereGeometry(0.235,20,16,0,Math.PI*2,0,Math.PI*0.62),M(HR[i%5]));hair.position.y=1.0;hair.rotation.x=0.35;p.add(hair);
+ const armL=box(0.12,0.12,0.55,M(z.color),-0.3,0.62,-0.28,p),armR=box(0.12,0.12,0.55,M(z.color),0.3,0.62,-0.28,p);
+ // status beacon
+ const bc=new THREE.Mesh(new THREE.SphereGeometry(0.09,12,10),new THREE.MeshBasicMaterial({color:ST[a.status][1]}));bc.position.set(0,2.35,-0.3);g.add(bc);
+ if(a.status==="blocked"){const l=new THREE.PointLight(0xef5350,.8,3);l.position.set(0,2,0);g.add(l)}
+ if(night){const l=new THREE.PointLight(0xffd9a0,.35,3.5);l.position.set(0.8,1.8,0);g.add(l)}
+ // label
+ const tg=document.createElement("button");tg.type="button";tg.className="tag3 "+a.status;tg.style.setProperty("--z",z.color);tg.innerHTML=`<span class="d" style="background:${ST[a.status][1]}"></span>${a.name}`;tg.setAttribute("aria-label",a.name+": "+a.task);tagsEl.appendChild(tg);
+ const rec={a,g,p,armL,armR,head,bc,tg,phase:Math.random()*6};agents.push(rec);
+ g.traverse(o=>{if(o.isMesh)o.userData.rec=rec});clickables.push(g);
+ tg.addEventListener("click",()=>select(rec));
+});
+// walker (كلود كروم carries videos between production and publish)
+const chromeRec=agents.find(r=>r.a.id==="chrome");
+const walker=new THREE.Group();scene.add(walker);
+{const b=new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.26,0.8,14),M(0xd4a373));b.position.y=0.95;b.castShadow=true;walker.add(b);
+ const hd=new THREE.Mesh(new THREE.SphereGeometry(0.2,16,12),M(0xf1c9a5));hd.position.y=1.55;walker.add(hd);
+ [[-.1],[.1]].forEach(l=>box(0.12,0.55,0.12,M(0x2b2f3a),l[0],0.28,0,walker));
+ const pkg=box(0.35,0.25,0.25,M(0xffbe28),0,1.05,0.3,walker);}
+const pathPts=[[W(6.2),W(4.6)],[W(4.9),W(5.0)],[W(6.4),W(5.6)],[W(8.4),W(5.6)],[W(8.4),W(4.6)]].map(p=>new THREE.Vector3(p[0],0,p[1]));
+const curve=new THREE.CatmullRomCurve3(pathPts,true);
+// camera control (orbit lite)
+let theta=Math.PI/4,phi=0.95,rad=30,target=new THREE.Vector3(0,0.5,0.5),auto=!RM,dragging=false,lx=0,ly=0,tour=false,tourT=0;
+function placeCam(){cam.position.set(target.x+rad*Math.sin(phi)*Math.sin(theta),target.y+rad*Math.cos(phi),target.z+rad*Math.sin(phi)*Math.cos(theta));cam.lookAt(target)}
+const cv=renderer.domElement;const pts=new Map();
+cv.addEventListener("pointerdown",e=>{cv.setPointerCapture(e.pointerId);pts.set(e.pointerId,[e.clientX,e.clientY]);dragging=true;auto=false;tour=false;lx=e.clientX;ly=e.clientY;down=[e.clientX,e.clientY]});
+let down=null,pinch=0;
+cv.addEventListener("pointermove",e=>{if(!pts.has(e.pointerId))return;pts.set(e.pointerId,[e.clientX,e.clientY]);
+ if(pts.size===2){const [a,b]=[...pts.values()];const d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(pinch)rad=Math.min(56,Math.max(14,rad*pinch/d));pinch=d;return}
+ if(!dragging)return;theta-=(e.clientX-lx)*0.006;phi=Math.min(1.3,Math.max(0.45,phi-(e.clientY-ly)*0.005));lx=e.clientX;ly=e.clientY});
+cv.addEventListener("pointerup",e=>{pts.delete(e.pointerId);pinch=0;dragging=false;if(down&&Math.hypot(e.clientX-down[0],e.clientY-down[1])<5)pick(e)});
+cv.addEventListener("wheel",e=>{e.preventDefault();rad=Math.min(56,Math.max(14,rad*(1+Math.sign(e.deltaY)*0.08)))},{passive:false});
+const ray=new THREE.Raycaster(),mv=new THREE.Vector2();
+function pick(e){const r=cv.getBoundingClientRect();mv.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(mv,cam);const hit=ray.intersectObjects(clickables,true)[0];if(hit&&hit.object.userData.rec)select(hit.object.userData.rec)}
+let selected=null;
+function select(rec){selected=rec;agents.forEach(r=>r.tg.classList.toggle("sel",r===rec));show(rec.a,window.OFFICE);target.set(rec.g.position.x,0.8,rec.g.position.z);rad=Math.min(rad,22);auto=false}
+document.getElementById("tour").addEventListener("click",()=>{tour=true;auto=false;tourT=0});
+// toasts from real feed (no invented events)
+let ti=0;function toast(){const f=window.OFFICE.feed;if(!f.length)return;const it=f[ti%f.length];ti++;const d=document.createElement("div");d.textContent="📅 "+it.t.slice(5,10).split("-").reverse().join("/")+" · "+it.text;toastEl.prepend(d);while(toastEl.children.length>1)toastEl.lastChild.remove()}
+if(!RM){toast();setInterval(toast,6000)}
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();if(!selected)rad=cam.aspect<1?Math.min(52,30/Math.max(.55,cam.aspect)):30}
+window.addEventListener("resize",resize);resize();
+const v=new THREE.Vector3();const clk=new THREE.Clock();
+function frame(){const t=clk.getElapsedTime();
+ if(auto)theta+=0.0012;
+ if(tour){tourT+=0.0035;const r=agents[Math.floor(tourT)%agents.length];target.lerp(new THREE.Vector3(r.g.position.x,0.8,r.g.position.z),0.04);rad+=(20-rad)*0.03;theta+=0.003;if(Math.floor(tourT)!==Math.floor(tourT-0.0035))select(r),tour=true}
+ placeCam();
+ agents.forEach(r=>{const w=r.a.status==="working";if(!RM){if(w){r.armL.position.y=0.62+Math.sin(t*14+r.phase)*0.03;r.armR.position.y=0.62+Math.cos(t*14+r.phase)*0.03;r.head.rotation.y=Math.sin(t*0.8+r.phase)*0.15}
+   else{r.p.rotation.y=Math.sin(t*0.4+r.phase)*0.12}r.bc.position.y=2.35+Math.sin(t*3+r.phase)*0.05}
+  v.set(r.g.position.x,2.65,r.g.position.z-0.3).project(cam);const x=(v.x+1)/2*stage.clientWidth,y=(1-v.y)/2*stage.clientHeight;
+  r.tg.style.left=x+"px";r.tg.style.top=y+"px";r.tg.style.opacity=v.z<1?1:0;r.tg.style.zIndex=Math.round((1-v.z)*1000)});
+ if(chromeRec&&chromeRec.a.status==="working"&&!RM){const u=(t*0.04)%1;const p=curve.getPointAt(u),q=curve.getPointAt((u+0.01)%1);walker.position.copy(p);walker.lookAt(q.x,0,q.z);walker.position.y=Math.abs(Math.sin(t*8))*0.05;walker.visible=true}else walker.visible=false;
+ renderer.render(scene,cam);requestAnimationFrame(frame)}
+frame();
+fetch("data/office.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d){window.OFFICE=d;panels(d)}}).catch(()=>{});
 })();
 </script>
 </main>
