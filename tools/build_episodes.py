@@ -273,6 +273,21 @@ def build():
         hub = '<nav class="topics" aria-label="المواضيع">' + "".join(topic_links) + "</nav>"
         txt = open("episodes.html").read().replace('<div class="grid">', hub + '<div class="grid">', 1)
         open("episodes.html", "w").write(txt)
+    # search index + page
+    idx = []
+    for x in eps:
+        sm, ch, _, _ = parse(x["description"])
+        tr = transcript(x["id"], ch)
+        idx.append({"u": f"episode-{x['id']}.html", "k": "حلقة", "t": x["title"], "s": sm,
+                    "c": " · ".join(c["title"] for c in ch), "x": " ".join(y["text"] for y in tr)})
+    for k, (slug, name, intro) in TOPIC_PAGES.items():
+        if any(topic(x["title"]) == k for x in eps + shorts):
+            idx.append({"u": f"topic-{slug}.html", "k": "موضوع", "t": name, "s": intro, "c": "", "x": ""})
+    for x in shorts:
+        idx.append({"u": f"https://www.youtube.com/shorts/{x['id']}", "k": "شورت", "t": x["title"], "s": "", "c": "", "x": ""})
+    json.dump(idx, open("data/search.json", "w"), ensure_ascii=False)
+    sbody = CSS + open("search.src.html").read()
+    page("search.html", "بحث · شنو السالفة؟", "ابحث في حلقات «شنو السالفة؟»: العناوين والفصول والنص الكامل.", sbody, nav="search.html")
     # RSS feed
     from email.utils import format_datetime
     import datetime as dt

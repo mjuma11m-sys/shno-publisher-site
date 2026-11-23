@@ -1,0 +1,31 @@
+<div class="wrap"><section class="ep" aria-labelledby="sh1">
+ <h1 id="sh1">بحث</h1>
+ <form id="sf" role="search" onsubmit="return false"><label for="q" style="display:block;color:var(--mut);margin-bottom:6px">دوّر بالحلقات والفصول والنصوص والشورتس</label>
+  <input id="q" type="search" autocomplete="off" placeholder="مثلاً: هولمز، الربط بالدولار، بيكاسو" style="width:100%;font:inherit;font-size:1.05rem;padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--fg)"></form>
+ <p id="sc" role="status" aria-live="polite" style="color:var(--mut);margin:0"></p>
+ <ol id="sr" style="list-style:none;margin:0;padding:0;display:grid;gap:12px"></ol>
+</section></div>
+<style>
+#sr a{display:grid;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;color:var(--fg);text-decoration:none}
+#sr a:hover b{color:var(--ac)}#sr small{color:var(--mut)}#sr p{margin:0;color:var(--mut);line-height:1.8;font-size:.92rem}
+#sr mark{background:var(--ac);color:#1a1300;border-radius:4px;padding:0 2px}
+#q:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+</style>
+<script>
+(function(){
+let I=[];const q=document.getElementById("q"),R=document.getElementById("sr"),C=document.getElementById("sc");
+const N=s=>(s||"").replace(/[ً-ٰٟـ]/g,"").replace(/[إأآٱ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ؤ/g,"و").replace(/ئ/g,"ي").toLowerCase();
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function snip(txt,w){const n=N(txt);const i=n.indexOf(w);if(i<0)return"";const a=Math.max(0,i-60),b=Math.min(txt.length,i+w.length+90);return(a?"…":"")+esc(txt.slice(a,i))+"<mark>"+esc(txt.slice(i,i+w.length))+"</mark>"+esc(txt.slice(i+w.length,b))+(b<txt.length?"…":"")}
+function run(){const words=N(q.value.trim()).split(/\s+/).filter(Boolean);
+ try{history.replaceState(null,"",q.value.trim()?"#"+encodeURIComponent(q.value.trim()):location.pathname)}catch(e){}
+ if(!words.length){R.innerHTML="";C.textContent="";return}
+ const hits=I.map(d=>{const f=[d.t,d.s,d.c,d.x].map(N);if(!words.every(w=>f.some(x=>x.includes(w))))return null;
+  const sc=words.reduce((a,w)=>a+(f[0].includes(w)?5:0)+(f[1].includes(w)?3:0)+(f[2].includes(w)?2:0)+(f[3].includes(w)?1:0),d.k==="حلقة"?3:0);return{d,sc}}).filter(Boolean).sort((a,b)=>b.sc-a.sc);
+ C.textContent=hits.length?hits.length+" نتيجة":"ما لقينا شي. جرّب كلمة ثانية.";
+ R.innerHTML=hits.slice(0,30).map(({d})=>{const w=words[0];const sn=snip(d.s,w)||snip(d.c,w)||snip(d.x,w)||esc(d.s.slice(0,140));const ext=d.u.startsWith("http");
+  return`<li><a href="${d.u}"${ext?' target="_blank" rel="noopener"':""}><small>${d.k}</small><b>${esc(d.t)}</b>${sn?`<p>${sn}</p>`:""}</a></li>`}).join("")}
+q.addEventListener("input",run);
+fetch("data/search.json").then(r=>r.json()).then(j=>{I=j;const h=location.hash.slice(1);if(h){try{q.value=decodeURIComponent(h)}catch(e){}}run()}).catch(()=>{C.textContent="البحث ما اشتغل، حدّث الصفحة."});
+})();
+</script>
