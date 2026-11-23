@@ -31,19 +31,25 @@ def fetch():
         tok = r.get("nextPageToken")
         if not tok:
             break
-    eps = []
+    eps, shorts = [], []
     for k in range(0, len(ids), 50):
         for v in get("videos?part=snippet,contentDetails,statistics,status&id=" + ",".join(ids[k:k + 50]))["items"]:
             secs = iso_secs(v["contentDetails"]["duration"])
-            if secs < 180 or v["status"]["privacyStatus"] != "public":
+            if v["status"]["privacyStatus"] != "public":
                 continue
             s = v["snippet"]
+            if secs < 180:
+                shorts.append({"id": v["id"], "title": re.sub(r"\s#\S+", "", s["title"]).strip(), "published": s["publishedAt"],
+                               "thumb": next(s["thumbnails"][k]["url"] for k in ("high", "medium", "default") if k in s["thumbnails"])})
+                continue
             eps.append({"id": v["id"], "title": s["title"], "published": s["publishedAt"], "duration": v["contentDetails"]["duration"],
                         "secs": secs, "thumb": next(s["thumbnails"][k]["url"] for k in ("maxres", "standard", "high", "medium", "default") if k in s["thumbnails"]),
                         "description": s["description"]})
     eps.sort(key=lambda e: e["published"], reverse=True)
+    shorts.sort(key=lambda e: e["published"], reverse=True)
     json.dump(eps, open("data/episodes.json", "w"), ensure_ascii=False, indent=1)
-    print("fetched", len(eps), "long episodes")
+    json.dump(shorts, open("data/shorts.json", "w"), ensure_ascii=False, indent=1)
+    print("fetched", len(eps), "long episodes,", len(shorts), "shorts")
 
 
 CREDIT = ("📚", "📷", "🛰", "🎞", "🗺", "🎙", "🎵", "🪙", "💵", "⚠")
@@ -61,6 +67,15 @@ def parse(desc):
     credits = [l for l in lines if l.startswith(CREDIT)]
     tags = re.findall(r"#(\S+)", desc)
     return summary, chapters, credits, tags
+
+
+TOPICS = {"GTA والألعاب": ["gta", "minecraft", "روكستار"], "إيران والخليج": ["إيران", "هرمز", "ايران"], "الموناليزا": ["الموناليزا", "بيكاسو", "اللوفر"],
+          "اقتصاد": ["دينار", "ضريبة", "دولار", "ألمنيوم", "الألمنيوم"], "تاريخ البحرين": ["البحرين", "المنامة", "اللؤلؤ", "نفط", "هولمز", "الغواص"]}
+
+
+def topic(t):
+    t = t.lower()
+    return next((k for k, w in TOPICS.items() if any(x in t for x in w)), "أخرى")
 
 
 def mmss(s):
@@ -93,6 +108,12 @@ CSS = """<style>
 .card3 img{aspect-ratio:16/9;width:100%;object-fit:cover;display:block;background:var(--bg2)}
 .card3 div{padding:12px 14px;display:grid;gap:6px}.card3 b{line-height:1.5}.card3 small{color:var(--mut)}
 .card3:hover b{color:var(--ac)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
+.chips button[aria-pressed="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac);font-weight:700}.chips button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sh{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--bg2);aspect-ratio:9/16;display:block;color:#fff;text-decoration:none}
+.sh img{width:100%;height:100%;object-fit:cover;display:block}
+.sh span{position:absolute;inset:auto 0 0 0;padding:28px 10px 10px;font-size:.85rem;line-height:1.5;font-weight:700;background:linear-gradient(transparent,rgba(0,0,0,.85))}
 @media (max-width:900px){.ecols{grid-template-columns:1fr}}
 </style>"""
 
@@ -135,11 +156,20 @@ def build():
 </article></div>"""
         title = f"{e['title']} · شنو السالفة؟"
         page(f"episode-{e['id']}.html", title, summary[:155], body, nav="episodes.html", image=thumb, og_type="video.other", ld=ld)
+    shorts = json.load(open("data/shorts.json")) if os.path.exists("data/shorts.json") else []
+    shorts_html = ""
+    if shorts:
+        used = [k for k in list(TOPICS) + ["أخرى"] if any(topic(x["title"]) == k for x in shorts)]
+        chips = '<button type="button" data-t="" aria-pressed="true">الكل</button>' + "".join(f'<button type="button" data-t="{k}" aria-pressed="false">{k}</button>' for k in used)
+        tiles = "".join(f'<a class="sh" data-t="{topic(x["title"])}" href="https://www.youtube.com/shorts/{x["id"]}" target="_blank" rel="noopener"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in shorts)
+        shorts_html = (f'<div style="display:grid;gap:12px;margin-top:12px"><h2 style="margin:0;font:900 1.5rem Tajawal,sans-serif">الشورتس <small style="color:var(--mut);font-size:.9rem;font-weight:400">{len(shorts)}</small></h2>'
+                       f'<div class="chips" role="group" aria-label="الموضوع">{chips}</div><div class="sgrid">{tiles}</div></div>'
+                       '<script>document.querySelectorAll(".chips button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".chips button").forEach(x=>x.setAttribute("aria-pressed",x===b));document.querySelectorAll(".sh").forEach(a=>a.hidden=!!b.dataset.t&&a.dataset.t!==b.dataset.t)}))</script>')
     cards = "".join(f'<a class="card3" href="episode-{e["id"]}.html"><img src="https://i.ytimg.com/vi/{e["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><b>{e_(e["title"])}</b><small>{ardate(e["published"])} · {mmss(e["secs"])} دقيقة</small></div></a>' for e in eps)
     ld = {"@context": "https://schema.org", "@type": "ItemList", "name": "حلقات شنو السالفة؟",
           "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": f"{BASE}episode-{e['id']}.html"} for i, e in enumerate(eps)]}
-    body = f"""{CSS}<div class="wrap"><section class="ep"><div><h1>الحلقات</h1><p style="color:var(--mut);margin:6px 0 0">كل حلقات «شنو السالفة؟» الطويلة: الملخص والفصول ومصادر كل حلقة.</p></div><div class="grid">{cards}</div></section></div>"""
-    page("episodes.html", "الحلقات · شنو السالفة؟", "كل حلقات «شنو السالفة؟» الطويلة باللهجة البحرينية: الملخص والفصول والمصادر.", body, nav="episodes.html", ld=ld)
+    body = f"""{CSS}<div class="wrap"><section class="ep"><div><h1>الحلقات</h1><p style="color:var(--mut);margin:6px 0 0">كل حلقات «شنو السالفة؟» الطويلة: الملخص والفصول ومصادر كل حلقة.</p></div><div class="grid">{cards}</div>{shorts_html}</section></div>"""
+    page("episodes.html", "الحلقات · شنو السالفة؟", "كل حلقات «شنو السالفة؟» باللهجة البحرينية: الحلقات الطويلة بملخصها وفصولها ومصادرها، والشورتس حسب الموضوع.", body, nav="episodes.html", ld=ld)
     # RSS feed
     from email.utils import format_datetime
     import datetime as dt

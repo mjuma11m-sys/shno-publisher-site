@@ -46,6 +46,7 @@
 <div class="wrap"><section class="dash" aria-label="لوحة تحكم سالفة ستوديو">
  <div class="dhead"><div><h1>لوحة التحكم</h1><p>أرقام قناة «شنو السالفة؟» الحقيقية من YouTube Data API، وتتحدث كل يوم.</p></div><span class="pill" id="upd2"></span></div>
  <div class="kgrid" id="kg"></div>
+ <div class="card2"><h2>المشاهدات مع الوقت</h2><p class="sub" id="hsub">مجموع مشاهدات القناة بكل سحبة يومية</p><div id="hc" style="direction:ltr"></div></div>
  <div class="row2">
   <div class="card2"><h2>أداء الفيديوهات</h2><p class="sub">المشاهدات لكل فيديو · الرقم الأخضر = الزيادة من آخر سحبة</p>
    <div class="tabs" role="group" aria-label="نوع الفيديو"><button type="button" data-f="all" aria-pressed="true">الكل</button><button type="button" data-f="short" aria-pressed="false">شورتس</button><button type="button" data-f="long" aria-pressed="false">حلقات طويلة</button></div>
@@ -73,6 +74,10 @@ function draw(D){
  const dl=v=>v>0?`<em>+${fmt(v)} من آخر سحبة</em>`:`<em class="zero">ما تغيّر</em>`;
  document.getElementById("kg").innerHTML=[["المشتركين",c.subscribers,dl(c.subs_delta)],["المشاهدات",fmt(c.views),dl(c.views_delta)],["الفيديوهات",c.videos,`<em class="zero">${D.videos.filter(v=>v.type==="long").length} طويلة · ${D.videos.filter(v=>v.type==="short").length} شورت</em>`],["أفضل فيديو",fmt(D.videos[0].views),`<em class="zero">${D.videos[0].title.slice(0,26)}…</em>`]].map(k=>`<div class="k"><span>${k[0]}</span><b>${k[1]}</b>${k[2]}</div>`).join("");
  table(D);
+ const H=D.history||[];if(H.length>1){const W=900,Ht=200,P=34,vs=H.map(h=>h.views),lo=Math.min(...vs),hi=Math.max(...vs),r=(hi-lo)||1;
+  const X=i=>P+i*(W-2*P)/(H.length-1),Y=v=>Ht-P-(v-lo)/r*(Ht-2*P);const pts=H.map((h,i)=>X(i)+","+Y(h.views)).join(" ");
+  document.getElementById("hc").innerHTML=`<svg viewBox="0 0 ${W} ${Ht}" width="100%" role="img" aria-label="المشاهدات من ${H[0].d} إلى ${H[H.length-1].d}" style="max-width:100%;height:auto;font:12px Tajawal,sans-serif"><polygon points="${X(0)},${Ht-P} ${pts} ${X(H.length-1)},${Ht-P}" style="fill:var(--ac);fill-opacity:.15"/><polyline points="${pts}" fill="none" stroke="var(--ac)" stroke-width="3" stroke-linejoin="round"/>${H.map((h,i)=>`<circle cx="${X(i)}" cy="${Y(h.views)}" r="4.5" fill="var(--ac)"><title>${h.d}: ${fmt(h.views)}</title></circle>`).join("")}${[0,H.length-1].map(i=>`<text x="${X(i)}" y="${Ht-10}" text-anchor="${i?"end":"start"}" fill="var(--mut)">${H[i].d.slice(8)}/${H[i].d.slice(5,7)}</text><text x="${X(i)}" y="${Y(H[i].views)-12}" text-anchor="${i?"end":"start"}" fill="var(--fg)" font-weight="700">${fmt(H[i].views)}</text>`).join("")}</svg>`;
+  document.getElementById("hsub").textContent=`مجموع مشاهدات القناة · ${H.length} سحبات · كل يوم تنضاف نقطة`;}
  const mx=Math.max(...D.topics.map(t=>t.views));document.getElementById("tp").innerHTML=D.topics.map(t=>`<div class="bar"><span class="lbl">${t.name} <span class="tag">${t.n}</span></span><span class="num">${fmt(t.views)}</span><div class="track"><div class="fill" style="width:${(t.views/mx*100).toFixed(1)}%;background:${ZC[t.name]||"#94a3b8"}"></div></div></div>`).join("");
  document.getElementById("ap").innerHTML=D.approvals.map(a=>`<div><i style="background:${AS[a.state][1]};color:#fff">${AS[a.state][0]}</i><span><b>${a.name}</b><small>${a.note}</small></span></div>`).join("");
  document.getElementById("ls").innerHTML=D.lessons.length?D.lessons.slice().reverse().map(l=>`<li><b>${{shorts:"صانع الشورتات",showrunner:"المنتج المنفذ",publisher:"الناشر",writer:"الكاتب",researcher:"الباحث",factchecker:"المدقق",standards:"مراجع المعايير",designer:"المصمم",editor:"المونتير",sound:"مهندس الصوت",analyst:"المحلل",illustrator:"الرسام"}[l.agent]||l.agent}</b>${l.text}</li>`).join(""):"<li>ما في دروس للحين.</li>";
