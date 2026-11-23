@@ -298,6 +298,22 @@ def build():
               + (f'<a class="card3" href="episode-{parent["id"]}.html"><img src="https://i.ytimg.com/vi/{parent["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><small>الحلقة الكاملة</small><b>{e_(parent["title"])}</b></div></a>' if parent else "")
               + '</div></div></article></div><style>@media (max-width:640px){.scol{grid-template-columns:1fr!important}.scol .sh{max-width:260px}}</style>')
         page(f"short-{x['id']}.html", f"{x['title']} · شنو السالفة؟", desc[:155], sb, nav="episodes.html", image=x["thumb"], og_type="video.other", ld=sld)
+    # home page: latest episodes and shorts between <!--LATEST--> markers
+    home = open("index.html").read()
+    if "<!--LATEST-->" in home:
+        lc = "".join(f'<a class="lc" href="episode-{x["id"]}.html"><img src="https://i.ytimg.com/vi/{x["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><b>{e_(x["title"])}</b><small>{ardate(x["published"])} · {mmss(x["secs"])} دقيقة</small></a>' for x in eps[:3])
+        ls = "".join(f'<a class="ls" href="short-{x["id"]}.html"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in shorts[:4])
+        strip = ('<section class="latest"><h2 class="sec">آخر الحلقات</h2><div class="lgrid">' + lc + '</div>'
+                 + ('<h3 style="margin:18px 0 10px">آخر الشورتس</h3><div class="sgr">' + ls + '</div>' if ls else "")
+                 + '<p style="margin:14px 0 0"><a href="episodes.html">كل الحلقات والشورتس ←</a></p></section>'
+                 '<style>.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}'
+                 '.lc{display:grid;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;color:var(--fg);text-decoration:none;padding-bottom:12px}'
+                 '.lc img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:var(--bg2)}.lc b,.lc small{padding-inline:14px;line-height:1.5}.lc small{color:var(--mut)}.lc:hover b{color:var(--ac)}'
+                 '.sgr{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.ls{position:relative;display:block;aspect-ratio:9/16;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--bg2);color:#fff;text-decoration:none}'
+                 '.ls img{width:100%;height:100%;object-fit:cover}.ls span{position:absolute;inset:auto 0 0;padding:24px 10px 10px;font-size:.85rem;font-weight:700;line-height:1.5;background:linear-gradient(transparent,rgba(0,0,0,.85))}'
+                 '@media (max-width:640px){.sgr{grid-template-columns:repeat(2,minmax(0,1fr))}}</style>')
+        home = re.sub(r"<!--LATEST-->.*?<!--/LATEST-->", lambda m: "<!--LATEST-->" + strip + "<!--/LATEST-->", home, flags=re.S)
+        open("index.html", "w").write(home)
     # search index + page
     idx = []
     for x in eps:
