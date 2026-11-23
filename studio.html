@@ -90,7 +90,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 (function(){
-const SB=supabase.createClient("https://frowdhbazytcmwhrlnmv.supabase.co","sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla",{auth:{flowType:"pkce",detectSessionInUrl:true,persistSession:true}});
+const SB=supabase.createClient("https://frowdhbazytcmwhrlnmv.supabase.co","sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla",{auth:{flowType:"implicit",detectSessionInUrl:true,persistSession:true}});
 const FN="https://frowdhbazytcmwhrlnmv.supabase.co/functions/v1/salfa-tiktok";
 const $=id=>document.getElementById(id);const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const PL={PUBLIC_TO_EVERYONE:"الكل",MUTUAL_FOLLOW_FRIENDS:"الأصدقاء",FOLLOWER_OF_CREATOR:"المتابعين",SELF_ONLY:"أنا بس"};
@@ -127,9 +127,11 @@ async function boot(){const {data:{session}}=await SB.auth.getSession();$("login
  load()}
 $("cb").addEventListener("click",async()=>{const a=new Uint8Array(24);crypto.getRandomValues(a);const st="studio-"+Array.from(a,b=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b%62]).join("");
  try{sessionStorage.setItem("tt_state",st)}catch(e){}try{const j=await call({action:"auth_url",state:st});location.href=j.url}catch(e){$("gerr").textContent=e.message}});
-$("lf").addEventListener("submit",async e=>{e.preventDefault();const em=$("em").value.trim();if(!em){$("lm").textContent="اكتب الإيميل";return}$("lb").disabled=true;
- const {error}=await SB.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+location.pathname}});$("lb").disabled=false;
- $("lm").className="msg "+(error?"err":"ok");$("lm").textContent=error?("ما انرسل: "+error.message):"انرسل. افتح الإيميل واضغط الرابط."});
+$("lf").addEventListener("submit",async e=>{e.preventDefault();const em=$("em").value.trim();if(!em){$("lm").textContent="اكتب الإيميل";return}if($("lb").disabled)return;$("lb").disabled=true;
+ const {error}=await SB.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+location.pathname}});
+ $("lm").className="msg "+(error?"err":"ok");$("lm").textContent=error?("ما انرسل: "+error.message):"انرسل. افتح آخر إيميل وصلك واضغط الرابط. الرابط يشتغل مرة وحدة.";
+ let n=60;const t=setInterval(()=>{n--;$("lb").textContent=n>0?("انتظر "+n+" ثانية"):"أرسل رابط الدخول";if(n<=0){clearInterval(t);$("lb").disabled=false}},1000)});
+(function(){const h=new URLSearchParams(location.hash.slice(1)),q=new URLSearchParams(location.search);const err=h.get("error_description")||q.get("error_description");if(err){$("lm").className="msg err";$("lm").textContent="الرابط ما اشتغل ("+err.replace(/\+/g," ")+"). أرسل رابط جديد وافتح آخر إيميل بس.";}})();
 $("out").addEventListener("click",async()=>{await SB.auth.signOut();boot()});
 $("f").addEventListener("input",e=>{if(e.target.id!=="pick")refresh()});
 $("pick").addEventListener("change",e=>show(e.target.value));
