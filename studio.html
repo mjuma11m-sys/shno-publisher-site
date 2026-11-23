@@ -86,7 +86,7 @@
       <p class="note" id="disclabel"></p></div></fieldset>
     <p class="note">🤖 الفيديو بينعلّم «محتوى مولّد بالذكاء الاصطناعي» لأن التعليق الصوتي مولّد.</p>
     <p class="hint" id="consent"></p>
-    <div class="row"><button class="btn2" id="go" type="submit" disabled>انشر على تيك توك</button><span class="msg" id="msg" role="status" aria-live="polite"></span></div>
+    <div class="row"><button class="btn2" id="go" type="submit" disabled>انشر على تيك توك</button><button class="btn2" id="dr" type="button" hidden style="background:var(--bg2);color:var(--fg);border:1px solid var(--line)">أرسل كمسودة لتطبيق تيك توك</button><span class="msg" id="msg" role="status" aria-live="polite"></span></div>
    </div>
   </form>
   <section class="sbox" id="hist" hidden><h2>آخر المنشورات من هالصفحة</h2><div style="overflow-x:auto"><table class="ht"><thead><tr><th>الوقت</th><th>الفيديو</th><th>منو يشوفه</th><th>الحالة</th></tr></thead><tbody id="hb"></tbody></table></div></section>
@@ -98,8 +98,8 @@
 const SB=supabase.createClient("https://frowdhbazytcmwhrlnmv.supabase.co","sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla",{auth:{flowType:"implicit",detectSessionInUrl:true,persistSession:true}});
 const FN="https://frowdhbazytcmwhrlnmv.supabase.co/functions/v1/salfa-tiktok";
 const $=id=>document.getElementById(id);const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const PL={PUBLIC_TO_EVERYONE:"الكل",MUTUAL_FOLLOW_FRIENDS:"الأصدقاء",FOLLOWER_OF_CREATOR:"المتابعين",SELF_ONLY:"أنا بس"};
-const ST={SENT:"انرسل",PUBLISH_COMPLETE:"انتشر ✓",FAILED:"انرفض"};
+const PL={PUBLIC_TO_EVERYONE:"الكل",MUTUAL_FOLLOW_FRIENDS:"الأصدقاء",FOLLOWER_OF_CREATOR:"المتابعين",SELF_ONLY:"أنا بس",DRAFT:"مسودة"};
+const ST={SENT:"انرسل",PUBLISH_COMPLETE:"انتشر ✓",SEND_TO_USER_INBOX:"وصل للتطبيق كمسودة",FAILED:"انرفض"};
 const AI="\n🤖 صوت بالذكاء الاصطناعي";
 const MUSIC='<a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener">Music Usage Confirmation</a>';
 const BRAND='<a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank" rel="noopener">Branded Content Policy</a>';
@@ -125,7 +125,7 @@ async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").
  const c=S.creator;$("nick").textContent=c.creator_nickname||"";$("user").textContent=c.creator_username?"@"+c.creator_username:"";
  $("av").innerHTML=c.creator_avatar_url?`<img src="${esc(c.creator_avatar_url)}" alt="">`:"؟";
  let locked=false;for(const k of ["comment","duet","stitch"]){const d=!!c[k+"_disabled"];$("c-"+k).disabled=d;$("t-"+k).setAttribute("aria-disabled",d);locked=locked||d}$("lockhint").hidden=!locked;
- renderHistory(S.history||[]);show()}
+ renderHistory(S.history||[]);$("dr").hidden=!S.drafts;show()}
 async function startTT(errEl){const a=new Uint8Array(24);crypto.getRandomValues(a);const st="studio-"+Array.from(a,b=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b%62]).join("");
  try{sessionStorage.setItem("tt_state",st)}catch(e){}try{const j=await call({action:"auth_url",state:st});location.href=j.url}catch(e){errEl.className="msg err";errEl.textContent=e.message==="SETUP"?"الإعداد ما خلص: ناقص "+(e.missing||[]).join("، "):e.message}}
 async function boot(){
@@ -146,6 +146,8 @@ $("lf").addEventListener("submit",async e=>{e.preventDefault();const em=$("em").
 $("out").addEventListener("click",async()=>{try{localStorage.removeItem("salfa_session")}catch(e){}await SB.auth.signOut();boot()});
 $("f").addEventListener("input",e=>{if(e.target.id!=="pick")refresh()});
 $("pick").addEventListener("change",e=>show(e.target.value));
+$("dr").addEventListener("click",async()=>{if(!cur||!cur.media)return;$("dr").disabled=true;$("msg").className="msg";$("msg").textContent="يرسل المسودة…";
+ try{await call({action:"draft",id:cur.id});$("msg").className="msg ok";const m="انرسلت. افتح تطبيق تيك توك، بتلقاها بالإشعارات، وكمّل النشر من هناك.";await load();$("msg").className="msg ok";$("msg").textContent=m}catch(e){$("msg").className="msg err";$("msg").textContent=e.message}$("dr").disabled=false});
 $("f").addEventListener("submit",async e=>{e.preventDefault();if($("go").disabled)return;$("go").disabled=true;$("msg").className="msg";$("msg").textContent="يرفع…";
  try{const j=await call({action:"post",id:cur.id,caption:$("cap").value,privacy:$("priv").value,allow_comment:$("c-comment").checked,allow_duet:$("c-duet").checked,allow_stitch:$("c-stitch").checked,disclose:$("disc").checked,brand_organic:$("b-own").checked,brand_content:$("b-paid").checked});
   $("msg").className="msg ok";$("msg").textContent="انرفع. تيك توك يعالج الفيديو، وممكن ياخذ كم دقيقة.";
