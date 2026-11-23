@@ -1,0 +1,97 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>لوحة التحكم · Salfa Studio</title><meta name="keywords" content="سالفة ستوديو, Salfa Studio, شنو السالفة, shnoalsalfa_bh"><meta name="description" content="مكتب افتراضي يعرض فريق وكلاء الذكاء الاصطناعي اللي يشتغل على قناة «شنو السالفة؟»: منو يشتغل، وشنو الجاي."><link rel="canonical" href="https://mjuma11m-sys.github.io/shno-publisher-site/">
+<meta property="og:title" content="سالفة ستوديو · Salfa Studio"><meta property="og:description" content="أداة نشر داخلية لقناة «شنو السالفة؟»: تنشر فيديوهات القناة على حساباتها بيوتيوب وتيك توك بجدول ثابت."><meta property="og:image" content="https://mjuma11m-sys.github.io/shno-publisher-site/assets/og.png"><meta property="og:type" content="website"><meta name="theme-color" content="#0b1222">
+<link rel="icon" href="favicon.ico" sizes="32x32"><link rel="icon" type="image/png" href="assets/favicon-64.png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Tajawal:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"سالفة ستوديو · Salfa Studio","alternateName":["Salfa Studio","سالفة ستوديو"],"url":"https://mjuma11m-sys.github.io/shno-publisher-site/","inLanguage":["ar","en"]},{"@type":"SoftwareApplication","name":"Salfa Studio","alternateName":"سالفة ستوديو","applicationCategory":"MultimediaApplication","operatingSystem":"Web","description":"In-house publishing tool of the Arabic channel «شنو السالفة؟» that posts the channel's own short videos to its own YouTube and TikTok accounts on a schedule.","url":"https://mjuma11m-sys.github.io/shno-publisher-site/","image":"https://mjuma11m-sys.github.io/shno-publisher-site/assets/icon-512.png","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"شنو السالفة؟","url":"https://www.youtube.com/@shnoalsalfa_bh","sameAs":["https://www.youtube.com/@shnoalsalfa_bh","https://www.tiktok.com/@shnoalsalfa_bh"]}}]}</script></head><body>
+<header class="top"><div class="wrap"><a class="brand" href="index.html"><img src="assets/icon-512.png" alt="" width="40" height="40"><span>سالفة ستوديو<small>Salfa Studio</small></span></a><nav class="links" aria-label="القائمة"><a href="dashboard.html" aria-current="page">لوحة التحكم</a><a href="office.html">المكتب</a><a href="index.html">الرئيسية</a><a href="privacy.html">الخصوصية</a><a href="terms.html">الشروط</a></nav></div></header>
+<main><style>
+.dash{padding-block:28px 8px;display:grid;gap:18px}
+.dhead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.dhead h1{margin:0;font:900 clamp(1.6rem,3vw,2.2rem)/1.2 "Tajawal",sans-serif}
+.dhead p{margin:4px 0 0;color:var(--mut)}
+.kgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.k{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;min-width:0}
+.k span{color:var(--mut);font-size:.85rem}
+.k b{display:block;font:900 2rem/1.15 "Tajawal",sans-serif;color:var(--fg);margin-top:4px;font-variant-numeric:tabular-nums}
+.k em{font-style:normal;font-size:.82rem;color:var(--ok)}
+.k em.zero{color:var(--mut)}
+.row2{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px}
+.card2{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px;min-width:0}
+.card2 h2{margin:0 0 4px;font-size:1.1rem}
+.card2 .sub{color:var(--mut);font-size:.85rem;margin:0 0 14px}
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) 54px;gap:10px;align-items:center}
+.bar .lbl{font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .track{grid-column:1/-1;height:10px;border-radius:999px;background:var(--bg2);overflow:hidden;margin-top:-4px}
+.bar .fill{height:100%;border-radius:999px}
+.bar .num{font-variant-numeric:tabular-nums;color:var(--mut);font-size:.85rem;text-align:left;direction:ltr}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tabs button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
+.tabs button[aria-pressed="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac);font-weight:700}
+.tbl{width:100%;border-collapse:collapse;font-size:.9rem}
+.tbl th{color:var(--mut);font-weight:600;text-align:right;padding:8px 6px;border-bottom:1px solid var(--line)}
+.tbl td{padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl td.n{font-variant-numeric:tabular-nums;direction:ltr;text-align:left;white-space:nowrap}
+.tbl a{color:var(--fg);text-decoration:none}.tbl a:hover{color:var(--ac)}
+.tag{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);color:var(--mut);margin-inline-start:6px}
+.scroll{overflow-x:auto}
+.appr{display:flex;flex-direction:column;gap:10px}
+.appr div{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start}
+.appr i{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-style:normal;font-size:.8rem}
+.appr b{font-size:.95rem}.appr small{display:block;color:var(--mut);font-size:.82rem}
+.ls{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.ls li{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.9rem}
+.ls li b{color:var(--ac);font-size:.8rem;display:block;margin-bottom:2px}
+.cal{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.cal li{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center}
+.cal .d{background:var(--bg2);border:1px solid var(--line);border-radius:12px;text-align:center;padding:6px 0;line-height:1.1}
+.cal .d b{display:block;font:900 1.15rem "Tajawal",sans-serif}.cal .d small{color:var(--mut);font-size:.72rem}
+@media (max-width:980px){.kgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.row2{grid-template-columns:1fr}}
+</style>
+<div class="wrap"><section class="dash" aria-label="لوحة تحكم سالفة ستوديو">
+ <div class="dhead"><div><h1>لوحة التحكم</h1><p>أرقام قناة «شنو السالفة؟» الحقيقية من YouTube Data API، وتتحدث كل يوم.</p></div><span class="pill" id="upd2"></span></div>
+ <div class="kgrid" id="kg"></div>
+ <div class="row2">
+  <div class="card2"><h2>أداء الفيديوهات</h2><p class="sub">المشاهدات لكل فيديو · الرقم الأخضر = الزيادة من آخر سحبة</p>
+   <div class="tabs" role="group" aria-label="نوع الفيديو"><button type="button" data-f="all" aria-pressed="true">الكل</button><button type="button" data-f="short" aria-pressed="false">شورتس</button><button type="button" data-f="long" aria-pressed="false">حلقات طويلة</button></div>
+   <div class="scroll"><table class="tbl"><thead><tr><th>الفيديو</th><th>مشاهدات</th><th>+</th><th>👍</th><th>💬</th></tr></thead><tbody id="vt"></tbody></table></div></div>
+  <div style="display:grid;gap:18px;align-content:start">
+   <div class="card2"><h2>المواضيع</h2><p class="sub">مجموع المشاهدات حسب الموضوع</p><div class="bars" id="tp"></div></div>
+   <div class="card2"><h2>الموافقات</h2><p class="sub">النشر المباشر من «سالفة ستوديو»</p><div class="appr" id="ap"></div></div>
+  </div>
+ </div>
+ <div class="row2">
+  <div class="card2"><h2>دروس الأكاديمية</h2><p class="sub">اللي تعلّمه الفريق من الأرقام</p><ul class="ls" id="ls"></ul></div>
+  <div class="card2"><h2>الجدول</h2><p class="sub">اللي نازل قريب</p><ul class="cal" id="cal"></ul></div>
+ </div>
+</section></div>
+<script>
+window.DASH={"updated": "2026-11-23T10:48+03:00", "channel": {"subscribers": 21, "views": 16529, "videos": 23, "views_delta": 3329, "subs_delta": 2}, "videos": [{"id": "dudDdusvHw8", "title": "GTA 6 بـ 80 دولار والعلبة بدون قرص! 💿", "type": "short", "views": 6208, "likes": 24, "comments": 0, "published": "2026-11-21", "delta": 2363, "topic": "GTA والألعاب"}, {"id": "cQ6yKBx4KLY", "title": "GTA 6 تأخرت مرتين قبل ما تنزل 🎮", "type": "short", "views": 3545, "likes": 31, "comments": 1, "published": "2026-11-20", "delta": 248, "topic": "GTA والألعاب"}, {"id": "MhOtMbXRrrU", "title": "ليش الخليج بنص حرب إيران وأمريكا؟", "type": "short", "views": 1788, "likes": 13, "comments": 2, "published": "2026-11-08", "delta": 0, "topic": "إيران والخليج"}, {"id": "Dgtomveeovc", "title": "يوم إيران سكّرت مضيق هرمز 🛢️", "type": "short", "views": 1686, "likes": 19, "comments": 0, "published": "2026-11-08", "delta": 0, "topic": "إيران والخليج"}, {"id": "47jNdTR02hE", "title": "أول نفط بالخليج طلع من البحرين 🛢️", "type": "short", "views": 1311, "likes": 15, "comments": 0, "published": "2026-11-15", "delta": 4, "topic": "تاريخ البحرين"}, {"id": "vQK_HP-DPiE", "title": "روابط GTA 6 المجانية = خطر ⚠️", "type": "short", "views": 1286, "likes": 13, "comments": 0, "published": "2026-11-19", "delta": 8, "topic": "GTA والألعاب"}, {"id": "eQbh6vkSU6Q", "title": "GTA V جابت مليار دولار بثلاث أيام!", "type": "short", "views": 1222, "likes": 12, "comments": 0, "published": "2026-11-17", "delta": -1, "topic": "GTA والألعاب"}, {"id": "wqoMptARZMQ", "title": "الغوص على اللؤلؤ: حجر، ونَفَس واحد، ودين ما يخلص", "type": "short", "views": 1172, "likes": 8, "comments": 0, "published": "2026-11-17", "delta": 2, "topic": "تاريخ البحرين"}, {"id": "yNhHe_33oXo", "title": "فرانك هولمز «أبو النفط»… كنت بتصبر 7 سنين؟", "type": "short", "views": 1097, "likes": 12, "comments": 2, "published": "2026-11-16", "delta": 0, "topic": "تاريخ البحرين"}, {"id": "6b3TJIP7qu0", "title": "السعودية وشركة GTA 🎮", "type": "short", "views": 1082, "likes": 19, "comments": 0, "published": "2026-11-18", "delta": 0, "topic": "GTA والألعاب"}, {"id": "D-MDEp6pXvk", "title": "GTA 6 جابت 3.79 مليار بيوم واحد! 💰", "type": "short", "views": 1059, "likes": 5, "comments": 0, "published": "2026-11-22", "delta": 0, "topic": "GTA والألعاب"}, {"id": "tleiGKGcrfA", "title": "شنو معنى اسم المنامة؟ 🤔", "type": "short", "views": 1045, "likes": 7, "comments": 0, "published": "2026-11-18", "delta": -3, "topic": "تاريخ البحرين"}, {"id": "rb87oV2KeYA", "title": "GTA 5 باعت 11 مليون بأول يوم… وGTA 6؟ (توقعات)", "type": "short", "views": 1001, "likes": 7, "comments": 0, "published": "2026-11-22", "delta": 598, "topic": "GTA والألعاب"}, {"id": "J0WzDnpqrW0", "title": "إيران وأمريكا: 3 سيناريوهات", "type": "short", "views": 986, "likes": 8, "comments": 0, "published": "2026-11-08", "delta": 0, "topic": "إيران والخليج"}, {"id": "Az24UGALWdc", "title": "بيكاسو متهم بسرقة الموناليزا؟!", "type": "short", "views": 379, "likes": 3, "comments": 0, "published": "2026-11-21", "delta": 95, "topic": "الموناليزا"}, {"id": "IUaW08O3GG0", "title": "GTA 6: ليش لعبة وحدة صارت بهالحجم؟ القصة والأرقام", "type": "long", "views": 301, "likes": 3, "comments": 5, "published": "2026-11-18", "delta": 3, "topic": "GTA والألعاب"}, {"id": "Nth7EGqZTBo", "title": "الموناليزا سنتين بصندوق مخفي 📦", "type": "short", "views": 281, "likes": 8, "comments": 0, "published": "2026-11-22", "delta": 123, "topic": "الموناليزا"}, {"id": "F_lXv1wMpPE", "title": "إيران وأمريكا: القصة الكاملة من 1953 لين حرب 2026", "type": "long", "views": 167, "likes": 2, "comments": 0, "published": "2026-11-08", "delta": 5, "topic": "إيران والخليج"}, {"id": "EmYkYIhy8yk", "title": "أول نفط بالخليج طلع من البحرين… بس ليش ما صارت أغنى دولة؟", "type": "long", "views": 110, "likes": 1, "comments": 1, "published": "2026-11-15", "delta": 4, "topic": "تاريخ البحرين"}, {"id": "aQrTHARZVI8", "title": "سرقة الموناليزا: الوثائقي الكامل", "type": "long", "views": 76, "likes": 1, "comments": 1, "published": "2026-11-20", "delta": 7, "topic": "الموناليزا"}, {"id": "cBy4uzqup7I", "title": "سرقة الموناليزا بمريول أبيض 🖼️", "type": "short", "views": 76, "likes": 2, "comments": 0, "published": "2026-11-20", "delta": 0, "topic": "الموناليزا"}, {"id": "ruFmH60jGrw", "title": "ليش الدينار البحريني غالي؟ (مو لأن البحرين أغنى من أمريكا)", "type": "long", "views": 1, "likes": 0, "comments": 0, "published": "2026-11-22", "delta": 0, "topic": "اقتصاد"}, {"id": "5M9vUdqWoZA", "title": "دينار = 2.66 دولار… يعني البحرين أغنى من أمريكا؟ 💰", "type": "short", "views": 0, "likes": 0, "comments": 0, "published": "2026-11-22", "delta": 0, "topic": "اقتصاد"}], "topics": [{"name": "GTA والألعاب", "views": 15704, "n": 8}, {"name": "تاريخ البحرين", "views": 4735, "n": 5}, {"name": "إيران والخليج", "views": 4627, "n": 4}, {"name": "الموناليزا", "views": 812, "n": 4}, {"name": "اقتصاد", "views": 1, "n": 2}], "schedule": [{"t": "2026-11-23 13:00", "k": "publish", "text": "«GTA 5 ضد GTA 6: أول يوم» على يوتيوب وتيك توك"}, {"t": "2026-11-23 14:41", "k": "auto", "text": "الطيار الآلي: شورت اليوم"}, {"t": "2026-11-25 21:00", "k": "publish", "text": "كرتون «شلون كان الغواص يطلّع اللؤلؤ؟»"}, {"t": "2026-11-28 11:23", "k": "report", "text": "التقرير الأسبوعي للقناة"}, {"t": "2026-12-04 20:00", "k": "publish", "text": "وثائقي «حيل المهربين في الكويت»"}, {"t": "2026-12-16 20:00", "k": "publish", "text": "«أشياء بدت بالبحرين أول»"}], "lessons": [{"agent": "publisher", "text": "23/11/2026 · The channel's Instagram account was disabled automatically on 19/11 after a plan to post a large number of reels. The rule: a new account starts at 1 post a day at most, with the platform's own «AI info» label. One publishing route per video (Buffer or Chrome, never both): a GTA short got duplicated on 22/11. Evidence: the Chrome report and Buffer."}, {"agent": "shorts", "text": "23/11/2026 · Number shorts (9–16 s) about GTA got 3,297–3,845 views, against 76–284 for the Mona Lisa shorts of the same length. The first 2 seconds hold one clear number. Evidence: stats-2026-11-23.json"}, {"agent": "showrunner", "text": "23/11/2026 · Long episodes run 12–15 min (the earnings rule). The 24-min Mona Lisa documentary got 69 views in two days, against 298 for GTA at 12 min. Evidence: stats-2026-11-23.json"}], "approvals": [{"name": "YouTube Data API (رفع)", "state": "keys", "note": "المفاتيح محفوظة · الفحص 1/12 بعد تجدد حصة GitHub"}, {"name": "YouTube API Audit", "state": "todo", "note": "يُرسل بعد الفيديو التوضيحي الثاني"}, {"name": "TikTok Content Posting (Sandbox)", "state": "ready", "note": "الحساب مضاف كمستخدم تجريبي"}, {"name": "TikTok App Review", "state": "todo", "note": "ينطر الفيديو التوضيحي"}, {"name": "Google Search Console", "state": "done", "note": "التحقق والخريطة والفهرسة انطلبت"}, {"name": "Instagram", "state": "off", "note": "الحساب معطّل من ميتا · ملغى"}]};
+(function(){
+const ZC={"GTA والألعاب":"#ec4899","إيران والخليج":"#f59e0b","الموناليزا":"#8b5cf6","اقتصاد":"#10b981","تاريخ البحرين":"#3b82f6","أخرى":"#94a3b8"};
+const AS={done:["✓","#1f883d"],ready:["●","#2563eb"],keys:["🔑","#b7791f"],todo:["…","#475569"],off:["✕","#7f1d1d"]};
+const fmt=n=>n.toLocaleString("en");
+let F="all";
+function draw(D){
+ const c=D.channel;document.getElementById("upd2").textContent="آخر تحديث "+D.updated.slice(5,10).split("-").reverse().join("/")+" · "+D.updated.slice(11,16);
+ const dl=v=>v>0?`<em>+${fmt(v)} من آخر سحبة</em>`:`<em class="zero">ما تغيّر</em>`;
+ document.getElementById("kg").innerHTML=[["المشتركين",c.subscribers,dl(c.subs_delta)],["المشاهدات",fmt(c.views),dl(c.views_delta)],["الفيديوهات",c.videos,`<em class="zero">${D.videos.filter(v=>v.type==="long").length} طويلة · ${D.videos.filter(v=>v.type==="short").length} شورت</em>`],["أفضل فيديو",fmt(D.videos[0].views),`<em class="zero">${D.videos[0].title.slice(0,26)}…</em>`]].map(k=>`<div class="k"><span>${k[0]}</span><b>${k[1]}</b>${k[2]}</div>`).join("");
+ table(D);
+ const mx=Math.max(...D.topics.map(t=>t.views));document.getElementById("tp").innerHTML=D.topics.map(t=>`<div class="bar"><span class="lbl">${t.name} <span class="tag">${t.n}</span></span><span class="num">${fmt(t.views)}</span><div class="track"><div class="fill" style="width:${(t.views/mx*100).toFixed(1)}%;background:${ZC[t.name]||"#94a3b8"}"></div></div></div>`).join("");
+ document.getElementById("ap").innerHTML=D.approvals.map(a=>`<div><i style="background:${AS[a.state][1]};color:#fff">${AS[a.state][0]}</i><span><b>${a.name}</b><small>${a.note}</small></span></div>`).join("");
+ document.getElementById("ls").innerHTML=D.lessons.length?D.lessons.slice().reverse().map(l=>`<li><b>${{shorts:"صانع الشورتات",showrunner:"المنتج المنفذ",publisher:"الناشر",writer:"الكاتب",researcher:"الباحث",factchecker:"المدقق",standards:"مراجع المعايير",designer:"المصمم",editor:"المونتير",sound:"مهندس الصوت",analyst:"المحلل",illustrator:"الرسام"}[l.agent]||l.agent}</b>${l.text}</li>`).join(""):"<li>ما في دروس للحين.</li>";
+ const AR=["أحد","اثنين","ثلاثاء","أربعاء","خميس","جمعة","سبت"];
+ document.getElementById("cal").innerHTML=D.schedule.map(s=>{const d=new Date(s.t.replace(" ","T")+":00+03:00");return`<li><div class="d"><small>${AR[d.getUTCDay()]||""}</small><b>${s.t.slice(8,10)}/${s.t.slice(5,7)}</b><small>${s.t.slice(11)}</small></div><span>${s.text}</span></li>`}).join("");
+}
+function table(D){const rows=D.videos.filter(v=>F==="all"||v.type===F);
+ document.getElementById("vt").innerHTML=rows.map(v=>`<tr><td><a href="https://youtu.be/${v.id}" rel="noopener" target="_blank">${v.title}</a><span class="tag">${v.type==="long"?"طويل":"شورت"}</span></td><td class="n">${fmt(v.views)}</td><td class="n" style="color:${v.delta>0?"var(--ok)":"var(--mut)"}">${v.delta>0?"+"+fmt(v.delta):"–"}</td><td class="n">${v.likes}</td><td class="n">${v.comments}</td></tr>`).join("");}
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{F=b.dataset.f;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));table(window.DASH)}));
+draw(window.DASH);
+fetch("data/dashboard.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d){window.DASH=d;draw(d)}}).catch(()=>{});
+})();
+</script>
+</main>
+<footer class="bot"><div class="wrap"><span>© 2026 سالفة ستوديو · أداة داخلية لقناة «شنو السالفة؟»</span><span><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a> · <a href="data-deletion.html">Data Deletion</a> · <a href="https://www.youtube.com/@shnoalsalfa_bh" rel="noopener">@shnoalsalfa_bh</a></span></div></footer>
+</body></html>
