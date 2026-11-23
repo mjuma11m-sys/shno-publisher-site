@@ -1,0 +1,114 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>مكتب سالفة ستوديو · Salfa Studio</title><meta name="keywords" content="سالفة ستوديو, Salfa Studio, شنو السالفة, shnoalsalfa_bh"><meta name="description" content="مكتب افتراضي يعرض فريق وكلاء الذكاء الاصطناعي اللي يشتغل على قناة «شنو السالفة؟»: منو يشتغل، وشنو الجاي."><link rel="canonical" href="https://mjuma11m-sys.github.io/shno-publisher-site/">
+<meta property="og:title" content="سالفة ستوديو · Salfa Studio"><meta property="og:description" content="أداة نشر داخلية لقناة «شنو السالفة؟»: تنشر فيديوهات القناة على حساباتها بيوتيوب وتيك توك بجدول ثابت."><meta property="og:image" content="https://mjuma11m-sys.github.io/shno-publisher-site/assets/og.png"><meta property="og:type" content="website"><meta name="theme-color" content="#0b1222">
+<link rel="icon" href="favicon.ico" sizes="32x32"><link rel="icon" type="image/png" href="assets/favicon-64.png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Tajawal:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"سالفة ستوديو · Salfa Studio","alternateName":["Salfa Studio","سالفة ستوديو"],"url":"https://mjuma11m-sys.github.io/shno-publisher-site/","inLanguage":["ar","en"]},{"@type":"SoftwareApplication","name":"Salfa Studio","alternateName":"سالفة ستوديو","applicationCategory":"MultimediaApplication","operatingSystem":"Web","description":"In-house publishing tool of the Arabic channel «شنو السالفة؟» that posts the channel's own short videos to its own YouTube and TikTok accounts on a schedule.","url":"https://mjuma11m-sys.github.io/shno-publisher-site/","image":"https://mjuma11m-sys.github.io/shno-publisher-site/assets/icon-512.png","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"شنو السالفة؟","url":"https://www.youtube.com/@shnoalsalfa_bh","sameAs":["https://www.youtube.com/@shnoalsalfa_bh","https://www.tiktok.com/@shnoalsalfa_bh"]}}]}</script></head><body>
+<header class="top"><div class="wrap"><a class="brand" href="index.html"><img src="assets/icon-512.png" alt="" width="40" height="40"><span>سالفة ستوديو<small>Salfa Studio</small></span></a><nav class="links" aria-label="القائمة"><a href="office.html" aria-current="page">المكتب</a><a href="index.html">الرئيسية</a><a href="privacy.html">الخصوصية</a><a href="terms.html">الشروط</a></nav></div></header>
+<main><style>
+.office{display:grid;grid-template-columns:1fr;gap:18px;padding-block:24px 8px}
+.stage{align-self:start;background:radial-gradient(1200px 600px at 50% 0%,#17223b,#0b1222 70%);border:1px solid var(--line);border-radius:22px;overflow:hidden;position:relative;min-width:0}
+.stage svg{display:block;width:100%;height:auto}
+.stage .hint{position:absolute;inset-inline-start:16px;bottom:12px;color:var(--mut);font-size:.85rem}
+.side{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;min-width:0}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.panel h3{margin:0 0 10px;font-size:1.02rem;display:flex;justify-content:space-between;align-items:center}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.kpi b{display:block;font:900 1.35rem/1.2 "Tajawal",sans-serif;color:var(--ac)}
+.kpi span{color:var(--mut);font-size:.82rem}
+.feed{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.feed li{display:flex;gap:10px;align-items:flex-start;font-size:.92rem}
+.feed time{flex:none;color:var(--mut);font-size:.78rem;direction:ltr;min-width:84px;padding-top:2px}
+.dot{width:9px;height:9px;border-radius:50%;flex:none;margin-top:7px}
+.agent-card .role{color:var(--mut);font-size:.9rem;margin:-6px 0 8px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:.8rem;background:var(--bg2);border:1px solid var(--line)}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.legend .pill i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.desk{cursor:pointer}
+.desk:hover .card rect,.desk.sel .card rect{stroke:#ffbe28;stroke-width:2.5}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.working .head{animation:bob 1.6s ease-in-out infinite}
+.st-working .sdot{animation:pulse 1.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.working .head,.st-working .sdot{animation:none}}
+.desk:focus{outline:none}@media (max-width:760px){.stage{overflow-x:auto}.stage svg{min-width:820px}.stage .hint{position:static;padding:0 16px 12px}}.desk:focus-visible .card rect{stroke:#ffbe28;stroke-width:3}
+</style>
+<div class="wrap">
+<section class="office" aria-label="مكتب سالفة ستوديو">
+ <div class="stage"><svg id="iso" viewBox="30 70 1340 850" role="img" aria-label="مخطط المكتب وفريق الوكلاء"></svg><div class="hint">اضغط على أي مكتب تشوف شغله</div></div>
+ <aside class="side">
+  <div class="panel agent-card" id="agent"><h3>الفريق</h3><p class="role">14 وكيل ذكاء اصطناعي يشتغلون على قناة «شنو السالفة؟»، وصاحب القناة يعتمد.</p><div class="legend" id="legend"></div></div>
+  <div class="panel"><h3>القناة <span class="pill" id="upd"></span></h3><div class="kpis" id="kpis"></div></div>
+  <div class="panel"><h3>الجاي</h3><ul class="feed" id="feed"></ul></div>
+ </aside>
+</section>
+</div>
+<script>
+window.OFFICE={"updated": "2026-11-23T08:00:00+03:00", "zones": [{"id": "research", "name": "البحث والتحرير", "color": "#3b82f6"}, {"id": "production", "name": "الإنتاج", "color": "#f59e0b"}, {"id": "visual", "name": "الصورة والصوت", "color": "#10b981"}, {"id": "publish", "name": "النشر والتحليل", "color": "#8b5cf6"}], "agents": [{"id": "showrunner", "name": "المنتج المنفذ", "en": "Showrunner", "zone": "production", "x": 6, "y": 1, "status": "working", "task": "خطة حلقة «مثلث برمودا»"}, {"id": "autopilot", "name": "الطيار الآلي", "en": "Autopilot", "zone": "production", "x": 8, "y": 1, "status": "scheduled", "task": "شورت اليوم 2:41 م"}, {"id": "researcher", "name": "الباحث", "en": "Researcher", "zone": "research", "x": 1, "y": 1, "status": "working", "task": "مصدرين لكل رقم"}, {"id": "writer", "name": "الكاتب", "en": "Writer", "zone": "research", "x": 3, "y": 1, "status": "idle", "task": "سكربت باللهجة البحرينية"}, {"id": "factchecker", "name": "المدقق", "en": "Fact-checker", "zone": "research", "x": 1, "y": 3, "status": "working", "task": "مراجعة أرقام GTA 6"}, {"id": "standards", "name": "مراجع المعايير", "en": "Standards", "zone": "research", "x": 3, "y": 3, "status": "idle", "task": "حقوق الصور والأسماء"}, {"id": "illustrator", "name": "الرسام", "en": "Illustrator", "zone": "visual", "x": 1, "y": 6, "status": "blocked", "task": "ينتظر رصيد Higgsfield"}, {"id": "sound", "name": "مهندس الصوت", "en": "Sound", "zone": "visual", "x": 3, "y": 6, "status": "idle", "task": "موسيقى ومؤثرات لكل فصل"}, {"id": "designer", "name": "المصمم", "en": "Designer", "zone": "visual", "x": 1, "y": 8, "status": "working", "task": "أغلفة الحلقات بالصور الحقيقية"}, {"id": "editor", "name": "المونتير", "en": "Editor", "zone": "production", "x": 6, "y": 3, "status": "idle", "task": "رندر وفحص الجودة"}, {"id": "shorts", "name": "صانع الشورتات", "en": "Shorts", "zone": "production", "x": 8, "y": 3, "status": "idle", "task": "3–4 شورتس من كل حلقة"}, {"id": "publisher", "name": "الناشر", "en": "Publisher", "zone": "publish", "x": 6, "y": 6, "status": "working", "task": "جدولة يوتيوب وتيك توك"}, {"id": "chrome", "name": "كلود كروم", "en": "Browser agent", "zone": "publish", "x": 8, "y": 6, "status": "working", "task": "يوتيوب ستوديو: الأغلفة"}, {"id": "analyst", "name": "المحلل", "en": "Analyst", "zone": "publish", "x": 6, "y": 8, "status": "scheduled", "task": "التقرير الأسبوعي · السبت"}], "feed": [{"t": "2026-11-23 13:00", "k": "publish", "text": "«GTA 5 ضد GTA 6: أول يوم» على يوتيوب وتيك توك"}, {"t": "2026-11-23 14:41", "k": "auto", "text": "الطيار الآلي: شورت اليوم"}, {"t": "2026-11-25 21:00", "k": "publish", "text": "كرتون «شلون كان الغواص يطلّع اللؤلؤ؟»"}, {"t": "2026-11-28 11:23", "k": "report", "text": "التقرير الأسبوعي للقناة"}, {"t": "2026-12-04 20:00", "k": "publish", "text": "وثائقي «حيل المهربين في الكويت»"}, {"t": "2026-12-16 20:00", "k": "publish", "text": "«أشياء بدت بالبحرين أول»"}], "stats": {"subscribers": 19, "views": 13200, "videos": 23, "tiktok_views_7d": 59600}};
+(function(){
+const ST={working:["يشتغل الحين","#4cc38a"],idle:["جاهز","#a9b6cc"],scheduled:["مجدول","#ffbe28"],blocked:["موقف","#ef5350"]};
+const KC={publish:"#8b5cf6",auto:"#f59e0b",report:"#10b981"};
+const TW=128,TH=64,OX=700,OY=260;
+const iso=(x,y)=>[OX+(x-y)*TW/2,OY+(x+y)*TH/2];
+const pts=a=>a.map(p=>p.join(",")).join(" ");
+const svg=document.getElementById("iso");const NS="http://www.w3.org/2000/svg";
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e};
+function shade(h,f){const n=parseInt(h.slice(1),16);let r=(n>>16)*f,g=(n>>8&255)*f,b=(n&255)*f;return`rgb(${r|0},${g|0},${b|0})`}
+function render(D){
+ svg.innerHTML="";
+ const N=10;
+ // walls
+ el("polygon",{points:pts([iso(0,0),iso(N,0),[iso(N,0)[0],iso(N,0)[1]-150],[iso(0,0)[0],iso(0,0)[1]-150]]),fill:"#1c2a46"});
+ el("polygon",{points:pts([iso(0,0),iso(0,N),[iso(0,N)[0],iso(0,N)[1]-150],[iso(0,0)[0],iso(0,0)[1]-150]]),fill:"#16223a"});
+ for(let i=1;i<N;i+=2){const a=iso(i,0),b=iso(i+1,0);el("polygon",{points:pts([[a[0],a[1]-120],[b[0],b[1]-120],[b[0],b[1]-60],[a[0],a[1]-60]]),fill:"#3a5a8c",opacity:.55});}
+ el("text",{x:iso(0,N/2)[0]-10,y:iso(0,N/2)[1]-95,fill:"#ffbe28","font-family":"Tajawal","font-weight":"900","font-size":"26","text-anchor":"middle"}).textContent="سالفة ستوديو";
+ // floor
+ el("polygon",{points:pts([iso(0,0),iso(N,0),iso(N,N),iso(0,N)]),fill:"#c99a62"});
+ for(let i=0;i<=N;i++){el("line",{x1:iso(i,0)[0],y1:iso(i,0)[1],x2:iso(i,N)[0],y2:iso(i,N)[1],stroke:"#b5874f","stroke-width":1});}
+ // zone rugs
+ const Z={research:[0.4,0.4,4.6,4.6],production:[5.4,0.4,9.6,4.6],visual:[0.4,5.4,4.6,9.6],publish:[5.4,5.4,9.6,9.6]};
+ const zc={};D.zones.forEach(z=>{zc[z.id]=z.color;const r=Z[z.id];el("polygon",{points:pts([iso(r[0],r[1]),iso(r[2],r[1]),iso(r[2],r[3]),iso(r[0],r[3])]),fill:z.color,opacity:.55});});
+ // desks sorted back-to-front
+ [...D.agents].sort((a,b)=>(a.x+a.y)-(b.x+b.y)).forEach(a=>{
+  const g=el("g",{class:"desk st-"+a.status+(a.status==="working"?" working":""),tabindex:0,role:"button","aria-label":a.name+": "+a.task});
+  const x=a.x+0.3,y=a.y+0.3,w=1.4,d=0.7,h=26;
+  const t=[iso(x,y),iso(x+w,y),iso(x+w,y+d),iso(x,y+d)].map(p=>[p[0],p[1]-h]);
+  // chair + person behind desk
+  const c=iso(x+w/2,y-0.12);
+  el("ellipse",{cx:c[0],cy:c[1]+4,rx:14,ry:7,fill:"#2b2f3a"},g);
+  const hd=el("g",{class:"head"},g);
+  el("rect",{x:c[0]-11,y:c[1]-30,width:22,height:26,rx:9,fill:zc[a.zone]||"#888"},hd);
+  el("circle",{cx:c[0],cy:c[1]-40,r:10,fill:"#f1c9a5"},hd);
+  // desk sides & top
+  el("polygon",{points:pts([iso(x,y+d),iso(x+w,y+d),[iso(x+w,y+d)[0],iso(x+w,y+d)[1]-h],[iso(x,y+d)[0],iso(x,y+d)[1]-h]]),fill:"#d9dde4"},g);
+  el("polygon",{points:pts([iso(x+w,y),iso(x+w,y+d),[iso(x+w,y+d)[0],iso(x+w,y+d)[1]-h],[iso(x+w,y)[0],iso(x+w,y)[1]-h]]),fill:"#b9bfca"},g);
+  el("polygon",{points:pts(t),fill:"#f4f6f9"},g);
+  // monitor
+  const m=iso(x+w/2,y+0.2);el("rect",{x:m[0]-13,y:m[1]-h-22,width:26,height:17,rx:2,fill:"#111827"},g);
+  el("rect",{x:m[0]-11,y:m[1]-h-20,width:22,height:13,fill:a.status==="blocked"?"#5b2121":"#1f6feb",opacity:.85},g);
+  // label card (name + status), task shows in side panel
+  const L=iso(x+w/2,y-0.15);const cg=el("g",{class:"card"},g);const cw=Math.max(120,a.name.length*15+44),ch=38,cx=L[0]-cw/2,cy=L[1]-h-96;
+  el("rect",{x:cx,y:cy,width:cw,height:ch,rx:19,fill:"#ffffff",stroke:"#dfe3ea","stroke-width":1},cg);
+  el("circle",{class:"sdot",cx:cx+cw-17,cy:cy+19,r:6,fill:ST[a.status][1]},cg);
+  el("text",{x:cx+(cw-18)/2,y:cy+25,fill:"#0b1222","font-family":"Tajawal","font-weight":"800","font-size":"18","text-anchor":"middle"},cg).textContent=a.name;
+  const pick=()=>{document.querySelectorAll(".desk.sel").forEach(n=>n.classList.remove("sel"));g.classList.add("sel");show(a,D)};
+  g.addEventListener("click",pick);g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick()}});
+ });
+ // plants
+ [[9.6,0.2],[0.2,9.6],[9.6,9.6]].forEach(p=>{const q=iso(p[0],p[1]);el("rect",{x:q[0]-7,y:q[1]-14,width:14,height:14,rx:3,fill:"#7c5a3a"});el("circle",{cx:q[0],cy:q[1]-24,r:13,fill:"#2f9e5b"});});
+ // side
+ document.getElementById("legend").innerHTML=D.zones.map(z=>`<span class="pill"><i style="background:${z.color}"></i>${z.name}</span>`).join("")+Object.entries(ST).map(([k,v])=>`<span class="pill"><i style="background:${v[1]}"></i>${v[0]} · ${D.agents.filter(a=>a.status===k).length}</span>`).join("");
+ const s=D.stats;document.getElementById("kpis").innerHTML=[[s.subscribers,"مشترك يوتيوب"],[s.views.toLocaleString("en"),"مشاهدة يوتيوب"],[s.videos,"فيديو منشور"],[(s.tiktok_views_7d/1000).toFixed(1)+"K","تيك توك · 7 أيام"]].map(k=>`<div class="kpi"><b>${k[0]}</b><span>${k[1]}</span></div>`).join("");
+ document.getElementById("upd").textContent="تحديث "+D.updated.slice(5,10).split("-").reverse().join("/");
+ document.getElementById("feed").innerHTML=D.feed.map(f=>`<li><span class="dot" style="background:${KC[f.k]||"#a9b6cc"}"></span><time>${f.t.slice(5,10).split("-").reverse().join("/")} ${f.t.slice(11)}</time><span>${f.text}</span></li>`).join("");
+}
+function show(a,D){const z=D.zones.find(z=>z.id===a.zone);document.getElementById("agent").innerHTML=`<h3>${a.name} <span class="pill"><i style="background:${ST[a.status][1]};width:10px;height:10px;border-radius:50%;display:inline-block"></i>${ST[a.status][0]}</span></h3><p class="role">${a.en} · ${z?z.name:""}</p><p style="margin:0">${a.task}</p>`}
+render(window.OFFICE);
+fetch("data/office.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d){window.OFFICE=d;render(d)}}).catch(()=>{});
+})();
+</script>
+</main>
+<footer class="bot"><div class="wrap"><span>© 2026 سالفة ستوديو · أداة داخلية لقناة «شنو السالفة؟»</span><span><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a> · <a href="data-deletion.html">Data Deletion</a> · <a href="https://www.youtube.com/@shnoalsalfa_bh" rel="noopener">@shnoalsalfa_bh</a></span></div></footer>
+</body></html>
