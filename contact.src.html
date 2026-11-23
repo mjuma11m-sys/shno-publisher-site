@@ -1,0 +1,43 @@
+<style>
+.ct{padding-block:28px 8px;display:grid;gap:18px;max-width:720px}
+.ct h1{margin:0;font:900 clamp(1.6rem,3.4vw,2.4rem)/1.3 "Tajawal",sans-serif}
+.ct .lead{color:var(--mut);line-height:1.9;margin:6px 0 0}
+.ct form{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 22px;display:grid;gap:14px}
+.ct label{display:grid;gap:6px;font-weight:600}
+.ct input,.ct select,.ct textarea{width:100%;background:var(--bg2);color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit}
+.ct textarea{min-height:140px;resize:vertical}
+.ct .hint{color:var(--mut);font-size:.85rem;font-weight:400}
+.ct button{all:unset;cursor:pointer;justify-self:start;background:var(--ac);color:#1a1300;font:900 1rem "Tajawal",sans-serif;padding:11px 24px;border-radius:999px}
+.ct button[disabled]{opacity:.5;cursor:not-allowed}
+.ct button:focus-visible,.ct input:focus-visible,.ct select:focus-visible,.ct textarea:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.ct .msg{min-height:1.5em;font-weight:600;margin:0}.ct .ok{color:var(--ok)}.ct .err{color:#f87171}
+</style>
+<div class="wrap"><section class="ct" aria-labelledby="cth">
+ <div><h1 id="cth">تواصل معنا</h1><p class="lead">لقيت غلط بحلقة؟ عندك سؤال أو فكرة حلقة؟ اكتب لنا هني. إذا كان تصحيح، حط مصدرك ونراجعه، ولو طلع غلط نصحّحه بوصف الفيديو وبصفحة الحلقة.</p></div>
+ <form id="cf" novalidate>
+  <label>نوع الرسالة<select id="kind"><option>تصحيح معلومة</option><option>سؤال</option><option>فكرة حلقة</option><option>شي ثاني</option></select></label>
+  <label>اسمك<input id="nm" maxlength="80" autocomplete="name" required></label>
+  <label>شلون نرد عليك؟ <span class="hint">إيميل أو حساب انستقرام/تيك توك/X</span><input id="co" maxlength="120" required></label>
+  <label>الرسالة <span class="hint" id="cnt">0 / 1400</span><textarea id="ms" maxlength="1400" required></textarea></label>
+  <p class="hint" style="margin:0">نحفظ بس اللي تكتبه هني عشان نرد عليك. التفاصيل في <a href="privacy.html">سياسة الخصوصية</a>.</p>
+  <button type="submit" id="sb">أرسل</button>
+  <p class="msg" id="out" role="status" aria-live="polite"></p>
+ </form>
+</section></div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const RPC="https://frowdhbazytcmwhrlnmv.supabase.co/rest/v1/rpc/salfa_submit_contact",KEY="sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla";
+$("ms").addEventListener("input",()=>{$("cnt").textContent=$("ms").value.length+" / 1400"});
+$("cf").addEventListener("submit",async e=>{e.preventDefault();const o=$("out");o.className="msg";
+ const n=$("nm").value.trim(),c=$("co").value.trim(),m=$("ms").value.trim();
+ if(!n||c.length<3||m.length<5){o.className="msg err";o.textContent="عبّ الاسم ووسيلة التواصل والرسالة (5 أحرف على الأقل).";return}
+ $("sb").disabled=true;o.textContent="يرسل…";
+ try{const r=await fetch(RPC,{method:"POST",headers:{"Content-Type":"application/json",apikey:KEY,Authorization:"Bearer "+KEY},body:JSON.stringify({p_name:n,p_contact:c,p_message:"["+$("kind").value+"] "+m})});
+  const j=await r.json().catch(()=>({}));
+  if(r.ok&&j.ok){o.className="msg ok";o.textContent="وصلت رسالتك، شكراً. نرد عليك قريب.";$("cf").reset();$("cnt").textContent="0 / 1400"}
+  else{o.className="msg err";o.textContent=j.error==="rate_limited"?"أرسلت رسائل كثير بساعة وحدة، جرّب بعد شوي.":"ما انرسلت، تأكد من الخانات وجرّب مرة ثانية."}}
+ catch(x){o.className="msg err";o.textContent="ما انرسلت، تأكد من الاتصال وجرّب مرة ثانية."}
+ $("sb").disabled=false});
+})();
+</script>
