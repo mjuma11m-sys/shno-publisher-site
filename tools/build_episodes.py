@@ -132,6 +132,18 @@ def parse_srt(path, chapters):
     return out
 
 
+def linkify(text):
+    """Escape, then turn only URLs that are literally in the text into links (never invent one)."""
+    out, last = [], 0
+    for m in re.finditer(r"https?://[^\s<>«»\"']+[^\s<>«»\"'.,؛،)]", text):
+        out.append(html.escape(text[last:m.start()]))
+        u = m.group(0)
+        out.append(f'<a href="{html.escape(u, quote=True)}" rel="noopener nofollow" target="_blank">{html.escape(u)}</a>')
+        last = m.end()
+    out.append(html.escape(text[last:]))
+    return "".join(out)
+
+
 def mmss(s):
     return f"{s // 60}:{s % 60:02d}" if s < 3600 else f"{s // 3600}:{s % 3600 // 60:02d}:{s % 60:02d}"
 
@@ -229,7 +241,7 @@ def build():
  <div style="display:grid;gap:20px;align-content:start">
   <section class="box"><h2>شنو السالفة؟</h2><p class="lead">{e_(summary)}</p></section>
   {('<section class="box"><h2>شنو تعلمنا</h2><ol class="tk">' + "".join(f"<li>{e_(t)}</li>" for t in takeaways[e["id"]]) + "</ol></section>") if e["id"] in takeaways else ""}
-  <section class="box"><h2>المصادر والحقوق</h2><ul class="cred">{''.join(f'<li>{e_(c)}</li>' for c in credits) or '<li>المصادر بوصف الفيديو على يوتيوب.</li>'}</ul></section>
+  <section class="box"><h2>المصادر والحقوق</h2><ul class="cred">{''.join(f'<li>{linkify(c)}</li>' for c in credits) or '<li>المصادر بوصف الفيديو على يوتيوب.</li>'}</ul></section>
   <div class="tags">{''.join(f'<span>#{e_(t)}</span>' for t in tags)}</div>
  </div>
  <section class="box"><h2>الفصول</h2><ol class="chap">{''.join(f'<li><a href="{watch}&amp;t={c["t"]}s" target="_blank" rel="noopener"><b>{c["label"]}</b><span>{e_(c["title"])}</span></a></li>' for c in chapters)}</ol></section>
