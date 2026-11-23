@@ -1,0 +1,166 @@
+"""Episode pages for the long «شنو السالفة؟» videos.
+
+  python3 tools/build_episodes.py --fetch   # pull long videos from YouTube Data API into data/episodes.json, then build
+  python3 tools/build_episodes.py           # build episodes.html + episode-<id>.html from data/episodes.json
+
+The API key is injected by the network proxy (header x-goog-api-key); nothing secret lives here.
+"""
+import html, json, os, re, sys, urllib.request
+os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE = "https://mjuma11m-sys.github.io/shno-publisher-site/"
+API = "https://youtube.googleapis.com/youtube/v3/"
+
+
+def get(path):
+    with urllib.request.urlopen(API + path, timeout=30) as r:
+        return json.load(r)
+
+
+def iso_secs(d):
+    m = re.match(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", d)
+    return sum(int(x or 0) * k for x, k in zip(m.groups(), (3600, 60, 1)))
+
+
+def fetch():
+    ch = get("channels?part=contentDetails&forHandle=shnoalsalfa_bh")["items"][0]
+    up = ch["contentDetails"]["relatedPlaylists"]["uploads"]
+    ids, tok = [], ""
+    while True:
+        r = get(f"playlistItems?part=contentDetails&maxResults=50&playlistId={up}" + (f"&pageToken={tok}" if tok else ""))
+        ids += [i["contentDetails"]["videoId"] for i in r["items"]]
+        tok = r.get("nextPageToken")
+        if not tok:
+            break
+    eps = []
+    for k in range(0, len(ids), 50):
+        for v in get("videos?part=snippet,contentDetails,statistics,status&id=" + ",".join(ids[k:k + 50]))["items"]:
+            secs = iso_secs(v["contentDetails"]["duration"])
+            if secs < 180 or v["status"]["privacyStatus"] != "public":
+                continue
+            s = v["snippet"]
+            eps.append({"id": v["id"], "title": s["title"], "published": s["publishedAt"], "duration": v["contentDetails"]["duration"],
+                        "secs": secs, "thumb": next(s["thumbnails"][k]["url"] for k in ("maxres", "standard", "high", "medium", "default") if k in s["thumbnails"]),
+                        "description": s["description"]})
+    eps.sort(key=lambda e: e["published"], reverse=True)
+    json.dump(eps, open("data/episodes.json", "w"), ensure_ascii=False, indent=1)
+    print("fetched", len(eps), "long episodes")
+
+
+CREDIT = ("📚", "📷", "🛰", "🎞", "🗺", "🎙", "🎵", "🪙", "💵", "⚠")
+
+
+def parse(desc):
+    lines = [l.strip() for l in desc.splitlines()]
+    summary = lines[0] if lines else ""
+    chapters = []
+    for l in lines:
+        m = re.match(r"^(?:(\d+):)?(\d+):(\d\d)\s+(.+)$", l)
+        if m:
+            h, mi, se, t = m.groups()
+            chapters.append({"t": int(h or 0) * 3600 + int(mi) * 60 + int(se), "label": l.split(" ", 1)[0], "title": t})
+    credits = [l for l in lines if l.startswith(CREDIT)]
+    tags = re.findall(r"#(\S+)", desc)
+    return summary, chapters, credits, tags
+
+
+def mmss(s):
+    return f"{s // 60}:{s % 60:02d}" if s < 3600 else f"{s // 3600}:{s % 3600 // 60:02d}:{s % 60:02d}"
+
+
+src = open("index.html").read()
+head, rest = src.split("<main>", 1)
+foot = "</main>" + rest.split("</main>", 1)[1]
+
+
+def shell(title, desc, canon, current, ld):
+    h = re.sub(r"<title>.*?</title>", f"<title>{html.escape(title)}</title>", head, count=1)
+    h = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{html.escape(desc)}">', h, count=1)
+    h = re.sub(r'<link rel="canonical" href="[^"]*">', f'<link rel="canonical" href="{canon}">', h, count=1)
+    h = re.sub(r'<script type="application/ld\+json">.*?</script>', "", h, flags=re.S)
+    h = h.replace("</head>", f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>\n</head>', 1)
+    h = h.replace(' aria-current="page"', "")
+    return h.replace(f'<a href="{current}">', f'<a href="{current}" aria-current="page">', 1)
+
+
+CSS = """<style>
+.ep{padding-block:28px 8px;display:grid;gap:20px}
+.crumb{color:var(--mut);font-size:.88rem}.crumb a{color:var(--mut)}
+.ep h1{margin:0;font:900 clamp(1.5rem,3.2vw,2.3rem)/1.3 "Tajawal",sans-serif;text-wrap:balance}
+.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--mut);font-size:.88rem}.meta span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:var(--bg2)}
+.poster{position:relative;display:block;border-radius:20px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/9;max-width:100%;background:var(--bg2)}
+.poster img{width:100%;height:100%;object-fit:cover;display:block}
+.poster span{position:absolute;inset-inline-start:16px;bottom:16px;background:#d92b2b;color:#fff;font-weight:800;padding:10px 18px;border-radius:999px}
+.ecols{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px;min-width:0}
+.box h2{margin:0 0 10px;font-size:1.1rem}
+.lead{font-size:1.05rem;line-height:1.9;max-width:65ch;margin:0}
+.chap{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.chap a{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:8px 4px;border-bottom:1px solid var(--line);color:var(--fg);text-decoration:none}
+.chap a:hover{color:var(--ac)}.chap b{font-variant-numeric:tabular-nums;color:var(--ac);direction:ltr;text-align:right;font-weight:700}
+.cred{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:.9rem;color:var(--mut);line-height:1.7}
+.tags{display:flex;gap:6px;flex-wrap:wrap}.tags span{font-size:.8rem;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;color:var(--fg);text-decoration:none;display:flex;flex-direction:column}
+.card3 img{aspect-ratio:16/9;width:100%;object-fit:cover;display:block;background:var(--bg2)}
+.card3 div{padding:12px 14px;display:grid;gap:6px}.card3 b{line-height:1.5}.card3 small{color:var(--mut)}
+.card3:hover b{color:var(--ac)}
+@media (max-width:900px){.ecols{grid-template-columns:1fr}}
+</style>"""
+
+AR_MONTHS = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"]
+
+
+def ardate(iso):
+    y, m, d = iso[:10].split("-")
+    return f"{int(d)} {AR_MONTHS[int(m) - 1]} {y}"
+
+
+def build():
+    eps = json.load(open("data/episodes.json"))
+    e_ = html.escape
+    for e in eps:
+        summary, chapters, credits, tags = parse(e["description"])
+        thumb = e.get("thumb") or f"https://i.ytimg.com/vi/{e['id']}/hqdefault.jpg"
+        url = f"{BASE}episode-{e['id']}.html"
+        watch = f"https://www.youtube.com/watch?v={e['id']}"
+        ld = {"@context": "https://schema.org", "@type": "VideoObject", "name": e["title"], "description": summary,
+              "thumbnailUrl": [thumb], "uploadDate": e["published"], "duration": e["duration"], "inLanguage": "ar",
+              "embedUrl": f"https://www.youtube.com/embed/{e['id']}", "url": url,
+              "publisher": {"@type": "Organization", "name": "شنو السالفة؟", "url": BASE},
+              "hasPart": [{"@type": "Clip", "name": c["title"], "startOffset": c["t"],
+                           "endOffset": (chapters[i + 1]["t"] if i + 1 < len(chapters) else e["secs"]),
+                           "url": f"{watch}&t={c['t']}s"} for i, c in enumerate(chapters)]}
+        body = f"""{CSS}<div class="wrap"><article class="ep">
+<nav class="crumb" aria-label="مسار الصفحة"><a href="episodes.html">الحلقات</a> ‹ {e_(e['title'][:40])}</nav>
+<h1>{e_(e['title'])}</h1>
+<div class="meta"><span class="pill">{ardate(e['published'])}</span><span class="pill">{mmss(e['secs'])} دقيقة</span><span class="pill">باللهجة البحرينية</span></div>
+<a class="poster" href="{watch}" target="_blank" rel="noopener"><img src="{thumb}" alt="غلاف حلقة {e_(e['title'])}" loading="eager" width="1280" height="720"><span>▶ شوف الحلقة على يوتيوب</span></a>
+<div class="ecols">
+ <div style="display:grid;gap:20px;align-content:start">
+  <section class="box"><h2>شنو السالفة؟</h2><p class="lead">{e_(summary)}</p></section>
+  <section class="box"><h2>المصادر والحقوق</h2><ul class="cred">{''.join(f'<li>{e_(c)}</li>' for c in credits) or '<li>المصادر بوصف الفيديو على يوتيوب.</li>'}</ul></section>
+  <div class="tags">{''.join(f'<span>#{e_(t)}</span>' for t in tags)}</div>
+ </div>
+ <section class="box"><h2>الفصول</h2><ol class="chap">{''.join(f'<li><a href="{watch}&amp;t={c["t"]}s" target="_blank" rel="noopener"><b>{c["label"]}</b><span>{e_(c["title"])}</span></a></li>' for c in chapters)}</ol></section>
+</div>
+</article></div>"""
+        title = f"{e['title']} · شنو السالفة؟"
+        open(f"episode-{e['id']}.html", "w").write(shell(title, summary[:155], url, "episodes.html", ld) + "<main>" + body + foot)
+    cards = "".join(f'<a class="card3" href="episode-{e["id"]}.html"><img src="https://i.ytimg.com/vi/{e["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><b>{e_(e["title"])}</b><small>{ardate(e["published"])} · {mmss(e["secs"])} دقيقة</small></div></a>' for e in eps)
+    ld = {"@context": "https://schema.org", "@type": "ItemList", "name": "حلقات شنو السالفة؟",
+          "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": f"{BASE}episode-{e['id']}.html"} for i, e in enumerate(eps)]}
+    body = f"""{CSS}<div class="wrap"><section class="ep"><div><h1>الحلقات</h1><p style="color:var(--mut);margin:6px 0 0">كل حلقات «شنو السالفة؟» الطويلة: الملخص والفصول ومصادر كل حلقة.</p></div><div class="grid">{cards}</div></section></div>"""
+    open("episodes.html", "w").write(shell("الحلقات · شنو السالفة؟", "كل حلقات «شنو السالفة؟» الطويلة باللهجة البحرينية: الملخص والفصول والمصادر.", BASE + "episodes.html", "episodes.html", ld) + "<main>" + body + foot)
+    # sitemap
+    sm = open("sitemap.xml").read()
+    sm = re.sub(r"<url><loc>[^<]*(?:episodes|episode-)[^<]*</loc>.*?</url>", "", sm)
+    add = "".join(f"<url><loc>{BASE}{p}</loc><lastmod>{d}</lastmod></url>" for p, d in
+                  [("episodes.html", eps[0]["published"][:10])] + [(f"episode-{e['id']}.html", e["published"][:10]) for e in eps])
+    open("sitemap.xml", "w").write(sm.replace("</urlset>", add + "</urlset>"))
+    print("built", len(eps), "episode pages")
+
+
+if __name__ == "__main__":
+    if "--fetch" in sys.argv:
+        fetch()
+    build()
