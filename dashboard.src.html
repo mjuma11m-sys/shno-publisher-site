@@ -48,9 +48,9 @@
  <div class="kgrid" id="kg"></div>
  <div class="card2"><h2>المشاهدات مع الوقت</h2><p class="sub" id="hsub">مجموع مشاهدات القناة بكل سحبة يومية</p><div id="hc" style="direction:ltr"></div></div>
  <div class="row2">
-  <div class="card2"><h2>أداء الفيديوهات</h2><p class="sub">المشاهدات لكل فيديو · الرقم الأخضر = الزيادة من آخر سحبة</p>
+  <div class="card2"><h2>أداء الفيديوهات</h2><p class="sub">«باليوم» = معدل المشاهدات اليومي من يوم النشر · الأخضر = الزيادة من آخر سحبة</p>
    <div class="tabs" role="group" aria-label="نوع الفيديو"><button type="button" data-f="all" aria-pressed="true">الكل</button><button type="button" data-f="short" aria-pressed="false">شورتس</button><button type="button" data-f="long" aria-pressed="false">حلقات طويلة</button></div>
-   <div class="scroll"><table class="tbl"><thead><tr><th>الفيديو</th><th>مشاهدات</th><th>+</th><th>👍</th><th>💬</th></tr></thead><tbody id="vt"></tbody></table></div></div>
+   <div class="scroll"><table class="tbl"><thead><tr><th>الفيديو</th><th>مشاهدات</th><th>باليوم</th><th>+</th><th>👍</th><th>💬</th></tr></thead><tbody id="vt"></tbody></table></div></div>
   <div style="display:grid;gap:18px;align-content:start">
    <div class="card2"><h2>المواضيع</h2><p class="sub">مجموع المشاهدات حسب الموضوع</p><div class="bars" id="tp"></div></div>
    <div class="card2"><h2>الموافقات</h2><p class="sub">النشر المباشر من «سالفة ستوديو»</p><div class="appr" id="ap"></div></div>
@@ -86,7 +86,7 @@ function draw(D){
  document.getElementById("cal").innerHTML=D.schedule.map(s=>{const d=new Date(s.t.replace(" ","T")+":00+03:00");return`<li><div class="d"><small>${AR[d.getUTCDay()]||""}</small><b>${s.t.slice(8,10)}/${s.t.slice(5,7)}</b><small>${s.t.slice(11)}</small></div><span>${s.text}</span></li>`}).join("");
 }
 function table(D){const rows=D.videos.filter(v=>F==="all"||v.type===F);
- document.getElementById("vt").innerHTML=rows.map(v=>`<tr><td><a href="https://youtu.be/${v.id}" rel="noopener" target="_blank">${v.title}</a><span class="tag">${v.type==="long"?"طويل":"شورت"}</span></td><td class="n">${fmt(v.views)}</td><td class="n" style="color:${v.delta>0?"var(--ok)":"var(--mut)"}">${v.delta>0?"+"+fmt(v.delta):"–"}</td><td class="n">${v.likes}</td><td class="n">${v.comments}</td></tr>`).join("");}
+ document.getElementById("vt").innerHTML=rows.map(v=>`<tr><td><a href="https://youtu.be/${v.id}" rel="noopener" target="_blank">${v.title}</a><span class="tag">${v.type==="long"?"طويل":"شورت"}</span></td><td class="n">${fmt(v.views)}</td><td class="n">${v.per_day!=null?fmt(Math.round(v.per_day)):"–"}</td><td class="n" style="color:${v.delta>0?"var(--ok)":"var(--mut)"}">${v.delta>0?"+"+fmt(v.delta):"–"}</td><td class="n">${v.likes}</td><td class="n">${v.comments}</td></tr>`).join("");}
 document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{F=b.dataset.f;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));table(window.DASH)}));
 draw(window.DASH);
 fetch("data/dashboard.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d){window.DASH=d;draw(d)}}).catch(()=>{});

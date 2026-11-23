@@ -37,6 +37,8 @@
 .card3 div{padding:12px 14px;display:grid;gap:6px}.card3 b{line-height:1.5}.card3 small{color:var(--mut)}
 .card3:hover b{color:var(--ac)}
 .topics{display:flex;gap:8px;flex-wrap:wrap}.topics a{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;color:var(--fg);text-decoration:none}.topics a:hover{color:var(--ac)}.topics small{color:var(--mut)}
+.pn{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pn a{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 16px;color:var(--fg);text-decoration:none;display:grid;gap:2px;line-height:1.5}.pn a:hover{color:var(--ac)}.pn a.old{text-align:left}.pn small{color:var(--mut)}
+@media (max-width:600px){.pn{grid-template-columns:1fr}.pn a.old{text-align:right}}
 .chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
 .chips button[aria-pressed="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac);font-weight:700}.chips button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}

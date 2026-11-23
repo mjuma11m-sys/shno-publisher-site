@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23T11:11+03:00",
+ "updated": "2026-11-23T11:13+03:00",
  "channel": {
   "subscribers": 21,
   "views": 16529,
@@ -17,7 +17,8 @@
    "comments": 0,
    "published": "2026-11-21",
    "delta": 2363,
-   "topic": "GTA والألعاب"
+   "topic": "GTA والألعاب",
+   "per_day": 3104.0
   },
   {
    "id": "cQ6yKBx4KLY",
@@ -28,7 +29,8 @@
    "comments": 1,
    "published": "2026-11-20",
    "delta": 248,
-   "topic": "GTA والألعاب"
+   "topic": "GTA والألعاب",
+   "per_day": 1181.7
   },
   {
    "id": "MhOtMbXRrrU",
@@ -39,7 +41,8 @@
    "comments": 2,
    "published": "2026-11-08",
    "delta": 0,
-   "topic": "إيران والخليج"
+   "topic": "إيران والخليج",
+   "per_day": 119.2
   },
   {
    "id": "Dgtomveeovc",
@@ -50,7 +53,8 @@
    "comments": 0,
    "published": "2026-11-08",
    "delta": 0,
-   "topic": "إيران والخليج"
+   "topic": "إيران والخليج",
+   "per_day": 112.4
   },
   {
    "id": "47jNdTR02hE",
@@ -61,7 +65,8 @@
    "comments": 0,
    "published": "2026-11-15",
    "delta": 4,
-   "topic": "تاريخ البحرين"
+   "topic": "تاريخ البحرين",
+   "per_day": 163.9
   },
   {
    "id": "vQK_HP-DPiE",
@@ -72,7 +77,8 @@
    "comments": 0,
    "published": "2026-11-19",
    "delta": 8,
-   "topic": "GTA والألعاب"
+   "topic": "GTA والألعاب",
+   "per_day": 321.5
   },
   {
    "id": "eQbh6vkSU6Q",
@@ -83,7 +89,8 @@
    "comments": 0,
    "published": "2026-11-17",
    "delta": -1,
-   "topic": "GTA والألعاب"
+   "topic": "GTA والألعاب",
+   "per_day": 203.7
   },
   {
    "id": "wqoMptARZMQ",
@@ -94,7 +101,8 @@
    "comments": 0,
    "published": "2026-11-17",
    "delta": 2,
-   "topic": "تاريخ البحرين"
+   "topic": "تاريخ البحرين",
+   "per_day": 195.3
   },
   {
    "id": "yNhHe_33oXo",
@@ -105,7 +113,8 @@
    "comments": 2,
    "published": "2026-11-16",
    "delta": 0,
-   "topic": "تاريخ البحرين"
+   "topic": "تاريخ البحرين",
+   "per_day": 156.7
   },
   {
    "id": "6b3TJIP7qu0",
@@ -116,7 +125,8 @@
    "comments": 0,
    "published": "2026-11-18",
    "delta": 0,
-   "topic": "GTA والألعاب"
+   "topic": "GTA والألعاب",
+   "per_day": 216.4
   },
   {
    "id": "D-MDEp6pXvk",
@@ -127,7 +137,8 @@
    "comments": 0,
    "published": "2026-11-22",
    "delta": 0,
-   "topic": "GTA والألعاب"
+   "topic": "GTA والألعاب",
+   "per_day": 1059.0
   },
   {
    "id": "tleiGKGcrfA",
@@ -138,7 +149,8 @@
    "comments": 0,
    "published": "2026-11-18",
    "delta": -3,
-   "topic": "تاريخ البحرين"
+   "topic": "تاريخ البحرين",
+   "per_day": 209.0
   },
   {
    "id": "rb87oV2KeYA",
@@ -149,7 +161,8 @@
    "comments": 0,
    "published": "2026-11-22",
    "delta": 598,
-   "topic": "GTA والألعاب"
+   "topic": "GTA والألعاب",
+   "per_day": 1001.0
   },
   {
    "id": "J0WzDnpqrW0",
@@ -160,7 +173,8 @@
    "comments": 0,
    "published": "2026-11-08",
    "delta": 0,
-   "topic": "إيران والخليج"
+   "topic": "إيران والخليج",
+   "per_day": 65.7
   },
   {
    "id": "Az24UGALWdc",
@@ -171,7 +185,8 @@
    "comments": 0,
    "published": "2026-11-21",
    "delta": 95,
-   "topic": "الموناليزا"
+   "topic": "الموناليزا",
+   "per_day": 189.5
   },
   {
    "id": "IUaW08O3GG0",
@@ -182,7 +197,8 @@
    "comments": 5,
    "published": "2026-11-18",
    "delta": 3,
-   "topic": "GTA والألعاب"
+   "topic": "GTA والألعاب",
+   "per_day": 60.2
   },
   {
    "id": "Nth7EGqZTBo",
@@ -193,7 +209,8 @@
    "comments": 0,
    "published": "2026-11-22",
    "delta": 123,
-   "topic": "الموناليزا"
+   "topic": "الموناليزا",
+   "per_day": 281.0
   },
   {
    "id": "F_lXv1wMpPE",
@@ -204,7 +221,8 @@
    "comments": 0,
    "published": "2026-11-08",
    "delta": 5,
-   "topic": "إيران والخليج"
+   "topic": "إيران والخليج",
+   "per_day": 11.1
   },
   {
    "id": "EmYkYIhy8yk",
@@ -215,7 +233,8 @@
    "comments": 1,
    "published": "2026-11-15",
    "delta": 4,
-   "topic": "تاريخ البحرين"
+   "topic": "تاريخ البحرين",
+   "per_day": 13.8
   },
   {
    "id": "aQrTHARZVI8",
@@ -226,7 +245,8 @@
    "comments": 1,
    "published": "2026-11-20",
    "delta": 7,
-   "topic": "الموناليزا"
+   "topic": "الموناليزا",
+   "per_day": 25.3
   },
   {
    "id": "cBy4uzqup7I",
@@ -237,7 +257,8 @@
    "comments": 0,
    "published": "2026-11-20",
    "delta": 0,
-   "topic": "الموناليزا"
+   "topic": "الموناليزا",
+   "per_day": 25.3
   },
   {
    "id": "ruFmH60jGrw",
@@ -248,7 +269,8 @@
    "comments": 0,
    "published": "2026-11-22",
    "delta": 0,
-   "topic": "اقتصاد"
+   "topic": "اقتصاد",
+   "per_day": 1.0
   },
   {
    "id": "5M9vUdqWoZA",
@@ -259,7 +281,8 @@
    "comments": 0,
    "published": "2026-11-22",
    "delta": 0,
-   "topic": "اقتصاد"
+   "topic": "اقتصاد",
+   "per_day": 0.0
   }
  ],
  "topics": [

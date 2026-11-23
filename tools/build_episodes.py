@@ -162,6 +162,8 @@ CSS = """<style>
 .card3 div{padding:12px 14px;display:grid;gap:6px}.card3 b{line-height:1.5}.card3 small{color:var(--mut)}
 .card3:hover b{color:var(--ac)}
 .topics{display:flex;gap:8px;flex-wrap:wrap}.topics a{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;color:var(--fg);text-decoration:none}.topics a:hover{color:var(--ac)}.topics small{color:var(--mut)}
+.pn{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pn a{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 16px;color:var(--fg);text-decoration:none;display:grid;gap:2px;line-height:1.5}.pn a:hover{color:var(--ac)}.pn a.old{text-align:left}.pn small{color:var(--mut)}
+@media (max-width:600px){.pn{grid-template-columns:1fr}.pn a.old{text-align:right}}
 .chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
 .chips button[aria-pressed="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac);font-weight:700}.chips button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
@@ -188,7 +190,7 @@ def build():
     adopt_pending(eps)
     shorts = json.load(open("data/shorts.json")) if os.path.exists("data/shorts.json") else []
     e_ = html.escape
-    for e in eps:
+    for i, e in enumerate(eps):
         summary, chapters, credits, tags = parse(e["description"])
         thumb = e.get("thumb") or f"https://i.ytimg.com/vi/{e['id']}/hqdefault.jpg"
         url = f"{BASE}episode-{e['id']}.html"
@@ -203,6 +205,11 @@ def build():
         rel = [x for x in shorts if topic(x["title"]) == topic(e["title"]) != "أخرى"][:6]
         rel_html = ("" if not rel else '<section class="box"><h2>شورتس من نفس الموضوع</h2><div class="sgrid">'
                     + "".join(f'<a class="sh" href="https://www.youtube.com/shorts/{x["id"]}" target="_blank" rel="noopener"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in rel) + "</div></section>")
+        newer, older = (eps[i - 1] if i > 0 else None), (eps[i + 1] if i + 1 < len(eps) else None)
+        pn_html = ('<nav class="pn" aria-label="حلقات ثانية">'
+                   + (f'<a href="episode-{newer["id"]}.html" rel="next"><small>الحلقة الأحدث</small>{e_(newer["title"])}</a>' if newer else "<span></span>")
+                   + (f'<a href="episode-{older["id"]}.html" rel="prev" class="old"><small>الحلقة الأقدم</small>{e_(older["title"])}</a>' if older else "<span></span>")
+                   + "</nav>")
         tr = transcript(e["id"], chapters)
         if tr:
             ld["transcript"] = " ".join(x["text"] for x in tr)
@@ -223,6 +230,7 @@ def build():
 </div>
 {rel_html}
 {tr_html}
+{pn_html}
 </article></div>"""
         title = f"{e['title']} · شنو السالفة؟"
         page(f"episode-{e['id']}.html", title, summary[:155], body, nav="episodes.html", image=thumb, og_type="video.other", ld=ld)
