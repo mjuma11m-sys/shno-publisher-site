@@ -5,7 +5,7 @@
 
 The API key is injected by the network proxy (header x-goog-api-key); nothing secret lives here.
 """
-import html, json, os, re, sys, urllib.request
+import html, json, os, re, sys, urllib.parse, urllib.request
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 BASE = "https://mjuma11m-sys.github.io/shno-publisher-site/"
 API = "https://youtube.googleapis.com/youtube/v3/"
@@ -180,6 +180,7 @@ CSS = """<style>
 .tk{margin:0;padding:0;list-style:none;counter-reset:k;display:grid;gap:10px}.tk li{counter-increment:k;display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start;line-height:1.8}
 .tk li::before{content:counter(k);width:32px;height:32px;border-radius:50%;background:var(--ac);color:#1a1300;font:900 1rem/32px "Tajawal",sans-serif;text-align:center}
 .card3 small{color:var(--mut)}
+.share{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.share a,.share button{all:unset;cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;color:var(--fg)}.share a:hover,.share button:hover{color:var(--ac)}.share a:focus-visible,.share button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}.share input{width:min(100%,360px);font:inherit;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--fg)}.cpm{color:var(--mut);font-size:.85rem}
 .chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
 .chips button[aria-pressed="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac);font-weight:700}.chips button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
@@ -246,9 +247,11 @@ def build():
  </div>
  <section class="box"><h2>الفصول</h2><ol class="chap">{''.join(f'<li><a href="{watch}&amp;t={c["t"]}s" target="_blank" rel="noopener"><b>{c["label"]}</b><span>{e_(c["title"])}</span></a></li>' for c in chapters)}</ol></section>
 </div>
+<div class="share" role="group" aria-label="شارك الحلقة"><button type="button" class="cp" data-u="{url}">انسخ الرابط</button><a href="https://wa.me/?text={urllib.parse.quote(e['title'] + ' ' + url)}" target="_blank" rel="noopener">واتساب</a><span class="cpm" role="status" aria-live="polite"></span></div>
 {rel_html}
 {tr_html}
 {pn_html}
+<script>document.querySelectorAll(".share .cp").forEach(b=>b.addEventListener("click",async()=>{{const m=b.parentNode.querySelector(".cpm");try{{await navigator.clipboard.writeText(b.dataset.u);m.textContent="انسخ ✓"}}catch(e){{const i=document.createElement("input");i.value=b.dataset.u;b.after(i);i.select();m.textContent="انسخ الرابط من الخانة"}}}}))</script>
 </article></div>"""
         title = f"{e['title']} · شنو السالفة؟"
         page(f"episode-{e['id']}.html", title, summary[:155], body, nav="episodes.html", image=thumb, og_type="video.other", ld=ld)
