@@ -1,0 +1,120 @@
+<style>
+.st{padding-block:28px 8px;display:grid;gap:18px}
+.st h1{margin:0;font:900 clamp(1.6rem,3vw,2.2rem)/1.2 "Tajawal",sans-serif}
+.st .muted{color:var(--mut);margin:4px 0 0}
+.sbox{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;min-width:0}
+.sbox h2{margin:0 0 10px;font-size:1rem}
+.sgrid2{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px;align-items:start}
+.who{display:flex;align-items:center;gap:12px}.who .av{width:48px;height:48px;border-radius:50%;background:var(--bg2);border:1px solid var(--line);overflow:hidden;display:grid;place-items:center;font-weight:700}
+.who .av img{width:100%;height:100%;object-fit:cover}.who b{display:block}.who span{color:var(--mut);font-size:.88rem}
+.st video,.st .ph{width:100%;max-width:100%;aspect-ratio:9/16;border-radius:14px;background:#000;display:block}
+.st .ph{display:grid;place-items:center;color:var(--mut);background:var(--bg2);border:1px dashed var(--line)}
+.f{display:grid;gap:6px;font-weight:600}.f .cnt{color:var(--mut);font-size:.8rem;font-weight:400}
+.st textarea,.st select,.st input[type=email],.st input[type=text]{width:100%;background:var(--bg2);color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit}
+.st textarea{min-height:110px;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tog{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer}
+.tog input{accent-color:var(--ac);width:18px;height:18px}.tog[aria-disabled="true"]{opacity:.45;cursor:not-allowed}
+.hint{color:var(--mut);font-size:.85rem;margin:0}
+.note{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.88rem;margin:0}
+.btn2{all:unset;cursor:pointer;text-align:center;background:var(--ac);color:#1a1300;font:900 1.02rem "Tajawal",sans-serif;padding:11px 22px;border-radius:999px}
+.btn2[disabled]{opacity:.4;cursor:not-allowed}.btn3{all:unset;cursor:pointer;color:var(--mut);text-decoration:underline;font-size:.88rem}
+.btn2:focus-visible,.btn3:focus-visible,.tog:focus-within,.st select:focus-visible,.st textarea:focus-visible,.st input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.msg{min-height:1.5em;font-weight:600}.msg.err{color:#f87171}.msg.ok{color:var(--ok)}
+.st fieldset{border:0;margin:0;padding:0;display:grid;gap:10px;min-width:0}.st legend{font-weight:600;margin-bottom:6px;padding:0}
+.ht{width:100%;border-collapse:collapse;font-size:.88rem}.ht th,.ht td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--line)}.ht th{color:var(--mut);font-weight:600}
+@media (max-width:760px){.sgrid2{grid-template-columns:1fr}}
+</style>
+<div class="wrap"><section class="st" aria-labelledby="sth">
+ <div><h1 id="sth">النشر على تيك توك</h1><p class="muted">صفحة صاحب القناة بس. كل فيديو تشوفه وتختار منو يشوفه وتأكد نشره بنفسك، حسب شروط تيك توك.</p></div>
+
+ <div class="sbox" id="login" hidden>
+  <h2>تسجيل الدخول</h2>
+  <form id="lf" class="row" novalidate><label class="f" style="flex:1 1 240px">الإيميل<input type="email" id="em" autocomplete="email" required></label><button class="btn2" type="submit" id="lb">أرسل رابط الدخول</button></form>
+  <p class="hint" style="margin-top:8px">يوصلك رابط على الإيميل. افتحه من نفس الجهاز وترجع لهالصفحة وأنت داخل.</p>
+  <p class="msg" id="lm" role="status" aria-live="polite"></p>
+ </div>
+
+ <div id="app" hidden style="display:grid;gap:18px">
+  <div class="row" style="justify-content:space-between"><div class="sbox who" style="flex:1 1 260px"><div class="av" id="av"></div><div><b id="nick"></b><span id="user"></span></div></div><button class="btn3" type="button" id="out">تسجيل خروج</button></div>
+  <p class="msg err" id="gerr" role="alert"></p>
+  <div class="sbox" id="conn" hidden><h2>اربط حساب تيك توك</h2><p class="hint">مرة وحدة بس. تيك توك بيطلب منك توافق على صلاحية النشر، وبعدها ترجع لهالصفحة.</p><div class="row" style="margin-top:10px"><button class="btn2" type="button" id="cb">اربط تيك توك</button></div></div>
+  <div id="empty" class="sbox" hidden><h2>الطابور خلص</h2><p class="hint">ما في فيديو جاهز لتيك توك.</p></div>
+  <form id="f" class="sgrid2" novalidate hidden>
+   <div class="sbox"><h2>المعاينة</h2><div id="pv"></div></div>
+   <div class="sbox" style="display:grid;gap:16px">
+    <label class="f">الفيديو <span class="cnt" id="qn"></span><select id="pick"></select></label>
+    <label class="f">الكابشن <span class="cnt" id="cc"></span><textarea id="cap" maxlength="2200"></textarea></label>
+    <label class="f">منو يشوف الفيديو؟<select id="priv"></select><span class="hint">لازم تختار بنفسك لكل فيديو.</span></label>
+    <fieldset><legend>اسمح للمشاهدين</legend><div class="row">
+     <label class="tog" id="t-comment"><input type="checkbox" id="c-comment"> التعليقات</label>
+     <label class="tog" id="t-duet"><input type="checkbox" id="c-duet"> الدويتو</label>
+     <label class="tog" id="t-stitch"><input type="checkbox" id="c-stitch"> الستيتش</label></div>
+     <p class="hint" id="lockhint" hidden>الخيارات الباهتة مطفّية من إعدادات حسابك في تيك توك.</p></fieldset>
+    <fieldset><legend>إفصاح المحتوى التجاري</legend>
+     <label class="tog" style="justify-self:start"><input type="checkbox" id="disc"> هذا الفيديو يروّج لعلامة تجارية أو منتج أو خدمة</label>
+     <div id="discbox" hidden style="display:grid;gap:8px">
+      <label class="tog" style="justify-self:start"><input type="checkbox" id="b-own"> علامتي التجارية</label>
+      <label class="tog" style="justify-self:start" id="t-paid"><input type="checkbox" id="b-paid"> محتوى ممول (لطرف ثاني)</label>
+      <p class="note" id="disclabel"></p></div></fieldset>
+    <p class="note">🤖 الفيديو بينعلّم «محتوى مولّد بالذكاء الاصطناعي» لأن التعليق الصوتي مولّد.</p>
+    <p class="hint" id="consent"></p>
+    <div class="row"><button class="btn2" id="go" type="submit" disabled>انشر على تيك توك</button><span class="msg" id="msg" role="status" aria-live="polite"></span></div>
+   </div>
+  </form>
+  <section class="sbox" id="hist" hidden><h2>آخر المنشورات من هالصفحة</h2><div style="overflow-x:auto"><table class="ht"><thead><tr><th>الوقت</th><th>الفيديو</th><th>منو يشوفه</th><th>الحالة</th></tr></thead><tbody id="hb"></tbody></table></div></section>
+ </div>
+</section></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function(){
+const SB=supabase.createClient("https://frowdhbazytcmwhrlnmv.supabase.co","sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla",{auth:{flowType:"pkce",detectSessionInUrl:true,persistSession:true}});
+const FN="https://frowdhbazytcmwhrlnmv.supabase.co/functions/v1/salfa-tiktok";
+const $=id=>document.getElementById(id);const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const PL={PUBLIC_TO_EVERYONE:"الكل",MUTUAL_FOLLOW_FRIENDS:"الأصدقاء",FOLLOWER_OF_CREATOR:"المتابعين",SELF_ONLY:"أنا بس"};
+const ST={SENT:"انرسل",PUBLISH_COMPLETE:"انتشر ✓",FAILED:"انرفض"};
+const AI="\n🤖 صوت بالذكاء الاصطناعي";
+const MUSIC='<a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener">Music Usage Confirmation</a>';
+const BRAND='<a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank" rel="noopener">Branded Content Policy</a>';
+let S=null,cur=null;
+async function call(body){const {data:{session}}=await SB.auth.getSession();const r=await fetch(FN,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+session.access_token,apikey:"sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla"},body:JSON.stringify(body)});const j=await r.json().catch(()=>({error:"رد غير مفهوم"}));if(!r.ok)throw new Error(j.error||("خطأ "+r.status));return j}
+function refresh(){if(!cur)return;const priv=$("priv").value,disc=$("disc").checked,own=$("b-own").checked;$("discbox").hidden=!disc;const self=priv==="SELF_ONLY";$("b-paid").disabled=self;$("t-paid").setAttribute("aria-disabled",self);if(self)$("b-paid").checked=false;const paid=$("b-paid").checked;
+ $("disclabel").textContent=disc?(paid?"بيطلع على الفيديو «شراكة مدفوعة» (Paid partnership).":own?"بيطلع على الفيديو «محتوى ترويجي» (Promotional content).":"اختار نوع واحد على الأقل."):"";
+ $("consent").innerHTML="بالنشر، أنت توافق على "+(disc&&paid?BRAND+" و":"")+MUSIC+" من تيك توك.";
+ $("cc").textContent=$("cap").value.length+" / 2200";$("go").disabled=!priv||!$("cap").value.trim()||(disc&&!own&&!paid)||!cur.media}
+function show(id){cur=S.queue.find(q=>q.id===id)||S.queue[0];if(!cur){$("f").hidden=true;$("empty").hidden=false;return}
+ $("f").hidden=false;$("empty").hidden=true;
+ $("pick").innerHTML=S.queue.map(q=>`<option value="${esc(q.id)}"${q.id===cur.id?" selected":""}>${esc(q.id)} · ${esc(q.caption.split("#")[0].trim().slice(0,60))}</option>`).join("");
+ $("qn").textContent=S.queue.length+" بالطابور";
+ $("pv").innerHTML=cur.media?`<video src="${esc(cur.media)}" controls playsinline preload="metadata"></video>`:`<div class="ph">ملف الفيديو مو مرفوع على الموقع</div>`;
+ $("cap").value=cur.caption+AI;
+ $("priv").innerHTML='<option value="" selected disabled>اختار…</option>'+S.creator.privacy_level_options.map(o=>`<option value="${o}">${PL[o]||o}</option>`).join("");
+ for(const k of ["comment","duet","stitch"])$("c-"+k).checked=false;$("disc").checked=$("b-own").checked=$("b-paid").checked=false;$("msg").textContent="";refresh()}
+function renderHistory(h){$("hist").hidden=!h.length;$("hb").innerHTML=h.map(r=>`<tr><td>${new Date(r.created_at).toLocaleString("ar-BH",{dateStyle:"short",timeStyle:"short"})}</td><td>${esc(r.item_id)}</td><td>${PL[r.privacy]||esc(r.privacy)}</td><td>${ST[r.status]||esc(r.status)}</td></tr>`).join("")}
+async function load(){$("gerr").textContent="";$("conn").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;return}$("gerr").textContent=e.message;return}
+ const c=S.creator;$("nick").textContent=c.creator_nickname||"";$("user").textContent=c.creator_username?"@"+c.creator_username:"";
+ $("av").innerHTML=c.creator_avatar_url?`<img src="${esc(c.creator_avatar_url)}" alt="">`:"؟";
+ let locked=false;for(const k of ["comment","duet","stitch"]){const d=!!c[k+"_disabled"];$("c-"+k).disabled=d;$("t-"+k).setAttribute("aria-disabled",d);locked=locked||d}$("lockhint").hidden=!locked;
+ renderHistory(S.history||[]);show()}
+async function boot(){const {data:{session}}=await SB.auth.getSession();$("login").hidden=!!session;$("app").hidden=!session;if(!session)return;
+ const u=new URLSearchParams(location.search),code=u.get("tt_code"),st=u.get("tt_state");
+ if(code){window.history.replaceState(null,"",location.pathname);let saved=null;try{saved=sessionStorage.getItem("tt_state")}catch(e){}
+  if(!saved||saved!==st){$("gerr").textContent="رابط الربط غير صالح، جرّب مرة ثانية.";}
+  else{try{await call({action:"connect",code});try{sessionStorage.removeItem("tt_state")}catch(e){}}catch(e){$("gerr").textContent=e.message}}}
+ load()}
+$("cb").addEventListener("click",async()=>{const a=new Uint8Array(24);crypto.getRandomValues(a);const st="studio-"+Array.from(a,b=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b%62]).join("");
+ try{sessionStorage.setItem("tt_state",st)}catch(e){}try{const j=await call({action:"auth_url",state:st});location.href=j.url}catch(e){$("gerr").textContent=e.message}});
+$("lf").addEventListener("submit",async e=>{e.preventDefault();const em=$("em").value.trim();if(!em){$("lm").textContent="اكتب الإيميل";return}$("lb").disabled=true;
+ const {error}=await SB.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+location.pathname}});$("lb").disabled=false;
+ $("lm").className="msg "+(error?"err":"ok");$("lm").textContent=error?("ما انرسل: "+error.message):"انرسل. افتح الإيميل واضغط الرابط."});
+$("out").addEventListener("click",async()=>{await SB.auth.signOut();boot()});
+$("f").addEventListener("input",e=>{if(e.target.id!=="pick")refresh()});
+$("pick").addEventListener("change",e=>show(e.target.value));
+$("f").addEventListener("submit",async e=>{e.preventDefault();if($("go").disabled)return;$("go").disabled=true;$("msg").className="msg";$("msg").textContent="يرفع…";
+ try{const j=await call({action:"post",id:cur.id,caption:$("cap").value,privacy:$("priv").value,allow_comment:$("c-comment").checked,allow_duet:$("c-duet").checked,allow_stitch:$("c-stitch").checked,disclose:$("disc").checked,brand_organic:$("b-own").checked,brand_content:$("b-paid").checked});
+  $("msg").className="msg ok";$("msg").textContent="انرفع. تيك توك يعالج الفيديو، وممكن ياخذ كم دقيقة.";
+  for(let i=0;i<20;i++){await new Promise(z=>setTimeout(z,4000));const s=await call({action:"status",publish_id:j.publish_id});if(s.status==="PUBLISH_COMPLETE"){$("msg").textContent="انتشر ✓";break}if(s.status==="FAILED"){$("msg").className="msg err";$("msg").textContent="تيك توك رفض الفيديو: "+(s.fail_reason||"");break}}
+  const m=[$("msg").className,$("msg").textContent];await load();$("msg").className=m[0];$("msg").textContent=m[1]}catch(err){$("msg").className="msg err";$("msg").textContent=err.message;refresh()}});
+SB.auth.onAuthStateChange(()=>boot());boot();
+})();
+</script>

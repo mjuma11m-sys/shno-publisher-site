@@ -18,3 +18,9 @@ page("en.html", "Salfa Studio · About in English", "Salfa Studio is the in-hous
      open("en.src.html").read(), nav="en.html")
 stamp_index()
 print("pages built")
+page("studio.html", "النشر على تيك توك · Salfa Studio", "صفحة صاحب قناة «شنو السالفة؟» لنشر فيديوهات القناة على تيك توك بعد مراجعتها.",
+     open("studio.src.html").read())
+s = open("studio.html").read()
+if 'name="robots"' not in s:
+    open("studio.html", "w").write(s.replace("</head>", '<meta name="robots" content="noindex">\n</head>', 1))
+print("studio built")
