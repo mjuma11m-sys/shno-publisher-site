@@ -20,9 +20,13 @@
 .btn2{all:unset;cursor:pointer;text-align:center;background:var(--ac);color:#1a1300;font:900 1.02rem "Tajawal",sans-serif;padding:11px 22px;border-radius:999px}
 .btn2[disabled]{opacity:.4;cursor:not-allowed}.btn3{all:unset;cursor:pointer;color:var(--mut);text-decoration:underline;font-size:.88rem}
 .btn2:focus-visible,.btn3:focus-visible,.tog:focus-within,.st select:focus-visible,.st textarea:focus-visible,.st input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-.msg{min-height:1.5em;font-weight:600}.msg.err{color:#f87171}.msg.ok{color:var(--ok)}
+.msg{min-height:1.5em;font-weight:600}#gerr:empty{display:none}.msg.err{color:#f87171}.msg.ok{color:var(--ok)}
 .st fieldset{border:0;margin:0;padding:0;display:grid;gap:10px;min-width:0}.st legend{font-weight:600;margin-bottom:6px;padding:0}
 .ht{width:100%;border-collapse:collapse;font-size:.88rem}.ht th,.ht td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--line)}.ht th{color:var(--mut);font-weight:600}
+.phone{position:relative;max-width:300px;margin:0 auto;border-radius:30px;padding:8px;background:#000;border:1px solid var(--line)}
+.phone video,.phone .ph{border-radius:22px}
+.phone .ov{position:absolute;inset:auto 8px 8px 8px;border-radius:0 0 22px 22px;padding:40px 14px 14px;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#fff;font-size:.82rem;line-height:1.6;pointer-events:none}
+.phone .ov b{display:block;margin-bottom:4px}.phone .ov .tg{color:#9ecbff;font-weight:600}.phone .ai{display:inline-block;margin-top:6px;font-size:.7rem;background:rgba(255,255,255,.18);border-radius:6px;padding:1px 6px}
 @media (max-width:760px){.sgrid2{grid-template-columns:1fr}}
 </style>
 <div class="wrap"><section class="st" aria-labelledby="sth">
@@ -42,7 +46,7 @@
   <div class="sbox" id="conn" hidden><h2>اربط حساب تيك توك</h2><p class="hint">مرة وحدة بس. تيك توك بيطلب منك توافق على صلاحية النشر، وبعدها ترجع لهالصفحة.</p><div class="row" style="margin-top:10px"><button class="btn2" type="button" id="cb">اربط تيك توك</button></div></div>
   <div id="empty" class="sbox" hidden><h2>الطابور خلص</h2><p class="hint">ما في فيديو جاهز لتيك توك.</p></div>
   <form id="f" class="sgrid2" novalidate hidden>
-   <div class="sbox"><h2>المعاينة</h2><div id="pv"></div></div>
+   <div class="sbox"><h2>المعاينة</h2><div class="phone"><div id="pv"></div><div class="ov" aria-hidden="true"><b id="ovn"></b><span id="ovc"></span><br><span class="ai">AI-generated</span></div></div><p class="hint" style="margin-top:8px;text-align:center">شكل تقريبي للكابشن بتيك توك (أول 150 حرف)</p></div>
    <div class="sbox" style="display:grid;gap:16px">
     <label class="f">الفيديو <span class="cnt" id="qn"></span><select id="pick"></select></label>
     <label class="f">الكابشن <span class="cnt" id="cc"></span><textarea id="cap" maxlength="2200"></textarea></label>
@@ -79,7 +83,8 @@ const MUSIC='<a href="https://www.tiktok.com/legal/page/global/music-usage-confi
 const BRAND='<a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank" rel="noopener">Branded Content Policy</a>';
 let S=null,cur=null;
 async function call(body){const {data:{session}}=await SB.auth.getSession();const r=await fetch(FN,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+session.access_token,apikey:"sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla"},body:JSON.stringify(body)});const j=await r.json().catch(()=>({error:"رد غير مفهوم"}));if(!r.ok){const e=new Error(j.error||("خطأ "+r.status));e.missing=j.missing;throw e}return j}
-function refresh(){if(!cur)return;const priv=$("priv").value,disc=$("disc").checked,own=$("b-own").checked;$("discbox").hidden=!disc;const self=priv==="SELF_ONLY";$("b-paid").disabled=self;$("t-paid").setAttribute("aria-disabled",self);if(self)$("b-paid").checked=false;const paid=$("b-paid").checked;
+function ovcap(){const t=$("cap").value.replace(AI,"").trim();const short=t.length>150?t.slice(0,150)+"… المزيد":t;$("ovc").innerHTML=esc(short).replace(/(#[^\s#]+)/g,'<span class="tg">$1</span>');$("ovn").textContent=S&&S.creator.creator_username?"@"+S.creator.creator_username:""}
+function refresh(){if(!cur)return;ovcap();const priv=$("priv").value,disc=$("disc").checked,own=$("b-own").checked;$("discbox").hidden=!disc;const self=priv==="SELF_ONLY";$("b-paid").disabled=self;$("t-paid").setAttribute("aria-disabled",self);if(self)$("b-paid").checked=false;const paid=$("b-paid").checked;
  $("disclabel").textContent=disc?(paid?"بيطلع على الفيديو «شراكة مدفوعة» (Paid partnership).":own?"بيطلع على الفيديو «محتوى ترويجي» (Promotional content).":"اختار نوع واحد على الأقل."):"";
  $("consent").innerHTML="بالنشر، أنت توافق على "+(disc&&paid?BRAND+" و":"")+MUSIC+" من تيك توك.";
  $("cc").textContent=$("cap").value.length+" / 2200";$("go").disabled=!priv||!$("cap").value.trim()||(disc&&!own&&!paid)||!cur.media}
