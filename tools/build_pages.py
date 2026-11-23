@@ -20,7 +20,7 @@ page("contact.html", "تواصل معنا · شنو السالفة؟", "تواص
 page("ideas.html", "أفكار الحلقات · شنو السالفة؟", "اقترح موضوع حلقة لقناة «شنو السالفة؟» وصوّت للأفكار اللي تعجبك.", open("ideas.src.html").read(), nav="ideas.html")
 stamp_index()
 print("pages built")
-page("studio.html", "النشر على تيك توك · Salfa Studio", "صفحة صاحب قناة «شنو السالفة؟» لنشر فيديوهات القناة على تيك توك بعد مراجعتها.",
+page("studio.html", "النشر · Salfa Studio", "صفحة صاحب قناة «شنو السالفة؟» لنشر فيديوهات القناة على يوتيوب وتيك توك بعد مراجعتها.",
      open("studio.src.html").read())
 s = open("studio.html").read()
 if 'name="robots"' not in s:
