@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23T11:13+03:00",
+ "updated": "2026-11-23T11:18+03:00",
  "channel": {
   "subscribers": 21,
   "views": 16529,
@@ -452,6 +452,12 @@
    "subs": 21
   }
  ],
+ "week_topic": {
+  "name": "GTA والألعاب",
+  "gain": 4278,
+  "since": "2026-11-22",
+  "days": 1
+ },
  "comments": {
   "threads": 7,
   "unanswered": 1,

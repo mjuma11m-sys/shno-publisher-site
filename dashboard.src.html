@@ -3,7 +3,7 @@
 .dhead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
 .dhead h1{margin:0;font:900 clamp(1.6rem,3vw,2.2rem)/1.2 "Tajawal",sans-serif}
 .dhead p{margin:4px 0 0;color:var(--mut)}
-.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+.kgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .k{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;min-width:0}
 .k span{color:var(--mut);font-size:.85rem}
 .k b{display:block;font:900 2rem/1.15 "Tajawal",sans-serif;color:var(--fg);margin-top:4px;font-variant-numeric:tabular-nums}
@@ -72,7 +72,7 @@ let F="all";
 function draw(D){
  const c=D.channel;document.getElementById("upd2").textContent="آخر تحديث "+D.updated.slice(5,10).split("-").reverse().join("/")+" · "+D.updated.slice(11,16);
  const dl=v=>v>0?`<em>+${fmt(v)} من آخر سحبة</em>`:`<em class="zero">ما تغيّر</em>`;
- document.getElementById("kg").innerHTML=[["المشتركين",c.subscribers,dl(c.subs_delta)],["المشاهدات",fmt(c.views),dl(c.views_delta)],["الفيديوهات",c.videos,`<em class="zero">${D.videos.filter(v=>v.type==="long").length} طويلة · ${D.videos.filter(v=>v.type==="short").length} شورت</em>`],["أفضل فيديو",fmt(D.videos[0].views),`<em class="zero">${D.videos[0].title.slice(0,26)}…</em>`]].concat(D.comments?[["تعليقات تنطر رد",D.comments.unanswered,`<em class="zero">من ${D.comments.threads} تعليق · يوتيوب</em>`]]:[]).map(k=>`<div class="k"><span>${k[0]}</span><b>${k[1]}</b>${k[2]}</div>`).join("");
+ document.getElementById("kg").innerHTML=[["المشتركين",c.subscribers,dl(c.subs_delta)],["المشاهدات",fmt(c.views),dl(c.views_delta)],["الفيديوهات",c.videos,`<em class="zero">${D.videos.filter(v=>v.type==="long").length} طويلة · ${D.videos.filter(v=>v.type==="short").length} شورت</em>`],["أفضل فيديو",fmt(D.videos[0].views),`<em class="zero">${D.videos[0].title.slice(0,26)}…</em>`]].concat(D.week_topic?[["أقوى موضوع "+(D.week_topic.days>=7?"هالأسبوع":"من "+D.week_topic.since.slice(8)+"/"+D.week_topic.since.slice(5,7)),`<span style="font-size:1.3rem;line-height:1.5">${D.week_topic.name}</span>`,`<em>+${fmt(D.week_topic.gain)} مشاهدة</em>`]]:[]).concat(D.comments?[["تعليقات تنطر رد",D.comments.unanswered,`<em class="zero">من ${D.comments.threads} تعليق · يوتيوب</em>`]]:[]).map(k=>`<div class="k"><span>${k[0]}</span><b>${k[1]}</b>${k[2]}</div>`).join("");
  table(D);
  const H=D.history||[];if(H.length>1){const W=900,Ht=200,P=34,vs=H.map(h=>h.views),lo=Math.min(...vs),hi=Math.max(...vs),r=(hi-lo)||1;
   const X=i=>P+i*(W-2*P)/(H.length-1),Y=v=>Ht-P-(v-lo)/r*(Ht-2*P);const pts=H.map((h,i)=>X(i)+","+Y(h.views)).join(" ");
