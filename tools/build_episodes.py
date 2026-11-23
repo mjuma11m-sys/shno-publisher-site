@@ -360,6 +360,21 @@ def build():
     open("feed-shorts.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>'
         f'<title>شورتس شنو السالفة؟</title><link>{BASE}episodes.html</link><description>شورتس «شنو السالفة؟» باللهجة البحرينية</description><language>ar</language>'
         f'<atom:link href="{BASE}feed-shorts.xml" rel="self" type="application/rss+xml"/>{sitems}</channel></rss>\n')
+    # llms.txt: plain-text map of the site for AI search tools
+    L = ["# شنو السالفة؟ · Salfa Studio", "",
+         "> قناة بحرينية تشرح القصص الكبيرة باللهجة البحرينية، بمصدرين لكل رقم. هذا الموقع فيه ملخص كل حلقة وفصولها ومصادرها.",
+         "> A Bahraini Arabic explainer channel (YouTube/TikTok @shnoalsalfa_bh). Each episode page has a summary, chapters, sources and, where available, the full transcript.", "",
+         "## الحلقات / Episodes"]
+    for x in eps:
+        L.append(f"- [{x['title']}]({BASE}episode-{x['id']}.html): {parse(x['description'])[0][:200]}")
+    L += ["", "## المواضيع / Topics"]
+    for k, (slug, name, intro) in TOPIC_PAGES.items():
+        if any(topic(x["title"]) == k for x in eps + shorts):
+            L.append(f"- [{name}]({BASE}topic-{slug}.html): {intro}")
+    L += ["", "## عن الموقع / About", f"- [من نحن]({BASE}about.html): شلون نشتغل وقواعدنا وتصحيح الأخطاء",
+          f"- [English]({BASE}en.html): what Salfa Studio is, permissions and data handling", f"- [بحث]({BASE}search.html)",
+          f"- [RSS]({BASE}feed.xml)", ""]
+    open("llms.txt", "w").write("\n".join(L))
     # sitemap
     sm = open("sitemap.xml").read()
     sm = re.sub(r"<url><loc>[^<]*(?:episodes|episode-|topic-|short-|en\\.html)[^<]*</loc>.*?</url>", "", sm)

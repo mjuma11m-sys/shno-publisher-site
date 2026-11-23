@@ -1,0 +1,24 @@
+# شنو السالفة؟ · Salfa Studio
+
+> قناة بحرينية تشرح القصص الكبيرة باللهجة البحرينية، بمصدرين لكل رقم. هذا الموقع فيه ملخص كل حلقة وفصولها ومصادرها.
+> A Bahraini Arabic explainer channel (YouTube/TikTok @shnoalsalfa_bh). Each episode page has a summary, chapters, sources and, where available, the full transcript.
+
+## الحلقات / Episodes
+- [ليش الدينار البحريني غالي؟ (مو لأن البحرين أغنى من أمريكا)](https://salfa-studio.vercel.app/episode-ruFmH60jGrw.html): دينار واحد يساوي تقريباً 2.66 دولار… يعني البحرين أغنى من أمريكا؟ لا. هالحلقة تشرح ليش، وقصة الدينار من الروبية الهندية لليوم.
+- [سرقة الموناليزا: الوثائقي الكامل](https://salfa-studio.vercel.app/episode-aQrTHARZVI8.html): وثائقي كامل عن سرقة الموناليزا: من دافنشي وملوك فرنسا ونابليون، لليلة 21 أغسطس 1911 دقيقة بدقيقة، والجدار الفاضي، وتحقيق الشرطة والبصمة، واعتقال أبولينير والتحقيق مع بيكاسو، وسنتين بصندوق بقاع مخفي، و
+- [GTA 6: ليش لعبة وحدة صارت بهالحجم؟ القصة والأرقام](https://salfa-studio.vercel.app/episode-IUaW08O3GG0.html): GTA 6 تنزل 19 نوفمبر 2026 على PS5 وXbox Series. من لعبة صغيرة باسكتلندا 1997، لـ GTA V اللي جابت مليار دولار بثلاث أيام، لتأجيلات GTA 6 وكلفتها المقدّرة وسعرها 79.99$، وشنو علاقة صندوق الاستثمارات الع
+- [أول نفط بالخليج طلع من البحرين… بس ليش ما صارت أغنى دولة؟](https://salfa-studio.vercel.app/episode-EmYkYIhy8yk.html): قبل السعودية والكويت… أول بير نفط على الضفة العربية من الخليج طلع من البحرين سنة 1932. شلون؟ ومين «أبو النفط»؟ وليش البحرين ما صارت أغنى دولة نفطية؟
+- [إيران وأمريكا: القصة الكاملة من 1953 لين حرب 2026](https://salfa-studio.vercel.app/episode-F_lXv1wMpPE.html): من انقلاب 1953 لين حرب 2026: شنو السالفة بين إيران وأمريكا؟ وليش الخليج بالنص؟ وشنو دار بالمفاوضات؟ ووين رايحين؟
+
+## المواضيع / Topics
+- [GTA والألعاب](https://salfa-studio.vercel.app/topic-gta.html): قصة سلسلة GTA وأرقامها: المبيعات، الكلفة، التأجيلات، وعلاقة الخليج بصناعة الألعاب.
+- [إيران والخليج](https://salfa-studio.vercel.app/topic-iran-gulf.html): السالفة بين إيران وأمريكا والخليج: من 1953 لين مضيق هرمز والمفاوضات.
+- [الموناليزا](https://salfa-studio.vercel.app/topic-mona-lisa.html): سرقة الموناليزا سنة 1911 وكل اللي صار للوحة قبلها وبعدها.
+- [اقتصاد وفلوس](https://salfa-studio.vercel.app/topic-economy.html): ليش الدينار البحريني غالي، وشلون يشتغل الربط بالدولار، وسوالف الاقتصاد الخليجي.
+- [تاريخ البحرين](https://salfa-studio.vercel.app/topic-bahrain-history.html): من الغوص على اللؤلؤ لأول بير نفط بالخليج: قصص البحرين اللي غيّرت المنطقة.
+
+## عن الموقع / About
+- [من نحن](https://salfa-studio.vercel.app/about.html): شلون نشتغل وقواعدنا وتصحيح الأخطاء
+- [English](https://salfa-studio.vercel.app/en.html): what Salfa Studio is, permissions and data handling
+- [بحث](https://salfa-studio.vercel.app/search.html)
+- [RSS](https://salfa-studio.vercel.app/feed.xml)
