@@ -39,6 +39,8 @@
 .topics{display:flex;gap:8px;flex-wrap:wrap}.topics a{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;color:var(--fg);text-decoration:none}.topics a:hover{color:var(--ac)}.topics small{color:var(--mut)}
 .pn{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pn a{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 16px;color:var(--fg);text-decoration:none;display:grid;gap:2px;line-height:1.5}.pn a:hover{color:var(--ac)}.pn a.old{text-align:left}.pn small{color:var(--mut)}
 @media (max-width:600px){.pn{grid-template-columns:1fr}.pn a.old{text-align:right}}
+.tk{margin:0;padding:0;list-style:none;counter-reset:k;display:grid;gap:10px}.tk li{counter-increment:k;display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start;line-height:1.8}
+.tk li::before{content:counter(k);width:32px;height:32px;border-radius:50%;background:var(--ac);color:#1a1300;font:900 1rem/32px "Tajawal",sans-serif;text-align:center}
 .chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
 .chips button[aria-pressed="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac);font-weight:700}.chips button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
@@ -58,6 +60,7 @@
 <div class="ecols">
  <div style="display:grid;gap:20px;align-content:start">
   <section class="box"><h2>شنو السالفة؟</h2><p class="lead">وثائقي كامل عن سرقة الموناليزا: من دافنشي وملوك فرنسا ونابليون، لليلة 21 أغسطس 1911 دقيقة بدقيقة، والجدار الفاضي، وتحقيق الشرطة والبصمة، واعتقال أبولينير والتحقيق مع بيكاسو، وسنتين بصندوق بقاع مخفي، والفخ بفلورنسا، والعودة للوفر 1914، والهجمات على اللوحة، وسرقة مجوهرات اللوفر 2025.</p></section>
+  <section class="box"><h2>شنو تعلمنا</h2><ol class="tk"><li>الموناليزا انسرقت من متحف اللوفر في أغسطس 1911.</li><li>اللوحة ظلت سنتين بصندوق بقاع مخفي.</li><li>رجعت للوفر سنة 1914 بعد فخ بفلورنسا.</li></ol></section>
   <section class="box"><h2>المصادر والحقوق</h2><ul class="cred"><li>📚 المصادر: متحف اللوفر · بريتانيكا · History.com · History Hit · History Today · The Collector · Europeana · تقارير صحفية عن سرقة 2025</li><li>📷 الصور الأرشيفية: ويكيميديا كومنز (ملكية عامة) · الرسوم توضيحية مولّدة ومحرّكة بالذكاء الاصطناعي</li><li>🎵 الموسيقى والمؤثرات مولّدة بالذكاء الاصطناعي</li><li>🎙️ التعليق الصوتي بالذكاء الاصطناعي</li><li>⚠️ الصوت مولّد بالذكاء الاصطناعي · الرسوم البيانية توضيحية</li></ul></section>
   <div class="tags"><span>#الموناليزا</span><span>#وثائقي</span><span>#شنو_السالفة</span></div>
  </div>
