@@ -128,7 +128,7 @@ async function boot(){const {data:{session}}=await SB.auth.getSession();$("login
 $("cb").addEventListener("click",async()=>{const a=new Uint8Array(24);crypto.getRandomValues(a);const st="studio-"+Array.from(a,b=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b%62]).join("");
  try{sessionStorage.setItem("tt_state",st)}catch(e){}try{const j=await call({action:"auth_url",state:st});location.href=j.url}catch(e){$("gerr").textContent=e.message}});
 $("lf").addEventListener("submit",async e=>{e.preventDefault();const em=$("em").value.trim();if(!em){$("lm").textContent="اكتب الإيميل";return}if($("lb").disabled)return;$("lb").disabled=true;
- const {error}=await SB.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+location.pathname}});
+ const {error}=await SB.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+location.pathname,shouldCreateUser:false}});
  $("lm").className="msg "+(error?"err":"ok");$("lm").textContent=error?("ما انرسل: "+error.message):"انرسل. افتح آخر إيميل وصلك واضغط الرابط. الرابط يشتغل مرة وحدة.";
  let n=60;const t=setInterval(()=>{n--;$("lb").textContent=n>0?("انتظر "+n+" ثانية"):"أرسل رابط الدخول";if(n<=0){clearInterval(t);$("lb").disabled=false}},1000)});
 (function(){const h=new URLSearchParams(location.hash.slice(1)),q=new URLSearchParams(location.search);const err=h.get("error_description")||q.get("error_description");if(err){$("lm").className="msg err";$("lm").textContent="الرابط ما اشتغل ("+err.replace(/\+/g," ")+"). أرسل رابط جديد وافتح آخر إيميل بس.";}})();
