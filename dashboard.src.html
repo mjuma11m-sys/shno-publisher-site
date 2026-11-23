@@ -14,11 +14,11 @@
 .card2 h2{margin:0 0 4px;font-size:1.1rem}
 .card2 .sub{color:var(--mut);font-size:.85rem;margin:0 0 14px}
 .bars{display:flex;flex-direction:column;gap:9px}
-.bar{display:grid;grid-template-columns:minmax(0,1fr) 54px;gap:10px;align-items:center}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) 104px;gap:10px;align-items:center}
 .bar .lbl{font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bar .track{grid-column:1/-1;height:10px;border-radius:999px;background:var(--bg2);overflow:hidden;margin-top:-4px}
 .bar .fill{height:100%;border-radius:999px}
-.bar .num{font-variant-numeric:tabular-nums;color:var(--mut);font-size:.85rem;text-align:left;direction:ltr}
+.bar .bnum{font-variant-numeric:tabular-nums;color:var(--mut);font-size:.85rem;direction:ltr;display:flex;align-items:center;justify-content:flex-start;gap:6px;white-space:nowrap}
 .tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
 .tabs button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
 .tabs button[aria-pressed="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac);font-weight:700}
@@ -69,6 +69,7 @@
 const ZC={"GTA والألعاب":"#ec4899","إيران والخليج":"#f59e0b","الموناليزا":"#8b5cf6","اقتصاد":"#10b981","تاريخ البحرين":"#3b82f6","أخرى":"#94a3b8"};
 const AS={done:["✓","#1f883d"],ready:["●","#2563eb"],keys:["🔑","#b7791f"],todo:["…","#475569"],off:["✕","#7f1d1d"]};
 const fmt=n=>n.toLocaleString("en");
+const spark=(a,c)=>{if(a.length<2)return"";const lo=Math.min(...a),hi=Math.max(...a),r=(hi-lo)||1,w=40,hh=14;const pts=a.map((v,i)=>(i*w/(a.length-1)).toFixed(1)+","+(hh-1-(v-lo)/r*(hh-2)).toFixed(1)).join(" ");return`<svg width="${w}" height="${hh}" viewBox="0 0 ${w} ${hh}" aria-hidden="true" style="vertical-align:middle;margin-inline-end:6px"><polyline points="${pts}" fill="none" style="stroke:${c}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>`};
 let F="all";
 function draw(D){
  const c=D.channel;document.getElementById("upd2").textContent="آخر تحديث "+D.updated.slice(5,10).split("-").reverse().join("/")+" · "+D.updated.slice(11,16);
@@ -79,7 +80,7 @@ function draw(D){
   const X=i=>P+i*(W-2*P)/(H.length-1),Y=v=>Ht-P-(v-lo)/r*(Ht-2*P);const pts=H.map((h,i)=>X(i)+","+Y(h.views)).join(" ");
   document.getElementById("hc").innerHTML=`<svg viewBox="0 0 ${W} ${Ht}" width="100%" role="img" aria-label="المشاهدات من ${H[0].d} إلى ${H[H.length-1].d}" style="max-width:100%;height:auto;font:12px Tajawal,sans-serif"><polygon points="${X(0)},${Ht-P} ${pts} ${X(H.length-1)},${Ht-P}" style="fill:var(--ac);fill-opacity:.15"/><polyline points="${pts}" fill="none" stroke="var(--ac)" stroke-width="3" stroke-linejoin="round"/>${H.map((h,i)=>`<circle cx="${X(i)}" cy="${Y(h.views)}" r="4.5" fill="var(--ac)"><title>${h.d}: ${fmt(h.views)}</title></circle>`).join("")}${[0,H.length-1].map(i=>`<text x="${X(i)}" y="${Ht-10}" text-anchor="${i?"end":"start"}" fill="var(--mut)">${H[i].d.slice(8)}/${H[i].d.slice(5,7)}</text><text x="${X(i)}" y="${Y(H[i].views)-12}" text-anchor="${i?"end":"start"}" fill="var(--fg)" font-weight="700">${fmt(H[i].views)}</text>`).join("")}</svg>`;
   document.getElementById("hsub").textContent=`مجموع مشاهدات القناة · ${H.length} سحبات · كل يوم تنضاف نقطة`;}
- const mx=Math.max(...D.topics.map(t=>t.views));document.getElementById("tp").innerHTML=D.topics.map(t=>`<div class="bar"><span class="lbl">${t.name} <span class="tag">${t.n}</span></span><span class="num">${fmt(t.views)}</span><div class="track"><div class="fill" style="width:${(t.views/mx*100).toFixed(1)}%;background:${ZC[t.name]||"#94a3b8"}"></div></div></div>`).join("");
+ const mx=Math.max(...D.topics.map(t=>t.views));document.getElementById("tp").innerHTML=D.topics.map(t=>`<div class="bar"><span class="lbl">${t.name} <span class="tag">${t.n}</span></span><span class="bnum">${spark(t.series||[],ZC[t.name]||"#94a3b8")}${fmt(t.views)}</span><div class="track"><div class="fill" style="width:${(t.views/mx*100).toFixed(1)}%;background:${ZC[t.name]||"#94a3b8"}"></div></div></div>`).join("");
  document.getElementById("ap").innerHTML=D.approvals.map(a=>`<div><i style="background:${AS[a.state][1]};color:#fff">${AS[a.state][0]}</i><span><b>${a.name}</b><small>${a.note}</small></span></div>`).join("");
  document.getElementById("ls").innerHTML=D.lessons.length?D.lessons.slice().reverse().map(l=>`<li><b>${{shorts:"صانع الشورتات",showrunner:"المنتج المنفذ",publisher:"الناشر",writer:"الكاتب",researcher:"الباحث",factchecker:"المدقق",standards:"مراجع المعايير",designer:"المصمم",editor:"المونتير",sound:"مهندس الصوت",analyst:"المحلل",illustrator:"الرسام"}[l.agent]||l.agent}</b>${l.text}</li>`).join(""):"<li>ما في دروس للحين.</li>";
  document.getElementById("qp").innerHTML=(D.queue||[]).map(q=>`<div><h3>${q.label}<span>${q.done} من ${q.total} منشور</span></h3>${q.total-q.done<14?`<p class="qwarn" role="note">⚠️ باقي ${q.total-q.done} شورت بس، يعني أقل من أسبوعين. نحتاج شورتات جديدة.</p>`:`<p class="qok">باقي ${q.total-q.done} شورت · تكفي تقريباً ${q.total-q.done} يوم</p>`}<div class="track" style="height:10px;border-radius:999px;background:var(--bg2);overflow:hidden"><div style="height:100%;width:${(q.done/q.total*100).toFixed(1)}%;background:var(--ac);border-radius:999px"></div></div><ol>${q.next.map(n=>`<li>${n.text}</li>`).join("")||"<li>الطابور خلص</li>"}</ol></div>`).join("");
