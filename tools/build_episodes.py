@@ -73,6 +73,15 @@ TOPICS = {"GTA والألعاب": ["gta", "minecraft", "روكستار"], "إي�
           "اقتصاد": ["دينار", "ضريبة", "دولار", "ألمنيوم", "الألمنيوم"], "تاريخ البحرين": ["البحرين", "المنامة", "اللؤلؤ", "نفط", "هولمز", "الغواص"]}
 
 
+TOPIC_PAGES = {
+    "GTA والألعاب": ("gta", "GTA والألعاب", "قصة سلسلة GTA وأرقامها: المبيعات، الكلفة، التأجيلات، وعلاقة الخليج بصناعة الألعاب."),
+    "إيران والخليج": ("iran-gulf", "إيران والخليج", "السالفة بين إيران وأمريكا والخليج: من 1953 لين مضيق هرمز والمفاوضات."),
+    "الموناليزا": ("mona-lisa", "الموناليزا", "سرقة الموناليزا سنة 1911 وكل اللي صار للوحة قبلها وبعدها."),
+    "اقتصاد": ("economy", "اقتصاد وفلوس", "ليش الدينار البحريني غالي، وشلون يشتغل الربط بالدولار، وسوالف الاقتصاد الخليجي."),
+    "تاريخ البحرين": ("bahrain-history", "تاريخ البحرين", "من الغوص على اللؤلؤ لأول بير نفط بالخليج: قصص البحرين اللي غيّرت المنطقة."),
+}
+
+
 def topic(t):
     t = t.lower()
     return next((k for k, w in TOPICS.items() if any(x in t for x in w)), "أخرى")
@@ -134,7 +143,7 @@ CSS = """<style>
 .ep{padding-block:28px 8px;display:grid;gap:20px}
 .crumb{color:var(--mut);font-size:.88rem}.crumb a{color:var(--mut)}
 .ep h1{margin:0;font:900 clamp(1.5rem,3.2vw,2.3rem)/1.3 "Tajawal",sans-serif;text-wrap:balance}
-.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--mut);font-size:.88rem}.meta span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:var(--bg2)}
+.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--mut);font-size:.88rem}.meta a{color:var(--fg);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:var(--bg2)}.meta a:hover{color:var(--ac)}.meta span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:var(--bg2)}
 .poster{position:relative;display:block;border-radius:20px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/9;max-width:100%;background:var(--bg2)}
 .poster img{width:100%;height:100%;object-fit:cover;display:block}
 .poster span{position:absolute;inset-inline-start:16px;bottom:16px;background:#d92b2b;color:#fff;font-weight:800;padding:10px 18px;border-radius:999px}
@@ -152,6 +161,7 @@ CSS = """<style>
 .card3 img{aspect-ratio:16/9;width:100%;object-fit:cover;display:block;background:var(--bg2)}
 .card3 div{padding:12px 14px;display:grid;gap:6px}.card3 b{line-height:1.5}.card3 small{color:var(--mut)}
 .card3:hover b{color:var(--ac)}
+.topics{display:flex;gap:8px;flex-wrap:wrap}.topics a{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;color:var(--fg);text-decoration:none}.topics a:hover{color:var(--ac)}.topics small{color:var(--mut)}
 .chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
 .chips button[aria-pressed="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac);font-weight:700}.chips button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
@@ -197,7 +207,7 @@ def build():
         body = f"""{CSS}<div class="wrap"><article class="ep">
 <nav class="crumb" aria-label="مسار الصفحة"><a href="episodes.html">الحلقات</a> ‹ {e_(e['title'][:40])}</nav>
 <h1>{e_(e['title'])}</h1>
-<div class="meta"><span class="pill">{ardate(e['published'])}</span><span class="pill">{mmss(e['secs'])} دقيقة</span><span class="pill">باللهجة البحرينية</span></div>
+<div class="meta"><span class="pill">{ardate(e['published'])}</span><span class="pill">{mmss(e['secs'])} دقيقة</span>{f'<a class="pill" href="topic-{TOPIC_PAGES[topic(e["title"])][0]}.html">{TOPIC_PAGES[topic(e["title"])][1]}</a>' if topic(e["title"]) in TOPIC_PAGES else '<span class="pill">باللهجة البحرينية</span>'}</div>
 <a class="poster" href="{watch}" target="_blank" rel="noopener"><img src="{thumb}" alt="غلاف حلقة {e_(e['title'])}" loading="eager" width="1280" height="720"><span>▶ شوف الحلقة على يوتيوب</span></a>
 <div class="ecols">
  <div style="display:grid;gap:20px;align-content:start">
@@ -225,6 +235,28 @@ def build():
           "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": f"{BASE}episode-{e['id']}.html"} for i, e in enumerate(eps)]}
     body = f"""{CSS}<div class="wrap"><section class="ep"><div><h1>الحلقات</h1><p style="color:var(--mut);margin:6px 0 0">كل حلقات «شنو السالفة؟» الطويلة: الملخص والفصول ومصادر كل حلقة.</p></div><div class="grid">{cards}</div>{shorts_html}</section></div>"""
     page("episodes.html", "الحلقات · شنو السالفة؟", "كل حلقات «شنو السالفة؟» باللهجة البحرينية: الحلقات الطويلة بملخصها وفصولها ومصادرها، والشورتس حسب الموضوع.", body, nav="episodes.html", ld=ld)
+    # topic hubs
+    topic_links = []
+    for key, (slug, name, intro) in TOPIC_PAGES.items():
+        te = [x for x in eps if topic(x["title"]) == key]
+        ts = [x for x in shorts if topic(x["title"]) == key]
+        if not te and not ts:
+            continue
+        topic_links.append(f'<a href="topic-{slug}.html">{name} <small>{len(te) + len(ts)}</small></a>')
+        tcards = "".join(f'<a class="card3" href="episode-{x["id"]}.html"><img src="https://i.ytimg.com/vi/{x["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><b>{e_(x["title"])}</b><small>{ardate(x["published"])} · {mmss(x["secs"])} دقيقة</small></div></a>' for x in te)
+        ttiles = "".join(f'<a class="sh" href="https://www.youtube.com/shorts/{x["id"]}" target="_blank" rel="noopener"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in ts)
+        tbody = (f'{CSS}<div class="wrap"><section class="ep"><nav class="crumb" aria-label="مسار الصفحة"><a href="episodes.html">الحلقات</a> ‹ {name}</nav>'
+                 f'<div><h1>{name}</h1><p class="lead" style="color:var(--mut);margin-top:6px">{intro}</p></div>'
+                 + (f'<h2 style="margin:0;font-size:1.2rem">الحلقات</h2><div class="grid">{tcards}</div>' if te else "")
+                 + (f'<h2 style="margin:8px 0 0;font-size:1.2rem">الشورتس</h2><div class="sgrid">{ttiles}</div>' if ts else "")
+                 + '</section></div>')
+        tld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": f"{name} · شنو السالفة؟", "description": intro,
+               "hasPart": [{"@type": "VideoObject", "name": x["title"], "url": f"{BASE}episode-{x['id']}.html"} for x in te]}
+        page(f"topic-{slug}.html", f"{name} · شنو السالفة؟", intro, tbody, nav="episodes.html", ld=tld)
+    if topic_links:
+        hub = '<nav class="topics" aria-label="المواضيع">' + "".join(topic_links) + "</nav>"
+        txt = open("episodes.html").read().replace('<div class="grid">', hub + '<div class="grid">', 1)
+        open("episodes.html", "w").write(txt)
     # RSS feed
     from email.utils import format_datetime
     import datetime as dt
@@ -237,9 +269,10 @@ def build():
         f'<atom:link href="{BASE}feed.xml" rel="self" type="application/rss+xml"/>{items}</channel></rss>\n')
     # sitemap
     sm = open("sitemap.xml").read()
-    sm = re.sub(r"<url><loc>[^<]*(?:episodes|episode-|en\\.html)[^<]*</loc>.*?</url>", "", sm)
+    sm = re.sub(r"<url><loc>[^<]*(?:episodes|episode-|topic-|en\\.html)[^<]*</loc>.*?</url>", "", sm)
     add = "".join(f"<url><loc>{BASE}{p}</loc><lastmod>{d}</lastmod></url>" for p, d in
-                  [("episodes.html", eps[0]["published"][:10]), ("en.html", "2026-11-23")] + [(f"episode-{e['id']}.html", e["published"][:10]) for e in eps])
+                  [("episodes.html", eps[0]["published"][:10]), ("en.html", "2026-11-23")] + [(f"episode-{e['id']}.html", e["published"][:10]) for e in eps]
+                  + [(f"topic-{v[0]}.html", eps[0]["published"][:10]) for k, v in TOPIC_PAGES.items() if any(topic(x["title"]) == k for x in eps + shorts)])
     open("sitemap.xml", "w").write(sm.replace("</urlset>", add + "</urlset>"))
     print("built", len(eps), "episode pages")
 
