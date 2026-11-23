@@ -40,6 +40,7 @@ def fetch():
             s = v["snippet"]
             if secs < 180:
                 shorts.append({"id": v["id"], "title": re.sub(r"\s#\S+", "", s["title"]).strip(), "published": s["publishedAt"],
+                               "duration": v["contentDetails"]["duration"], "description": s["description"],
                                "thumb": next(s["thumbnails"][k]["url"] for k in ("high", "medium", "default") if k in s["thumbnails"])})
                 continue
             eps.append({"id": v["id"], "title": s["title"], "published": s["publishedAt"], "duration": v["contentDetails"]["duration"],
@@ -166,6 +167,7 @@ CSS = """<style>
 @media (max-width:600px){.pn{grid-template-columns:1fr}.pn a.old{text-align:right}}
 .tk{margin:0;padding:0;list-style:none;counter-reset:k;display:grid;gap:10px}.tk li{counter-increment:k;display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start;line-height:1.8}
 .tk li::before{content:counter(k);width:32px;height:32px;border-radius:50%;background:var(--ac);color:#1a1300;font:900 1rem/32px "Tajawal",sans-serif;text-align:center}
+.card3 small{color:var(--mut)}
 .chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
 .chips button[aria-pressed="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac);font-weight:700}.chips button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
@@ -207,7 +209,7 @@ def build():
                            "url": f"{watch}&t={c['t']}s"} for i, c in enumerate(chapters)]}
         rel = [x for x in shorts if topic(x["title"]) == topic(e["title"]) != "أخرى"][:6]
         rel_html = ("" if not rel else '<section class="box"><h2>شورتس من نفس الموضوع</h2><div class="sgrid">'
-                    + "".join(f'<a class="sh" href="https://www.youtube.com/shorts/{x["id"]}" target="_blank" rel="noopener"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in rel) + "</div></section>")
+                    + "".join(f'<a class="sh" href="short-{x["id"]}.html"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in rel) + "</div></section>")
         newer, older = (eps[i - 1] if i > 0 else None), (eps[i + 1] if i + 1 < len(eps) else None)
         pn_html = ('<nav class="pn" aria-label="حلقات ثانية">'
                    + (f'<a href="episode-{newer["id"]}.html" rel="next"><small>الحلقة الأحدث</small>{e_(newer["title"])}</a>' if newer else "<span></span>")
@@ -242,7 +244,7 @@ def build():
     if shorts:
         used = [k for k in list(TOPICS) + ["أخرى"] if any(topic(x["title"]) == k for x in shorts)]
         chips = '<button type="button" data-t="" aria-pressed="true">الكل</button>' + "".join(f'<button type="button" data-t="{k}" aria-pressed="false">{k}</button>' for k in used)
-        tiles = "".join(f'<a class="sh" data-t="{topic(x["title"])}" href="https://www.youtube.com/shorts/{x["id"]}" target="_blank" rel="noopener"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in shorts)
+        tiles = "".join(f'<a class="sh" data-t="{topic(x["title"])}" href="short-{x["id"]}.html"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in shorts)
         shorts_html = (f'<div style="display:grid;gap:12px;margin-top:12px"><h2 style="margin:0;font:900 1.5rem Tajawal,sans-serif">الشورتس <small style="color:var(--mut);font-size:.9rem;font-weight:400">{len(shorts)}</small></h2>'
                        f'<div class="chips" role="group" aria-label="الموضوع">{chips}</div><div class="sgrid">{tiles}</div></div>'
                        '<script>document.querySelectorAll(".chips button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".chips button").forEach(x=>x.setAttribute("aria-pressed",x===b));document.querySelectorAll(".sh").forEach(a=>a.hidden=!!b.dataset.t&&a.dataset.t!==b.dataset.t)}))</script>')
@@ -260,7 +262,7 @@ def build():
             continue
         topic_links.append(f'<a href="topic-{slug}.html">{name} <small>{len(te) + len(ts)}</small></a>')
         tcards = "".join(f'<a class="card3" href="episode-{x["id"]}.html"><img src="https://i.ytimg.com/vi/{x["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><b>{e_(x["title"])}</b><small>{ardate(x["published"])} · {mmss(x["secs"])} دقيقة</small></div></a>' for x in te)
-        ttiles = "".join(f'<a class="sh" href="https://www.youtube.com/shorts/{x["id"]}" target="_blank" rel="noopener"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in ts)
+        ttiles = "".join(f'<a class="sh" href="short-{x["id"]}.html"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in ts)
         tbody = (f'{CSS}<div class="wrap"><section class="ep"><nav class="crumb" aria-label="مسار الصفحة"><a href="episodes.html">الحلقات</a> ‹ {name}</nav>'
                  f'<div><h1>{name}</h1><p class="lead" style="color:var(--mut);margin-top:6px">{intro}</p></div>'
                  + (f'<h2 style="margin:0;font-size:1.2rem">الحلقات</h2><div class="grid">{tcards}</div>' if te else "")
@@ -273,6 +275,29 @@ def build():
         hub = '<nav class="topics" aria-label="المواضيع">' + "".join(topic_links) + "</nav>"
         txt = open("episodes.html").read().replace('<div class="grid">', hub + '<div class="grid">', 1)
         open("episodes.html", "w").write(txt)
+    # per-short pages
+    for x in shorts:
+        k = topic(x["title"])
+        parent = next((y for y in eps if topic(y["title"]) == k), None) if k != "أخرى" else None
+        yurl = f"https://www.youtube.com/shorts/{x['id']}"
+        desc = (x.get("description") or "").split("\n")[0].strip() or x["title"]
+        desc = re.sub(r"\s*#\S+", "", desc).strip() or x["title"]
+        sld = {"@context": "https://schema.org", "@type": "VideoObject", "name": x["title"], "description": desc,
+               "thumbnailUrl": [x["thumb"]], "uploadDate": x["published"], "inLanguage": "ar", "url": f"{BASE}short-{x['id']}.html",
+               "embedUrl": f"https://www.youtube.com/embed/{x['id']}", "publisher": {"@type": "Organization", "name": "شنو السالفة؟", "url": BASE}}
+        if x.get("duration"):
+            sld["duration"] = x["duration"]
+        sb = (f'{CSS}<div class="wrap"><article class="ep" style="max-width:720px">'
+              f'<nav class="crumb" aria-label="مسار الصفحة"><a href="episodes.html">الحلقات</a> ‹ شورت</nav>'
+              f'<h1>{e_(x["title"])}</h1>'
+              f'<div class="meta"><span>{ardate(x["published"])}</span>'
+              + (f'<a href="topic-{TOPIC_PAGES[k][0]}.html">{TOPIC_PAGES[k][1]}</a>' if k in TOPIC_PAGES else "") + '</div>'
+              f'<div style="display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:20px;align-items:start" class="scol">'
+              f'<a class="sh" href="{yurl}" target="_blank" rel="noopener"><img src="{x["thumb"]}" alt="غلاف شورت {e_(x["title"])}" width="480" height="360"><span>▶ شوف على يوتيوب</span></a>'
+              f'<div style="display:grid;gap:16px"><section class="box"><h2>عن الشورت</h2><p class="lead">{e_(desc)}</p></section>'
+              + (f'<a class="card3" href="episode-{parent["id"]}.html"><img src="https://i.ytimg.com/vi/{parent["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><small>الحلقة الكاملة</small><b>{e_(parent["title"])}</b></div></a>' if parent else "")
+              + '</div></div></article></div><style>@media (max-width:640px){.scol{grid-template-columns:1fr!important}.scol .sh{max-width:260px}}</style>')
+        page(f"short-{x['id']}.html", f"{x['title']} · شنو السالفة؟", desc[:155], sb, nav="episodes.html", image=x["thumb"], og_type="video.other", ld=sld)
     # search index + page
     idx = []
     for x in eps:
@@ -284,7 +309,7 @@ def build():
         if any(topic(x["title"]) == k for x in eps + shorts):
             idx.append({"u": f"topic-{slug}.html", "k": "موضوع", "t": name, "s": intro, "c": "", "x": ""})
     for x in shorts:
-        idx.append({"u": f"https://www.youtube.com/shorts/{x['id']}", "k": "شورت", "t": x["title"], "s": "", "c": "", "x": ""})
+        idx.append({"u": f"short-{x['id']}.html", "k": "شورت", "t": x["title"], "s": "", "c": "", "x": ""})
     json.dump(idx, open("data/search.json", "w"), ensure_ascii=False)
     sbody = CSS + open("search.src.html").read()
     page("search.html", "بحث · شنو السالفة؟", "ابحث في حلقات «شنو السالفة؟»: العناوين والفصول والنص الكامل.", sbody, nav="search.html")
@@ -300,9 +325,10 @@ def build():
         f'<atom:link href="{BASE}feed.xml" rel="self" type="application/rss+xml"/>{items}</channel></rss>\n')
     # sitemap
     sm = open("sitemap.xml").read()
-    sm = re.sub(r"<url><loc>[^<]*(?:episodes|episode-|topic-|en\\.html)[^<]*</loc>.*?</url>", "", sm)
+    sm = re.sub(r"<url><loc>[^<]*(?:episodes|episode-|topic-|short-|en\\.html)[^<]*</loc>.*?</url>", "", sm)
     add = "".join(f"<url><loc>{BASE}{p}</loc><lastmod>{d}</lastmod></url>" for p, d in
                   [("episodes.html", eps[0]["published"][:10]), ("en.html", "2026-11-23")] + [(f"episode-{e['id']}.html", e["published"][:10]) for e in eps]
+                  + [(f"short-{x['id']}.html", x["published"][:10]) for x in shorts]
                   + [(f"topic-{v[0]}.html", eps[0]["published"][:10]) for k, v in TOPIC_PAGES.items() if any(topic(x["title"]) == k for x in eps + shorts)])
     open("sitemap.xml", "w").write(sm.replace("</urlset>", add + "</urlset>"))
     print("built", len(eps), "episode pages")
