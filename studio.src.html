@@ -72,6 +72,7 @@
     <div class="row"><button class="btn2" id="go" type="submit" disabled>انشر على تيك توك</button><button class="btn2" id="dr" type="button" hidden style="background:var(--bg2);color:var(--fg);border:1px solid var(--line)">أرسل كمسودة لتطبيق تيك توك</button><span class="msg" id="msg" role="status" aria-live="polite"></span></div>
    </div>
   </form>
+  <section class="sbox" id="hitsbox"><h2>زيارات الموقع <span class="hint" id="hitn"></span></h2><p class="hint" style="margin-bottom:10px">كم مرة انفتحت كل صفحة بآخر 7 أيام. أرقام إجمالية بس، بدون أي معلومة عن الزوار.</p><div id="hitd" style="display:flex;gap:4px;align-items:flex-end;height:60px;margin-bottom:10px" aria-hidden="true"></div><ol id="hitl" style="margin:0;padding-inline-start:20px;display:grid;gap:4px;font-size:.9rem"></ol></section>
   <section class="sbox" id="ideasbox"><h2>أفكار الحلقات <span class="hint" id="idn"></span></h2><p class="hint" style="margin-bottom:10px">من <a href="ideas.html">صفحة الأفكار</a>. الفكرة الجديدة ما تطلع للناس إلا لما تضغط «انشرها».</p><div id="idl" style="display:grid;gap:10px"></div></section>
   <section class="sbox" id="inbox"><h2>رسائل الزوار <span class="hint" id="inbn"></span></h2><p class="hint" style="margin-bottom:10px">من <a href="contact.html">صفحة التواصل</a>. التصحيحات تطلع أول.</p><div id="inbl" style="display:grid;gap:10px"></div></section>
   <section class="sbox" id="hist" hidden><h2>آخر المنشورات من هالصفحة</h2><div style="overflow-x:auto"><table class="ht"><thead><tr><th>الوقت</th><th>الفيديو</th><th>منو يشوفه</th><th>الحالة</th></tr></thead><tbody id="hb"></tbody></table></div></section>
@@ -110,7 +111,7 @@ async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").
  const c=S.creator;$("nick").textContent=c.creator_nickname||"";$("user").textContent=c.creator_username?"@"+c.creator_username:"";
  $("av").innerHTML=c.creator_avatar_url?`<img src="${esc(c.creator_avatar_url)}" alt="">`:"؟";
  let locked=false;for(const k of ["comment","duet","stitch"]){const d=!!c[k+"_disabled"];$("c-"+k).disabled=d;$("t-"+k).setAttribute("aria-disabled",d);locked=locked||d}$("lockhint").hidden=!locked;
- renderHistory(S.history||[]);loadInbox();loadIdeas();$("dr").hidden=!S.drafts;show()}
+ renderHistory(S.history||[]);loadInbox();loadIdeas();loadHits();$("dr").hidden=!S.drafts;show()}
 async function startTT(errEl){const a=new Uint8Array(24);crypto.getRandomValues(a);const st="studio-"+Array.from(a,b=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b%62]).join("");
  try{sessionStorage.setItem("tt_state",st)}catch(e){}try{const j=await call({action:"auth_url",state:st});location.href=j.url}catch(e){errEl.className="msg err";errEl.textContent=e.message==="SETUP"?"الإعداد ما خلص: ناقص "+(e.missing||[]).join("، "):e.message}}
 async function boot(){
@@ -132,6 +133,12 @@ $("out").addEventListener("click",async()=>{try{localStorage.removeItem("salfa_s
 $("f").addEventListener("input",e=>{if(e.target.id!=="pick")refresh()});
 $("pick").addEventListener("change",e=>show(e.target.value));
 const MS={new:"جديدة",seen:"انقرت",done:"خلصت"};
+const PN=p=>({"/":"الرئيسية","/episodes.html":"الحلقات","/ideas.html":"أفكار الحلقات","/contact.html":"تواصل","/search.html":"بحث","/dashboard.html":"لوحة التحكم","/about.html":"من نحن","/office.html":"المكتب","/studio.html":"صفحة النشر","/en.html":"English"})[p]||p.replace(/^\//,"");
+let TN=null;async function titles(){if(TN)return TN;TN={};try{const [e,sh]=await Promise.all(["data/episodes.json","data/shorts.json"].map(u=>fetch(u).then(r=>r.ok?r.json():[]).catch(()=>[])));
+ e.forEach(x=>TN["/episode-"+x.id.toLowerCase()+".html"]=x.title);sh.forEach(x=>TN["/short-"+x.id.toLowerCase()+".html"]="شورت: "+x.title)}catch(x){}return TN}
+async function loadHits(){try{const [j,tn]=await Promise.all([call({action:"hits"}),titles()]);$("hitn").textContent=j.total+" زيارة";const mx=Math.max(1,...j.days.map(d=>d.hits));
+ $("hitd").innerHTML=j.days.map(d=>`<div title="${d.day}: ${d.hits}" style="flex:1;background:var(--ac);opacity:.85;border-radius:4px 4px 0 0;height:${Math.max(4,Math.round(d.hits/mx*56))}px"></div>`).join("");
+ $("hitl").innerHTML=j.pages.length?j.pages.map(x=>`<li><span style="display:inline-block;min-width:3.5em;font-variant-numeric:tabular-nums;color:var(--ac)">${x.hits}</span>${esc(tn[x.path]||PN(x.path))}</li>`).join(""):"<li class='hint'>ما في زيارات للحين.</li>"}catch(e){$("hitl").innerHTML="<li class='hint'>ما قدرنا نجيب الأرقام: "+esc(e.message)+"</li>"}}
 const IS={pending:"تنطر موافقتك",open:"منشورة",planned:"بنسويها",done:"انتشرت"};
 async function loadIdeas(){try{const j=await call({action:"ideas"});const a=j.ideas||[];const ord={pending:0,open:1,planned:2,done:3};a.sort((x,y)=>ord[x.status]-ord[y.status]||y.votes-x.votes);
  $("idn").textContent=a.filter(x=>x.status==="pending").length+" تنطر موافقتك";
