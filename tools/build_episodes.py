@@ -78,6 +78,50 @@ def topic(t):
     return next((k for k, w in TOPICS.items() if any(x in t for x in w)), "أخرى")
 
 
+def transcript(vid, chapters):
+    """Chapter-grouped paragraphs from data/transcripts/<id>.srt, or [] if none."""
+    path = f"data/transcripts/{vid}.srt"
+    if not os.path.exists(path):
+        return []
+    return parse_srt(path, chapters)
+
+
+def adopt_pending(eps):
+    """Move a waiting transcript (data/transcripts/pending/) to <videoId>.srt once its episode is public."""
+    cfg = "data/transcripts/pending.json"
+    if not os.path.exists(cfg):
+        return
+    pend = json.load(open(cfg))
+    for e in eps:
+        for key, fn in list(pend.items()):
+            src = f"data/transcripts/pending/{fn}"
+            if key in e["title"] and os.path.exists(src) and not os.path.exists(f"data/transcripts/{e['id']}.srt"):
+                os.replace(src, f"data/transcripts/{e['id']}.srt")
+                del pend[key]
+                print("transcript adopted:", e["title"])
+    json.dump(pend, open(cfg, "w"), ensure_ascii=False)
+
+
+def parse_srt(path, chapters):
+    cues = []
+    for block in re.split(r"\n\s*\n", open(path, encoding="utf-8-sig").read().strip()):
+        lines = block.strip().splitlines()
+        m = next((re.match(r"(\d+):(\d+):(\d+)", l) for l in lines if "-->" in l), None)
+        if m:
+            t = int(m[1]) * 3600 + int(m[2]) * 60 + int(m[3])
+            text = " ".join(l for l in lines if "-->" not in l and not l.strip().isdigit()).strip()
+            if text:
+                cues.append((t, text))
+    marks = chapters or [{"t": 0, "title": ""}]
+    out = []
+    for i, c in enumerate(marks):
+        end = marks[i + 1]["t"] if i + 1 < len(marks) else 10 ** 9
+        words = " ".join(x for t, x in cues if c["t"] <= t < end)
+        if words:
+            out.append({"t": c["t"], "title": c["title"], "text": words})
+    return out
+
+
 def mmss(s):
     return f"{s // 60}:{s % 60:02d}" if s < 3600 else f"{s // 3600}:{s % 3600 // 60:02d}:{s % 60:02d}"
 
@@ -114,6 +158,10 @@ CSS = """<style>
 .sh{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--bg2);aspect-ratio:9/16;display:block;color:#fff;text-decoration:none}
 .sh img{width:100%;height:100%;object-fit:cover;display:block}
 .sh span{position:absolute;inset:auto 0 0 0;padding:28px 10px 10px;font-size:.85rem;line-height:1.5;font-weight:700;background:linear-gradient(transparent,rgba(0,0,0,.85))}
+.tr summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.tr summary::-webkit-details-marker{display:none}
+.tr summary h2{margin:0}.tr summary h2::before{content:"▸ ";color:var(--ac)}.tr[open] summary h2::before{content:"▾ "}.tr summary span{color:var(--mut);font-size:.85rem}
+.tr section{margin-top:16px}.tr h3{margin:0 0 6px;font-size:1rem}.tr h3 a{color:var(--ac);text-decoration:none;font-variant-numeric:tabular-nums;margin-inline-end:6px}
+.tr p{margin:0;line-height:2;max-width:70ch}
 @media (max-width:900px){.ecols{grid-template-columns:1fr}}
 </style>"""
 
@@ -127,6 +175,7 @@ def ardate(iso):
 
 def build():
     eps = json.load(open("data/episodes.json"))
+    adopt_pending(eps)
     e_ = html.escape
     for e in eps:
         summary, chapters, credits, tags = parse(e["description"])
@@ -140,6 +189,11 @@ def build():
               "hasPart": [{"@type": "Clip", "name": c["title"], "startOffset": c["t"],
                            "endOffset": (chapters[i + 1]["t"] if i + 1 < len(chapters) else e["secs"]),
                            "url": f"{watch}&t={c['t']}s"} for i, c in enumerate(chapters)]}
+        tr = transcript(e["id"], chapters)
+        if tr:
+            ld["transcript"] = " ".join(x["text"] for x in tr)
+        tr_html = ("" if not tr else '<details class="box tr"><summary><h2>النص الكامل للحلقة</h2><span>من ترجمة الحلقة · ' + str(len(tr)) + ' فصل</span></summary>'
+                   + "".join(f'<section><h3><a href="{watch}&amp;t={x["t"]}s" target="_blank" rel="noopener">{mmss(x["t"])}</a> {e_(x["title"])}</h3><p>{e_(x["text"])}</p></section>' for x in tr) + "</details>")
         body = f"""{CSS}<div class="wrap"><article class="ep">
 <nav class="crumb" aria-label="مسار الصفحة"><a href="episodes.html">الحلقات</a> ‹ {e_(e['title'][:40])}</nav>
 <h1>{e_(e['title'])}</h1>
@@ -153,6 +207,7 @@ def build():
  </div>
  <section class="box"><h2>الفصول</h2><ol class="chap">{''.join(f'<li><a href="{watch}&amp;t={c["t"]}s" target="_blank" rel="noopener"><b>{c["label"]}</b><span>{e_(c["title"])}</span></a></li>' for c in chapters)}</ol></section>
 </div>
+{tr_html}
 </article></div>"""
         title = f"{e['title']} · شنو السالفة؟"
         page(f"episode-{e['id']}.html", title, summary[:155], body, nav="episodes.html", image=thumb, og_type="video.other", ld=ld)
