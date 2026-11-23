@@ -60,6 +60,7 @@
  <div class="card2"><h2>طابور النشر</h2><p class="sub">الشورتات اللي بينشرها الطيار الآلي، بالترتيب · ينتقل لـ «سالفة ستوديو» بعد الموافقات</p><div class="qp" id="qp"></div></div>
  <div class="row2">
   <div class="card2"><h2>دروس الأكاديمية</h2><p class="sub">اللي تعلّمه الفريق من الأرقام</p><ul class="ls" id="ls"></ul></div>
+  <div class="card2"><h2>أكثر الأفكار طلباً</h2><p class="sub">من <a href="ideas.html">صفحة الأفكار</a> · حسب الأصوات</p><ol class="ls" id="topideas"><li>يحمّل…</li></ol></div>
   <div class="card2"><h2>الجدول</h2><p class="sub">اللي نازل قريب</p><ul class="cal" id="cal"></ul></div>
  </div>
 </section></div>
@@ -91,6 +92,8 @@ function table(D){const rows=D.videos.filter(v=>F==="all"||v.type===F);
  document.getElementById("vt").innerHTML=rows.map(v=>`<tr><td><a href="https://youtu.be/${v.id}" rel="noopener" target="_blank">${v.title}</a><span class="tag">${v.type==="long"?"طويل":"شورت"}</span></td><td class="n">${fmt(v.views)}</td><td class="n">${v.per_day!=null?fmt(Math.round(v.per_day)):"–"}</td><td class="n" style="color:${v.delta>0?"var(--ok)":"var(--mut)"}">${v.delta>0?"+"+fmt(v.delta):"–"}</td><td class="n">${v.likes}</td><td class="n">${v.comments}</td></tr>`).join("");}
 document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{F=b.dataset.f;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));table(window.DASH)}));
 draw(window.DASH);
+fetch("https://frowdhbazytcmwhrlnmv.supabase.co/rest/v1/rpc/salfa_list_ideas",{method:"POST",headers:{"Content-Type":"application/json",apikey:"sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla",Authorization:"Bearer sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla"},body:"{}"}).then(r=>r.ok?r.json():[]).then(a=>{const t=(a||[]).filter(x=>x.status!=="done").slice(0,5);const e=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+ document.getElementById("topideas").innerHTML=t.length?t.map(x=>`<li><b>👍 ${x.votes}${x.status==="planned"?" · بنسويها":""}</b>${e(x.title)}</li>`).join(""):"<li>ما في أفكار منشورة للحين.</li>"}).catch(()=>{document.getElementById("topideas").innerHTML="<li>ما قدرنا نجيب الأفكار.</li>"});
 fetch("data/dashboard.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.updated!==window.DASH.updated){window.DASH=d;draw(d)}}).catch(()=>{});
 })();
 </script>

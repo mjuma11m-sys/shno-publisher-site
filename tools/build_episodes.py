@@ -189,6 +189,7 @@ CSS = """<style>
 .card3 small{color:var(--mut)}
 .share{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.share a,.share button{all:unset;cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;color:var(--fg)}.share a:hover,.share button:hover{color:var(--ac)}.share a:focus-visible,.share button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}.share input{width:min(100%,360px);font:inherit;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--fg)}.cpm{color:var(--mut);font-size:.85rem}
 .pwrap{display:grid;gap:6px}.pnote{margin:0;color:var(--mut);font-size:.8rem}.pnote a{color:var(--mut)}iframe.poster{width:100%;height:auto}iframe.sh{width:100%;height:auto}
+.cta{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--card);border:1px dashed var(--ac);border-radius:16px;padding:14px 18px;color:var(--fg);text-decoration:none}.cta span{color:var(--ac)}.cta:hover b{color:var(--ac)}
 .chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
 .chips button[aria-pressed="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac);font-weight:700}.chips button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
@@ -279,7 +280,7 @@ def build():
     cards = "".join(f'<a class="card3" href="episode-{e["id"]}.html"><img src="https://i.ytimg.com/vi/{e["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><b>{e_(e["title"])}</b><small>{ardate(e["published"])} · {mmss(e["secs"])} دقيقة</small></div></a>' for e in eps)
     ld = {"@context": "https://schema.org", "@type": "ItemList", "name": "حلقات شنو السالفة؟",
           "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": f"{BASE}episode-{e['id']}.html"} for i, e in enumerate(eps)]}
-    body = f"""{CSS}<div class="wrap"><section class="ep"><div><h1>الحلقات</h1><p style="color:var(--mut);margin:6px 0 0">كل حلقات «شنو السالفة؟» الطويلة: الملخص والفصول ومصادر كل حلقة.</p><p style="margin:6px 0 0;font-size:.85rem;color:var(--mut)">تابع بـ RSS: <a href="feed.xml">الحلقات</a> · <a href="feed-shorts.xml">الشورتس</a></p></div><div class="grid">{cards}</div>{shorts_html}</section></div>"""
+    body = f"""{CSS}<div class="wrap"><section class="ep"><div><h1>الحلقات</h1><p style="color:var(--mut);margin:6px 0 0">كل حلقات «شنو السالفة؟» الطويلة: الملخص والفصول ومصادر كل حلقة.</p><p style="margin:6px 0 0;font-size:.95rem"><a href="ideas.html">💡 اقترح موضوع الحلقة الجاية وصوّت ←</a></p><p style="margin:6px 0 0;font-size:.85rem;color:var(--mut)">تابع بـ RSS: <a href="feed.xml">الحلقات</a> · <a href="feed-shorts.xml">الشورتس</a></p></div><div class="grid">{cards}</div>{shorts_html}</section></div>"""
     page("episodes.html", "الحلقات · شنو السالفة؟", "كل حلقات «شنو السالفة؟» باللهجة البحرينية: الحلقات الطويلة بملخصها وفصولها ومصادرها، والشورتس حسب الموضوع.", body, nav="episodes.html", ld=ld)
     # topic hubs
     topic_links = []
@@ -336,7 +337,7 @@ def build():
         ls = "".join(f'<a class="ls" href="short-{x["id"]}.html"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in shorts[:4])
         strip = ('<section class="latest"><h2 class="sec">آخر الحلقات</h2><div class="lgrid">' + lc + '</div>'
                  + ('<h3 style="margin:18px 0 10px">آخر الشورتس</h3><div class="sgr">' + ls + '</div>' if ls else "")
-                 + '<p style="margin:14px 0 0"><a href="episodes.html">كل الحلقات والشورتس ←</a></p></section>'
+                 + '<p style="margin:14px 0 0;display:flex;gap:18px;flex-wrap:wrap"><a href="episodes.html">كل الحلقات والشورتس ←</a><a href="ideas.html">💡 اقترح حلقة وصوّت ←</a></p></section>'
                  '<style>.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}'
                  '.lc{display:grid;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;color:var(--fg);text-decoration:none;padding-bottom:12px}'
                  '.lc img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:var(--bg2)}.lc b,.lc small{padding-inline:14px;line-height:1.5}.lc small{color:var(--mut)}.lc:hover b{color:var(--ac)}'
@@ -388,7 +389,7 @@ def build():
         if any(topic(x["title"]) == k for x in eps + shorts):
             L.append(f"- [{name}]({BASE}topic-{slug}.html): {intro}")
     L += ["", "## عن الموقع / About", f"- [من نحن]({BASE}about.html): شلون نشتغل وقواعدنا وتصحيح الأخطاء",
-          f"- [English]({BASE}en.html): what Salfa Studio is, permissions and data handling", f"- [بحث]({BASE}search.html)",
+          f"- [English]({BASE}en.html): what Salfa Studio is, permissions and data handling", f"- [بحث]({BASE}search.html)", f"- [أفكار الحلقات]({BASE}ideas.html): اقتراح مواضيع والتصويت عليها", f"- [تواصل]({BASE}contact.html): تصحيح معلومة أو سؤال",
           f"- [RSS]({BASE}feed.xml)", ""]
     open("llms.txt", "w").write("\n".join(L))
     # sitemap
