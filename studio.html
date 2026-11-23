@@ -45,6 +45,14 @@
 .phone video,.phone .ph{border-radius:22px}
 .phone .ov{position:absolute;inset:auto 8px 8px 8px;border-radius:0 0 22px 22px;padding:40px 14px 14px;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#fff;font-size:.82rem;line-height:1.6;pointer-events:none}
 .phone .ov b{display:block;margin-bottom:4px}.phone .ov .tg{color:#9ecbff;font-weight:600}.phone .ai{display:inline-block;margin-top:6px;font-size:.7rem;background:rgba(255,255,255,.18);border-radius:6px;padding:1px 6px}
+.tabs3{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}
+.tabs3 button{all:unset;cursor:pointer;padding:8px 14px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-weight:600}
+.tabs3 button[aria-selected="true"]{background:var(--ac);color:#1a1300;border-color:var(--ac)}
+.tabs3 button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.tc{display:inline-block;min-width:1.4em;padding:0 5px;border-radius:999px;background:#dc2626;color:#fff;font-size:.75rem;text-align:center}.tc:empty{display:none}
+#app[data-tab] [data-tp]{display:none!important}
+#app[data-tab="tp-post"] [data-tp="tp-post"]:not([hidden]),#app[data-tab="tp-msg"] [data-tp="tp-msg"],#app[data-tab="tp-ideas"] [data-tp="tp-ideas"],#app[data-tab="tp-hits"] [data-tp="tp-hits"]{display:revert!important}
+#app[data-tab="tp-post"] form[data-tp]:not([hidden]){display:grid!important}
 @media (max-width:760px){.sgrid2{grid-template-columns:1fr}}
 </style>
 <div class="wrap"><section class="st" aria-labelledby="sth">
@@ -61,13 +69,19 @@
   </details>
  </div>
 
- <div id="app" hidden style="display:grid;gap:18px">
+ <div id="app" hidden data-tab="tp-post" style="display:grid;gap:18px">
   <div class="row" style="justify-content:space-between"><div class="sbox who" style="flex:1 1 260px"><div class="av" id="av"></div><div><b id="nick"></b><span id="user"></span></div></div><button class="btn3" type="button" id="out">تسجيل خروج</button></div>
+  <div class="tabs3" role="tablist" aria-label="أقسام صفحة النشر">
+   <button type="button" role="tab" data-t="tp-post" aria-selected="true">النشر</button>
+   <button type="button" role="tab" data-t="tp-msg" aria-selected="false">الرسائل <span class="tc" id="tcm"></span></button>
+   <button type="button" role="tab" data-t="tp-ideas" aria-selected="false">الأفكار <span class="tc" id="tci"></span></button>
+   <button type="button" role="tab" data-t="tp-hits" aria-selected="false">الزيارات</button>
+  </div>
   <p class="msg err" id="gerr" role="alert"></p>
-  <div class="sbox" id="setup" hidden><h2>الإعداد ما خلص</h2><p class="hint">ناقص هالأسرار في Supabase (مشروع sports-hub ← Edge Functions ← Secrets). صاحب الحساب يحطها بنفسه:</p><ul id="miss" style="margin:8px 0 0;line-height:2"></ul></div>
-  <div class="sbox" id="conn" hidden><h2>اربط حساب تيك توك</h2><p class="hint">مرة وحدة بس. تيك توك بيطلب منك توافق على صلاحية النشر، وبعدها ترجع لهالصفحة.</p><div class="row" style="margin-top:10px"><button class="btn2" type="button" id="cb">اربط تيك توك</button></div></div>
-  <div id="empty" class="sbox" hidden><h2>الطابور خلص</h2><p class="hint">ما في فيديو جاهز لتيك توك.</p></div>
-  <form id="f" class="sgrid2" novalidate hidden>
+  <div class="sbox" id="setup" data-tp="tp-post" hidden><h2>الإعداد ما خلص</h2><p class="hint">ناقص هالأسرار في Supabase (مشروع sports-hub ← Edge Functions ← Secrets). صاحب الحساب يحطها بنفسه:</p><ul id="miss" style="margin:8px 0 0;line-height:2"></ul></div>
+  <div class="sbox" id="conn" data-tp="tp-post" hidden><h2>اربط حساب تيك توك</h2><p class="hint">مرة وحدة بس. تيك توك بيطلب منك توافق على صلاحية النشر، وبعدها ترجع لهالصفحة.</p><div class="row" style="margin-top:10px"><button class="btn2" type="button" id="cb">اربط تيك توك</button></div></div>
+  <div id="empty" data-tp="tp-post" class="sbox" hidden><h2>الطابور خلص</h2><p class="hint">ما في فيديو جاهز لتيك توك.</p></div>
+  <form id="f" data-tp="tp-post" class="sgrid2" novalidate hidden>
    <div class="sbox"><h2>المعاينة</h2><div class="phone"><div id="pv"></div><div class="ov" aria-hidden="true"><b id="ovn"></b><span id="ovc"></span><br><span class="ai">AI-generated</span></div></div><p class="hint" style="margin-top:8px;text-align:center">شكل تقريبي للكابشن بتيك توك (أول 150 حرف)</p></div>
    <div class="sbox" style="display:grid;gap:16px">
     <label class="f">الفيديو <span class="cnt" id="qn"></span><select id="pick"></select></label>
@@ -89,10 +103,10 @@
     <div class="row"><button class="btn2" id="go" type="submit" disabled>انشر على تيك توك</button><button class="btn2" id="dr" type="button" hidden style="background:var(--bg2);color:var(--fg);border:1px solid var(--line)">أرسل كمسودة لتطبيق تيك توك</button><span class="msg" id="msg" role="status" aria-live="polite"></span></div>
    </div>
   </form>
-  <section class="sbox" id="hitsbox"><h2>زيارات الموقع <span class="hint" id="hitn"></span></h2><p class="hint" style="margin-bottom:10px">كم مرة انفتحت كل صفحة بآخر 7 أيام. أرقام إجمالية بس، بدون أي معلومة عن الزوار.</p><div id="hitd" style="display:flex;gap:4px;align-items:flex-end;height:60px;margin-bottom:10px" aria-hidden="true"></div><ol id="hitl" style="margin:0;padding-inline-start:20px;display:grid;gap:4px;font-size:.9rem"></ol></section>
-  <section class="sbox" id="ideasbox"><h2>أفكار الحلقات <span class="hint" id="idn"></span></h2><p class="hint" style="margin-bottom:10px">من <a href="ideas.html">صفحة الأفكار</a>. الفكرة الجديدة ما تطلع للناس إلا لما تضغط «انشرها».</p><div id="idl" style="display:grid;gap:10px"></div></section>
-  <section class="sbox" id="inbox"><h2>رسائل الزوار <span class="hint" id="inbn"></span></h2><p class="hint" style="margin-bottom:10px">من <a href="contact.html">صفحة التواصل</a>. التصحيحات تطلع أول.</p><div id="inbl" style="display:grid;gap:10px"></div></section>
-  <section class="sbox" id="hist" hidden><h2>آخر المنشورات من هالصفحة</h2><div style="overflow-x:auto"><table class="ht"><thead><tr><th>الوقت</th><th>الفيديو</th><th>منو يشوفه</th><th>الحالة</th></tr></thead><tbody id="hb"></tbody></table></div></section>
+  <section class="sbox" id="hitsbox" data-tp="tp-hits"><h2>زيارات الموقع <span class="hint" id="hitn"></span></h2><p class="hint" style="margin-bottom:10px">كم مرة انفتحت كل صفحة بآخر 7 أيام. أرقام إجمالية بس، بدون أي معلومة عن الزوار.</p><div id="hitd" style="display:flex;gap:4px;align-items:flex-end;height:60px;margin-bottom:10px" aria-hidden="true"></div><ol id="hitl" style="margin:0;padding-inline-start:20px;display:grid;gap:4px;font-size:.9rem"></ol></section>
+  <section class="sbox" id="ideasbox" data-tp="tp-ideas"><h2>أفكار الحلقات <span class="hint" id="idn"></span></h2><p class="hint" style="margin-bottom:10px">من <a href="ideas.html">صفحة الأفكار</a>. الفكرة الجديدة ما تطلع للناس إلا لما تضغط «انشرها».</p><div id="idl" style="display:grid;gap:10px"></div></section>
+  <section class="sbox" id="inbox" data-tp="tp-msg"><h2>رسائل الزوار <span class="hint" id="inbn"></span></h2><p class="hint" style="margin-bottom:10px">من <a href="contact.html">صفحة التواصل</a>. التصحيحات تطلع أول.</p><div id="inbl" style="display:grid;gap:10px"></div></section>
+  <section class="sbox" id="hist" data-tp="tp-post" hidden><h2>آخر المنشورات من هالصفحة</h2><div style="overflow-x:auto"><table class="ht"><thead><tr><th>الوقت</th><th>الفيديو</th><th>منو يشوفه</th><th>الحالة</th></tr></thead><tbody id="hb"></tbody></table></div></section>
  </div>
 </section></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -150,6 +164,9 @@ $("out").addEventListener("click",async()=>{try{localStorage.removeItem("salfa_s
 $("f").addEventListener("input",e=>{if(e.target.id!=="pick")refresh()});
 $("pick").addEventListener("change",e=>show(e.target.value));
 const MS={new:"جديدة",seen:"انقرت",done:"خلصت"};
+function tab(t){$("app").dataset.tab=t;document.querySelectorAll(".tabs3 button").forEach(b=>b.setAttribute("aria-selected",b.dataset.t===t));try{localStorage.setItem("salfa_tab",t)}catch(e){}}
+document.querySelectorAll(".tabs3 button").forEach(b=>b.addEventListener("click",()=>tab(b.dataset.t)));
+try{const t=localStorage.getItem("salfa_tab");if(t)tab(t)}catch(e){}
 const PN=p=>({"/":"الرئيسية","/episodes.html":"الحلقات","/ideas.html":"أفكار الحلقات","/contact.html":"تواصل","/search.html":"بحث","/dashboard.html":"لوحة التحكم","/about.html":"من نحن","/office.html":"المكتب","/studio.html":"صفحة النشر","/en.html":"English"})[p]||p.replace(/^\//,"");
 let TN=null;async function titles(){if(TN)return TN;TN={};try{const [e,sh]=await Promise.all(["data/episodes.json","data/shorts.json"].map(u=>fetch(u).then(r=>r.ok?r.json():[]).catch(()=>[])));
  e.forEach(x=>TN["/episode-"+x.id.toLowerCase()+".html"]=x.title);sh.forEach(x=>TN["/short-"+x.id.toLowerCase()+".html"]="شورت: "+x.title)}catch(x){}return TN}
@@ -158,12 +175,12 @@ async function loadHits(){try{const [j,tn]=await Promise.all([call({action:"hits
  $("hitl").innerHTML=j.pages.length?j.pages.map(x=>`<li><span style="display:inline-block;min-width:3.5em;font-variant-numeric:tabular-nums;color:var(--ac)">${x.hits}</span>${esc(tn[x.path]||PN(x.path))}</li>`).join(""):"<li class='hint'>ما في زيارات للحين.</li>"}catch(e){$("hitl").innerHTML="<li class='hint'>ما قدرنا نجيب الأرقام: "+esc(e.message)+"</li>"}}
 const IS={pending:"تنطر موافقتك",open:"منشورة",planned:"بنسويها",done:"انتشرت"};
 async function loadIdeas(){try{const j=await call({action:"ideas"});const a=j.ideas||[];const ord={pending:0,open:1,planned:2,done:3};a.sort((x,y)=>ord[x.status]-ord[y.status]||y.votes-x.votes);
- $("idn").textContent=a.filter(x=>x.status==="pending").length+" تنطر موافقتك";
+ const np=a.filter(x=>x.status==="pending").length;$("idn").textContent=np+" تنطر موافقتك";$("tci").textContent=np||"";
  const btn=(x,st,t)=>`<button class="btn3" type="button" data-iid="${x.id}" data-ist="${st}">${t}</button>`;
  $("idl").innerHTML=a.length?a.map(x=>`<div class="note" style="display:grid;gap:6px"><div class="row" style="justify-content:space-between"><b>${esc(x.title)}</b><span class="hint">👍 ${x.votes} · ${IS[x.status]||esc(x.status)}</span></div>${x.details?`<div style="white-space:pre-wrap;color:var(--mut)">${esc(x.details)}</div>`:""}<div class="row">${x.status==="pending"?btn(x,"open","انشرها")+btn(x,"rejected","ارفضها"):""}${x.status==="open"?btn(x,"planned","بنسويها"):""}${x.status==="planned"?btn(x,"done","انتشرت"):""}<button class="btn3" type="button" data-iid="${x.id}" data-idel="1">احذف</button></div></div>`).join(""):"<p class='hint'>ما في أفكار للحين.</p>"}catch(e){$("idl").innerHTML="<p class='hint'>ما قدرنا نجيب الأفكار: "+esc(e.message)+"</p>"}}
 $("idl").addEventListener("click",async e=>{const b=e.target.closest("button[data-iid]");if(!b)return;b.disabled=true;try{await call(b.dataset.idel?{action:"idea_set",id:b.dataset.iid,delete:true}:{action:"idea_set",id:b.dataset.iid,status:b.dataset.ist});loadIdeas()}catch(x){b.disabled=false}});
 async function loadInbox(){try{const j=await call({action:"messages"});const m=(j.messages||[]).slice().sort((a,b)=>(b.message.startsWith("[تصحيح")-a.message.startsWith("[تصحيح"))||(a.status==="done")-(b.status==="done"));
- $("inbn").textContent=m.filter(x=>x.status==="new").length+" جديدة";
+ const nn=m.filter(x=>x.status==="new").length;$("inbn").textContent=nn+" جديدة";$("tcm").textContent=nn||"";
  $("inbl").innerHTML=m.length?m.map(x=>`<div class="note" style="display:grid;gap:6px${x.status==="done"?";opacity:.6":""}"><div class="row" style="justify-content:space-between"><b>${esc(x.name)} · <span dir="ltr">${esc(x.contact)}</span></b><span class="hint">${new Date(x.created_at).toLocaleString("ar-BH",{dateStyle:"short",timeStyle:"short"})} · ${MS[x.status]||esc(x.status)}</span></div><div style="white-space:pre-wrap">${esc(x.message)}</div><div class="row">${x.status!=="done"?`<button class="btn3" type="button" data-id="${x.id}" data-st="done">علّمها خلصت</button>`:""}<button class="btn3" type="button" data-id="${x.id}" data-del="1">احذف</button></div></div>`).join(""):"<p class='hint'>ما في رسائل للحين.</p>";
  if(m.some(x=>x.status==="new"))m.filter(x=>x.status==="new").forEach(x=>call({action:"message_set",id:x.id,status:"seen"}).catch(()=>{}))}catch(e){$("inbl").innerHTML="<p class='hint'>ما قدرنا نجيب الرسائل: "+esc(e.message)+"</p>"}}
 $("inbl").addEventListener("click",async e=>{const b=e.target.closest("button[data-id]");if(!b)return;b.disabled=true;try{await call(b.dataset.del?{action:"message_set",id:b.dataset.id,delete:true}:{action:"message_set",id:b.dataset.id,status:b.dataset.st});loadInbox()}catch(x){b.disabled=false}});
