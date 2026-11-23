@@ -22,7 +22,8 @@ def page(path, title, desc, body, nav=None, image=None, og_type="website", ld=No
     extra = (f'<meta property="og:url" content="{url}">\n<meta name="twitter:card" content="summary_large_image">\n'
              f'<link rel="alternate" hreflang="ar" href="{BASE}">\n<link rel="alternate" hreflang="en" href="{BASE}en.html">\n'
              f'<link rel="alternate" hreflang="x-default" href="{BASE}">\n'
-             f'<link rel="alternate" type="application/rss+xml" title="حلقات شنو السالفة؟" href="{BASE}feed.xml">')
+             f'<link rel="alternate" type="application/rss+xml" title="حلقات شنو السالفة؟" href="{BASE}feed.xml">\n'
+             f'<link rel="alternate" type="application/rss+xml" title="شورتس شنو السالفة؟" href="{BASE}feed-shorts.xml">')
     if ld is not None:
         h = re.sub(r'<script type="application/ld\+json">.*?</script>', "", h, flags=re.S)
         extra += f'\n<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>'
@@ -40,5 +41,6 @@ def stamp_index():
     extra = (f'<meta property="og:url" content="{BASE}">\n<meta name="twitter:card" content="summary_large_image">\n'
              f'<link rel="alternate" hreflang="ar" href="{BASE}">\n<link rel="alternate" hreflang="en" href="{BASE}en.html">\n'
              f'<link rel="alternate" hreflang="x-default" href="{BASE}">\n'
-             f'<link rel="alternate" type="application/rss+xml" title="حلقات شنو السالفة؟" href="{BASE}feed.xml">')
+             f'<link rel="alternate" type="application/rss+xml" title="حلقات شنو السالفة؟" href="{BASE}feed.xml">\n'
+             f'<link rel="alternate" type="application/rss+xml" title="شورتس شنو السالفة؟" href="{BASE}feed-shorts.xml">')
     open("index.html", "w").write(h.replace("</head>", extra + "\n</head>", 1))

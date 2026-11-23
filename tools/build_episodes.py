@@ -251,7 +251,7 @@ def build():
     cards = "".join(f'<a class="card3" href="episode-{e["id"]}.html"><img src="https://i.ytimg.com/vi/{e["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><b>{e_(e["title"])}</b><small>{ardate(e["published"])} · {mmss(e["secs"])} دقيقة</small></div></a>' for e in eps)
     ld = {"@context": "https://schema.org", "@type": "ItemList", "name": "حلقات شنو السالفة؟",
           "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": f"{BASE}episode-{e['id']}.html"} for i, e in enumerate(eps)]}
-    body = f"""{CSS}<div class="wrap"><section class="ep"><div><h1>الحلقات</h1><p style="color:var(--mut);margin:6px 0 0">كل حلقات «شنو السالفة؟» الطويلة: الملخص والفصول ومصادر كل حلقة.</p></div><div class="grid">{cards}</div>{shorts_html}</section></div>"""
+    body = f"""{CSS}<div class="wrap"><section class="ep"><div><h1>الحلقات</h1><p style="color:var(--mut);margin:6px 0 0">كل حلقات «شنو السالفة؟» الطويلة: الملخص والفصول ومصادر كل حلقة.</p><p style="margin:6px 0 0;font-size:.85rem;color:var(--mut)">تابع بـ RSS: <a href="feed.xml">الحلقات</a> · <a href="feed-shorts.xml">الشورتس</a></p></div><div class="grid">{cards}</div>{shorts_html}</section></div>"""
     page("episodes.html", "الحلقات · شنو السالفة؟", "كل حلقات «شنو السالفة؟» باللهجة البحرينية: الحلقات الطويلة بملخصها وفصولها ومصادرها، والشورتس حسب الموضوع.", body, nav="episodes.html", ld=ld)
     # topic hubs
     topic_links = []
@@ -339,6 +339,12 @@ def build():
     open("feed.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>'
         f'<title>حلقات شنو السالفة؟</title><link>{BASE}episodes.html</link><description>حلقات «شنو السالفة؟» الطويلة باللهجة البحرينية</description><language>ar</language>'
         f'<atom:link href="{BASE}feed.xml" rel="self" type="application/rss+xml"/>{items}</channel></rss>\n')
+    sitems = "".join(
+        f"<item><title>{e_(x['title'])}</title><link>{BASE}short-{x['id']}.html</link><guid isPermaLink=\"true\">{BASE}short-{x['id']}.html</guid>"
+        f"<pubDate>{format_datetime(dt.datetime.fromisoformat(x['published'].replace('Z', '+00:00')))}</pubDate></item>" for x in shorts)
+    open("feed-shorts.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>'
+        f'<title>شورتس شنو السالفة؟</title><link>{BASE}episodes.html</link><description>شورتس «شنو السالفة؟» باللهجة البحرينية</description><language>ar</language>'
+        f'<atom:link href="{BASE}feed-shorts.xml" rel="self" type="application/rss+xml"/>{sitems}</channel></rss>\n')
     # sitemap
     sm = open("sitemap.xml").read()
     sm = re.sub(r"<url><loc>[^<]*(?:episodes|episode-|topic-|short-|en\\.html)[^<]*</loc>.*?</url>", "", sm)
