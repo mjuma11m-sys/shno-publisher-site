@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23T11:07+03:00",
+ "updated": "2026-11-23T11:11+03:00",
  "channel": {
   "subscribers": 21,
   "views": 16529,
@@ -428,5 +428,10 @@
    "views": 16529,
    "subs": 21
   }
- ]
+ ],
+ "comments": {
+  "threads": 7,
+  "unanswered": 1,
+  "date": "2026-11-23"
+ }
 }

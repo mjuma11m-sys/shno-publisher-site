@@ -186,6 +186,7 @@ def ardate(iso):
 def build():
     eps = json.load(open("data/episodes.json"))
     adopt_pending(eps)
+    shorts = json.load(open("data/shorts.json")) if os.path.exists("data/shorts.json") else []
     e_ = html.escape
     for e in eps:
         summary, chapters, credits, tags = parse(e["description"])
@@ -199,6 +200,9 @@ def build():
               "hasPart": [{"@type": "Clip", "name": c["title"], "startOffset": c["t"],
                            "endOffset": (chapters[i + 1]["t"] if i + 1 < len(chapters) else e["secs"]),
                            "url": f"{watch}&t={c['t']}s"} for i, c in enumerate(chapters)]}
+        rel = [x for x in shorts if topic(x["title"]) == topic(e["title"]) != "أخرى"][:6]
+        rel_html = ("" if not rel else '<section class="box"><h2>شورتس من نفس الموضوع</h2><div class="sgrid">'
+                    + "".join(f'<a class="sh" href="https://www.youtube.com/shorts/{x["id"]}" target="_blank" rel="noopener"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in rel) + "</div></section>")
         tr = transcript(e["id"], chapters)
         if tr:
             ld["transcript"] = " ".join(x["text"] for x in tr)
@@ -217,11 +221,11 @@ def build():
  </div>
  <section class="box"><h2>الفصول</h2><ol class="chap">{''.join(f'<li><a href="{watch}&amp;t={c["t"]}s" target="_blank" rel="noopener"><b>{c["label"]}</b><span>{e_(c["title"])}</span></a></li>' for c in chapters)}</ol></section>
 </div>
+{rel_html}
 {tr_html}
 </article></div>"""
         title = f"{e['title']} · شنو السالفة؟"
         page(f"episode-{e['id']}.html", title, summary[:155], body, nav="episodes.html", image=thumb, og_type="video.other", ld=ld)
-    shorts = json.load(open("data/shorts.json")) if os.path.exists("data/shorts.json") else []
     shorts_html = ""
     if shorts:
         used = [k for k in list(TOPICS) + ["أخرى"] if any(topic(x["title"]) == k for x in shorts)]
