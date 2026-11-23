@@ -14,3 +14,9 @@ open('office-2d.html','w').write(H('مكتب سالفة ستوديو (مسطّح
 dd='window.DASH='+json.dumps(json.load(open('data/dashboard.json')),ensure_ascii=False)+';'
 hd=H('لوحة التحكم · Salfa Studio').replace(' aria-current="page"','').replace('<a href="dashboard.html">','<a href="dashboard.html" aria-current="page">',1)
 open('dashboard.html','w').write(hd+'<main>'+open('dashboard.src.html').read().replace('/*DATA*/',dd)+foot)
+
+ha=re.sub(r'<title>.*?</title>','<title>من نحن · شنو السالفة؟</title>',head,count=1)
+ha=re.sub(r'<meta name="description" content="[^"]*">','<meta name="description" content="«شنو السالفة؟» قناة بحرينية تشرح القصص الكبيرة باللهجة البحرينية بمصدرين لكل رقم. شلون نشتغل، قواعدنا، وشلون نصحّح الغلط.">',ha,count=1)
+ha=re.sub(r'<link rel="canonical" href="[^"]*">','<link rel="canonical" href="https://mjuma11m-sys.github.io/shno-publisher-site/about.html">',ha,count=1)
+ha=ha.replace(' aria-current="page"','').replace('<a href="about.html">','<a href="about.html" aria-current="page">',1)
+open('about.html','w').write(ha+'<main>'+open('about.src.html').read()+foot)
