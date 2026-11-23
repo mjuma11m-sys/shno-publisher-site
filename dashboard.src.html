@@ -90,6 +90,6 @@ function table(D){const rows=D.videos.filter(v=>F==="all"||v.type===F);
  document.getElementById("vt").innerHTML=rows.map(v=>`<tr><td><a href="https://youtu.be/${v.id}" rel="noopener" target="_blank">${v.title}</a><span class="tag">${v.type==="long"?"طويل":"شورت"}</span></td><td class="n">${fmt(v.views)}</td><td class="n">${v.per_day!=null?fmt(Math.round(v.per_day)):"–"}</td><td class="n" style="color:${v.delta>0?"var(--ok)":"var(--mut)"}">${v.delta>0?"+"+fmt(v.delta):"–"}</td><td class="n">${v.likes}</td><td class="n">${v.comments}</td></tr>`).join("");}
 document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{F=b.dataset.f;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));table(window.DASH)}));
 draw(window.DASH);
-fetch("data/dashboard.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d){window.DASH=d;draw(d)}}).catch(()=>{});
+fetch("data/dashboard.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.updated!==window.DASH.updated){window.DASH=d;draw(d)}}).catch(()=>{});
 })();
 </script>

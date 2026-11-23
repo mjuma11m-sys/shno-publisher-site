@@ -55,3 +55,4 @@ code{background:var(--bg2);border:1px solid var(--line);padding:3px 8px;border-r
 @media (max-width:820px){.hero{grid-template-columns:1fr;padding-block:36px 20px}.hero .art{order:-1}.hero .art img{width:150px;border-radius:34px}.brand img{width:34px;height:34px}nav.links{gap:2px}nav.links a{font-size:.88rem}.grid3{grid-template-columns:1fr}nav.links a{padding:6px 9px}}
 @media (prefers-reduced-motion:no-preference){.btn,.card{transition:background .2s,transform .2s}.card:hover{transform:translateY(-2px)}}
 @media (max-width:760px){header.top .wrap{flex-wrap:wrap;gap:8px;padding-block:10px 6px}nav.links{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none;-webkit-overflow-scrolling:touch;mask-image:linear-gradient(to left,#000 88%,transparent)}nav.links::-webkit-scrollbar{display:none}nav.links a{white-space:nowrap;flex:none}}
+.art img{height:auto;aspect-ratio:1/1}
