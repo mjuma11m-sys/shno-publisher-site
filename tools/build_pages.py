@@ -26,3 +26,15 @@ s = open("studio.html").read()
 if 'name="robots"' not in s:
     open("studio.html", "w").write(s.replace("</head>", '<meta name="robots" content="noindex">\n</head>', 1))
 print("studio built")
+
+# Offline fallback for the installed app (served by sw.js when there is no connection and the page is not cached)
+page("offline.html", "ما فيه إنترنت · Salfa Studio", "الصفحة هذي تطلع لما ينقطع الإنترنت وأنت فاتح تطبيق سالفة ستوديو.",
+     '<div class="wrap" style="padding-block:48px;text-align:center"><h1>ما فيه إنترنت 📡</h1>'
+     '<p class="muted">الصفحات اللي فتحتها قبل تشتغل بدون إنترنت. هالصفحة للحين ما انحفظت.</p>'
+     '<p style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'
+     '<a class="btn" href="/">الرئيسية</a><a class="btn" href="/episodes.html">الحلقات</a>'
+     '<button class="btn" type="button" onclick="location.reload()">جرّب مرة ثانية</button></p></div>')
+s = open("offline.html").read()
+if 'name="robots"' not in s:
+    open("offline.html", "w").write(s.replace("</head>", '<meta name="robots" content="noindex">\n</head>', 1))
+print("offline built")
