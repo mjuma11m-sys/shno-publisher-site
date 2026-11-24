@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23T18:06+03:00",
+ "updated": "2026-11-24T12:29+03:00",
  "channel": {
   "subscribers": 21,
   "views": 16529,
@@ -491,5 +491,50 @@
   "threads": 7,
   "unanswered": 1,
   "date": "2026-11-23"
+ },
+ "growth": {
+  "plan_start": "2026-11-24",
+  "rows": [
+   {
+    "key": "subs_per_1k",
+    "label": "مشترك لكل 1000 مشاهدة",
+    "now": 1.27,
+    "t30": 3,
+    "t90": 5,
+    "better": "up",
+    "week": {
+     "subs_per_1k": 0.6,
+     "views": 3329,
+     "subs": 2,
+     "since": "2026-11-22"
+    }
+   },
+   {
+    "key": "subscribers",
+    "label": "مشتركين يوتيوب",
+    "now": 21,
+    "t30": 150,
+    "t90": 1000,
+    "better": "up"
+   },
+   {
+    "key": "top_share",
+    "label": "حصة أكبر موضوع %",
+    "now": 60.7,
+    "t30": 50,
+    "t90": 40,
+    "better": "down",
+    "note": "GTA والألعاب"
+   },
+   {
+    "key": "tiktok_followers",
+    "label": "متابعين تيك توك",
+    "now": null,
+    "t30": 300,
+    "t90": 1500,
+    "better": "up",
+    "note": "يدوي من TikTok Studio"
+   }
+  ]
  }
 }

@@ -43,10 +43,12 @@
 .cal .d{background:var(--bg2);border:1px solid var(--line);border-radius:12px;text-align:center;padding:6px 0;line-height:1.1}
 .cal .d b{display:block;font:900 1.15rem "Tajawal",sans-serif}.cal .d small{color:var(--mut);font-size:.72rem}
 @media (max-width:980px){.kgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.kgrid .k:last-child:nth-child(odd){grid-column:span 2}.row2{grid-template-columns:1fr}}
+.gp{display:grid;gap:12px;margin-top:6px}.gp .r{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:4px 12px;align-items:center}.gp .bar{grid-column:1/-1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}.gp .bar i{display:block;height:100%;background:var(--ac);border-radius:99px}.gp .v{text-align:left;font-variant-numeric:tabular-nums;direction:ltr}.gp small{color:var(--mut)}
 </style>
 <div class="wrap"><section class="dash" aria-label="لوحة تحكم سالفة ستوديو">
  <div class="dhead"><div><h1>لوحة التحكم</h1><p>أرقام قناة «شنو السالفة؟» الحقيقية من YouTube Data API، وتتحدث كل يوم.</p></div><span class="pill" id="upd2"></span></div>
  <div class="kgrid" id="kg"></div>
+ <div class="card2" id="gpc" hidden><h2>خطة النمو · 90 يوم</h2><p class="sub">الأهداف من <a href="https://github.com/mjuma11m-sys/claude/blob/claude/zealous-maxwell-yg7vha/shno-publisher/GROWTH-PLAN.md" rel="noopener">خطة النمو</a> (24/11/2026). أهداف، مو توقعات. الشريط = الطريق لهدف 30 يوم.</p><div class="gp" id="gp"></div></div>
  <div class="card2"><h2>المشاهدات مع الوقت</h2><p class="sub" id="hsub">مجموع مشاهدات القناة بكل سحبة يومية</p><div id="hc" style="direction:ltr"></div></div>
  <div class="row2">
   <div class="card2"><h2>أداء الفيديوهات</h2><p class="sub">«باليوم» = معدل المشاهدات اليومي من يوم النشر · الأخضر = الزيادة من آخر سحبة</p>
@@ -76,6 +78,11 @@ function draw(D){
  const c=D.channel;document.getElementById("upd2").textContent="آخر تحديث "+D.updated.slice(5,10).split("-").reverse().join("/")+" · "+D.updated.slice(11,16);
  const dl=v=>v>0?`<em>+${fmt(v)} من آخر سحبة</em>`:`<em class="zero">ما تغيّر</em>`;
  document.getElementById("kg").innerHTML=[["المشتركين",c.subscribers,dl(c.subs_delta)],["المشاهدات",fmt(c.views),dl(c.views_delta)],["الفيديوهات",c.videos,`<em class="zero">${D.videos.filter(v=>v.type==="long").length} طويلة · ${D.videos.filter(v=>v.type==="short").length} شورت</em>`],["أفضل فيديو",fmt(D.videos[0].views),`<em class="zero">${D.videos[0].title.slice(0,26)}…</em>`]].concat(D.week_topic?[["أقوى موضوع "+(D.week_topic.days>=7?"هالأسبوع":"من "+D.week_topic.since.slice(8)+"/"+D.week_topic.since.slice(5,7)),`<span style="font-size:1.3rem;line-height:1.5">${D.week_topic.name}</span>`,`<em>+${fmt(D.week_topic.gain)} مشاهدة</em>`]]:[]).concat(D.by_type&&D.by_type.short&&D.by_type.long?[["شورت ضد حلقة طويلة",`<span style="font-size:1.3rem;line-height:1.5">${fmt(Math.round(D.by_type.short.avg_per_day))} ضد ${fmt(Math.round(D.by_type.long.avg_per_day))}</span>`,`<em class="zero">مشاهدة باليوم · ${D.by_type.short.n} شورت، ${D.by_type.long.n} حلقات</em>`]]:[]).concat(D.comments?[["تعليقات تنطر رد",D.comments.unanswered,`<em class="zero">من ${D.comments.threads} تعليق · يوتيوب</em>`]]:[]).map(k=>`<div class="k"><span>${k[0]}</span><b>${k[1]}</b>${k[2]}</div>`).join("");
+(function(){const G=D.growth;if(!G)return;const f=x=>x===null||x===undefined?"—":(typeof x==="number"?x.toLocaleString("en-US"):x);
+ document.getElementById("gp").innerHTML=G.rows.map(r=>{let pct=0;if(r.now!==null){pct=r.better==="up"?r.now/r.t30*100:(r.now<=r.t30?100:Math.max(0,(100-r.now)/(100-r.t30)*100))}pct=Math.max(2,Math.min(100,pct));
+  const wk=r.week?`<small>من ${r.week.since.slice(5).split("-").reverse().join("/")}: ${r.week.subs_per_1k} لكل 1000 (${f(r.week.subs)} مشترك من ${f(r.week.views)} مشاهدة)</small>`:"";
+  return `<div class="r"><div><b>${r.label}</b>${r.note?` <small>· ${r.note}</small>`:""}<br>${wk}</div><div class="v"><b style="font-size:1.25em">${f(r.now)}</b> <small>→ ${f(r.t30)} · ${f(r.t90)}</small></div><div class="bar" role="img" aria-label="${Math.round(pct)}% من هدف 30 يوم"><i style="width:${r.now===null?0:pct}%"></i></div></div>`}).join("");
+ document.getElementById("gpc").hidden=false})();
  table(D);
  const H=D.history||[];if(H.length>1){const W=900,Ht=200,P=34,vs=H.map(h=>h.views),lo=Math.min(...vs),hi=Math.max(...vs),r=(hi-lo)||1;
   const X=i=>P+i*(W-2*P)/(H.length-1),Y=v=>Ht-P-(v-lo)/r*(Ht-2*P);const pts=H.map((h,i)=>X(i)+","+Y(h.views)).join(" ");
