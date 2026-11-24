@@ -1,8 +1,8 @@
 /* Salfa Studio service worker: works offline for pages already visited.
    Pages: network first, cached copy if offline, offline.html as last resort.
-   Static assets: cache first. Data JSON: network first. Never touched: other origins
+   Static assets: stale-while-revalidate. Data JSON: network first. Never touched: other origins
    (Supabase, YouTube, fonts), POST requests, video files, studio.html (always live). */
-const V = "salfa-v1";
+const V = "salfa-v2";
 const SHELL = ["/", "/episodes.html", "/offline.html", "/assets/site.css", "/assets/icon-192.png", "/favicon.ico"];
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(V).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -25,6 +25,10 @@ self.addEventListener("fetch", (e) => {
     return;
   }
   if (u.pathname.startsWith("/assets/") || u.pathname === "/favicon.ico") {
-    e.respondWith(caches.match(r).then((m) => m || fetch(r).then((res) => put(r, res))));
+    // stale-while-revalidate: show the cached copy now, fetch the new one for next time (so CSS/JS updates arrive)
+    e.respondWith(caches.match(r).then((m) => {
+      const net = fetch(r).then((res) => put(r, res)).catch(() => m);
+      return m || net;
+    }));
   }
 });
