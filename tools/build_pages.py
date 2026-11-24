@@ -16,6 +16,7 @@ page("about.html", "من نحن · شنو السالفة؟", "«شنو السا�
      open("about.src.html").read(), nav="about.html")
 page("en.html", "Salfa Studio · About in English", "Salfa Studio is the in-house tool that publishes the Bahraini channel «شنو السالفة؟» videos to its own YouTube and TikTok accounts. Scopes, data handling and policies.",
      open("en.src.html").read(), nav="en.html")
+page("advertise.html", "أعلن معنا · شنو السالفة؟", "الإعلان والرعاية في قناة «شنو السالفة؟» على يوتيوب وتيك توك: الأرقام المباشرة، طرق التعاون، وشروطنا.", open("advertise.src.html").read())
 page("contact.html", "تواصل معنا · شنو السالفة؟", "تواصل مع قناة «شنو السالفة؟»: تصحيح معلومة، سؤال، أو فكرة حلقة.", open("contact.src.html").read())
 page("ideas.html", "أفكار الحلقات · شنو السالفة؟", "اقترح موضوع حلقة لقناة «شنو السالفة؟» وصوّت للأفكار اللي تعجبك.", open("ideas.src.html").read(), nav="ideas.html")
 stamp_index()
@@ -32,8 +33,8 @@ page("offline.html", "ما فيه إنترنت · Salfa Studio", "الصفحة �
      '<div class="wrap" style="padding-block:48px;text-align:center"><h1>ما فيه إنترنت 📡</h1>'
      '<p class="muted">الصفحات اللي فتحتها قبل تشتغل بدون إنترنت. هالصفحة للحين ما انحفظت.</p>'
      '<p style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'
-     '<a class="btn" href="/">الرئيسية</a><a class="btn" href="/episodes.html">الحلقات</a>'
-     '<button class="btn" type="button" onclick="location.reload()">جرّب مرة ثانية</button></p></div>')
+     '<a class="btn pri" href="/">الرئيسية</a><a class="btn sec" href="/episodes.html">الحلقات</a>'
+     '<button class="btn sec" type="button" onclick="location.reload()">جرّب مرة ثانية</button></p></div>')
 s = open("offline.html").read()
 if 'name="robots"' not in s:
     open("offline.html", "w").write(s.replace("</head>", '<meta name="robots" content="noindex">\n</head>', 1))

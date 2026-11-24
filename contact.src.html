@@ -15,7 +15,7 @@
 <div class="wrap"><section class="ct" aria-labelledby="cth">
  <div><h1 id="cth">تواصل معنا</h1><p class="lead">لقيت غلط بحلقة؟ عندك سؤال أو فكرة حلقة؟ اكتب لنا هني. إذا كان تصحيح، حط مصدرك ونراجعه، ولو طلع غلط نصحّحه بوصف الفيديو وبصفحة الحلقة.</p></div>
  <form id="cf" novalidate>
-  <label>نوع الرسالة<select id="kind"><option>تصحيح معلومة</option><option>سؤال</option><option>فكرة حلقة</option><option>شي ثاني</option></select></label>
+  <label>نوع الرسالة<select id="kind"><option>تصحيح معلومة</option><option>سؤال</option><option>فكرة حلقة</option><option>إعلان أو رعاية</option><option>شي ثاني</option></select></label>
   <label>اسمك<input id="nm" maxlength="80" autocomplete="name" required></label>
   <label>شلون نرد عليك؟ <span class="hint">إيميل أو حساب انستقرام/تيك توك/X</span><input id="co" maxlength="120" required></label>
   <label>الرسالة <span class="hint" id="cnt">0 / 1400</span><textarea id="ms" maxlength="1400" required></textarea></label>
@@ -40,4 +40,6 @@ $("cf").addEventListener("submit",async e=>{e.preventDefault();const o=$("out");
  catch(x){o.className="msg err";o.textContent="ما انرسلت، تأكد من الاتصال وجرّب مرة ثانية."}
  $("sb").disabled=false});
 })();
+
+try{if(new URLSearchParams(location.search).get("kind")==="ad")document.getElementById("kind").value="إعلان أو رعاية"}catch(e){}
 </script>

@@ -23,4 +23,5 @@
 - [بحث](https://salfa-studio.vercel.app/search.html)
 - [أفكار الحلقات](https://salfa-studio.vercel.app/ideas.html): اقتراح مواضيع والتصويت عليها
 - [تواصل](https://salfa-studio.vercel.app/contact.html): تصحيح معلومة أو سؤال
+- [أعلن معنا](https://salfa-studio.vercel.app/advertise.html): الإعلان والرعاية
 - [RSS](https://salfa-studio.vercel.app/feed.xml)

@@ -389,7 +389,7 @@ def build():
         if any(topic(x["title"]) == k for x in eps + shorts):
             L.append(f"- [{name}]({BASE}topic-{slug}.html): {intro}")
     L += ["", "## عن الموقع / About", f"- [من نحن]({BASE}about.html): شلون نشتغل وقواعدنا وتصحيح الأخطاء",
-          f"- [English]({BASE}en.html): what Salfa Studio is, permissions and data handling", f"- [بحث]({BASE}search.html)", f"- [أفكار الحلقات]({BASE}ideas.html): اقتراح مواضيع والتصويت عليها", f"- [تواصل]({BASE}contact.html): تصحيح معلومة أو سؤال",
+          f"- [English]({BASE}en.html): what Salfa Studio is, permissions and data handling", f"- [بحث]({BASE}search.html)", f"- [أفكار الحلقات]({BASE}ideas.html): اقتراح مواضيع والتصويت عليها", f"- [تواصل]({BASE}contact.html): تصحيح معلومة أو سؤال", f"- [أعلن معنا]({BASE}advertise.html): الإعلان والرعاية",
           f"- [RSS]({BASE}feed.xml)", ""]
     open("llms.txt", "w").write("\n".join(L))
     # sitemap
