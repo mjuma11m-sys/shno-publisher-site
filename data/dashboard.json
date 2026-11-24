@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T22:41+03:00",
+ "updated": "2026-11-24T22:42+03:00",
  "channel": {
   "subscribers": 27,
   "views": 34194,
@@ -444,6 +444,10 @@
   {
    "agent": "shorts",
    "text": "23/11/2026 · Number shorts (9–16 s) about GTA got 3,297–3,845 views, against 76–284 for the Mona Lisa shorts of the same length. The first 2 seconds hold one clear number. Evidence: stats-2026-11-23.json"
+  },
+  {
+   "agent": "shorts",
+   "text": "24/11/2026 · Dinar/economy shorts got 0–9 views in their first 1–2 days, against 2,193–3,472 for GTA number shorts in their first day. Economy needs a sharper hook or a pause; GTA share is now 68%, so non-GTA tests must change the hook, not just the topic. Evidence: stats-2026-11-24.json"
   },
   {
    "agent": "showrunner",
