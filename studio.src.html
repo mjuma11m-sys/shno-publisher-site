@@ -34,7 +34,7 @@
 .tabs3 button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .tc{display:inline-block;min-width:1.4em;padding:0 5px;border-radius:999px;background:#dc2626;color:#fff;font-size:.75rem;text-align:center}.tc:empty{display:none}
 #app[data-tab] [data-tp]{display:none!important}
-#app[data-tab="tp-post"] [data-tp="tp-post"]:not([hidden]),#app[data-tab="tp-msg"] [data-tp="tp-msg"],#app[data-tab="tp-ideas"] [data-tp="tp-ideas"],#app[data-tab="tp-hits"] [data-tp="tp-hits"],#app[data-tab="tp-tools"] [data-tp="tp-tools"],#app[data-tab="tp-admins"] [data-tp="tp-admins"]{display:revert!important}
+#app[data-tab="tp-post"] [data-tp="tp-post"]:not([hidden]),#app[data-tab="tp-msg"] [data-tp="tp-msg"],#app[data-tab="tp-ideas"] [data-tp="tp-ideas"],#app[data-tab="tp-hits"] [data-tp="tp-hits"],#app[data-tab="tp-tools"] [data-tp="tp-tools"],#app[data-tab="tp-cmt"] [data-tp="tp-cmt"],#app[data-tab="tp-admins"] [data-tp="tp-admins"]{display:revert!important}
 #app[data-tab="tp-post"] form[data-tp]:not([hidden]){display:grid!important}
 @media (max-width:760px){.sgrid2{grid-template-columns:1fr}}
 </style>
@@ -57,6 +57,7 @@
   <div class="tabs3" role="tablist" aria-label="أقسام صفحة النشر">
    <button type="button" role="tab" data-t="tp-post" aria-selected="true">النشر</button>
    <button type="button" role="tab" data-t="tp-msg" aria-selected="false">الرسائل <span class="tc" id="tcm"></span></button>
+   <button type="button" role="tab" data-t="tp-cmt" aria-selected="false">التعليقات <span class="tc" id="tcc"></span></button>
    <button type="button" role="tab" data-t="tp-ideas" aria-selected="false">الأفكار <span class="tc" id="tci"></span></button>
    <button type="button" role="tab" data-t="tp-hits" aria-selected="false">الزيارات</button>
    <button type="button" role="tab" data-t="tp-tools" aria-selected="false">أدوات يوتيوب</button>
@@ -118,6 +119,8 @@
    <p class="msg" id="adm" role="status"></p><ul id="adl" style="margin:0;padding:0;list-style:none;display:grid;gap:8px"></ul>
    <p class="hint">لو تبيه يدخل بقوقل وتطبيق قوقل بوضع «Testing»، لازم إيميله ينضاف بعد كـ Test user في Google Cloud.</p></section>
   <section class="sbox" id="hitsbox" data-tp="tp-hits"><h2>زيارات الموقع <span class="hint" id="hitn"></span></h2><p class="hint" style="margin-bottom:10px">كم مرة انفتحت كل صفحة بآخر 7 أيام. أرقام إجمالية بس، بدون أي معلومة عن الزوار.</p><div id="hitd" style="display:flex;gap:4px;align-items:flex-end;height:60px;margin-bottom:10px" aria-hidden="true"></div><ol id="hitl" style="margin:0;padding-inline-start:20px;display:grid;gap:4px;font-size:.9rem"></ol></section>
+  <section class="sbox" data-tp="tp-cmt" style="display:grid;gap:12px"><h2>تعليقات يوتيوب</h2><p class="hint">اللي ما رديت عليها أول. لكل تعليق رد مقترح باللهجة تقدر تعدّله، والزر ينسخ الرد ويفتح التعليق في يوتيوب، وإنت تلصق وترد. الرد ما ينتشر بروحه عشان ما يعتبره يوتيوب سبام.</p>
+   <p class="msg" id="cmm" role="status"></p><div id="cml" style="display:grid;gap:12px"></div></section>
   <section class="sbox" id="ideasbox" data-tp="tp-ideas"><h2>أفكار الحلقات <span class="hint" id="idn"></span></h2><p class="hint" style="margin-bottom:10px">من <a href="ideas.html">صفحة الأفكار</a>. الفكرة الجديدة ما تطلع للناس إلا لما تضغط «انشرها».</p><div id="idl" style="display:grid;gap:10px"></div></section>
   <section class="sbox" id="inbox" data-tp="tp-msg"><h2>رسائل الزوار <span class="hint" id="inbn"></span></h2><p class="hint" style="margin-bottom:10px">من <a href="contact.html">صفحة التواصل</a>. التصحيحات تطلع أول.</p><div id="inbl" style="display:grid;gap:10px"></div></section>
   <section class="sbox" id="hist" data-tp="tp-post" hidden><h2>آخر المنشورات من هالصفحة</h2><div style="overflow-x:auto"><table class="ht"><thead><tr><th>الوقت</th><th>الفيديو</th><th>منو يشوفه</th><th>الحالة</th></tr></thead><tbody id="hb"></tbody></table></div></section>
@@ -203,11 +206,23 @@ async function loadAQ(body){try{const r=await call(body||{action:"list"},QFN);$(
  $("aqs").hidden=!r.skipped.length;$("aqsl").innerHTML=r.skipped.map(aqRow).join("");
  document.querySelectorAll("#aq [data-q]").forEach(b=>b.addEventListener("click",async()=>{b.disabled=true;await loadAQ({action:"flag",id:b.dataset.q,flag:b.dataset.f||null});$("aqm").className="msg ok";$("aqm").textContent=b.dataset.f==="next"?"بينزل بالنشر الجاي":b.dataset.f==="skip"?"انشال من النشر التلقائي":"رجع لمكانه"}))}
  catch(e){$("aq").hidden=false;$("aqm").className="msg err";$("aqm").textContent=e.message}}
-async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="هالصفحة لصاحب القناة بس"&&getTS()){try{localStorage.removeItem("salfa_session")}catch(x){}boot();return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;$("nick").textContent="شنو السالفة؟";$("av").innerHTML='<img src="assets/icon-96.png" alt="">';loadBuffer();loadAQ();loadInbox();loadIdeas();loadHits();loadAdmins();return}$("gerr").textContent=e.message;return}
+async function loadComments(){let r;try{r=await call({action:"comments"},QFN)}catch(e){$("cmm").className="msg err";$("cmm").textContent=e.message;return}
+ $("tcc").textContent=r.unanswered?String(r.unanswered):"";const fmtd=t=>t?new Date(t).toLocaleDateString("ar-BH",{day:"numeric",month:"short"}):"";
+ $("cmm").className="msg";$("cmm").textContent=r.source==="daily"?"من آخر سحب يومي. لما ينضاف مفتاح يوتيوب بـ Supabase تصير القائمة مباشرة.":"";
+ $("cml").innerHTML=r.comments.length?r.comments.map((c,i)=>`<article style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:8px">
+  <div class="hint">${esc(c.video)} · ${fmtd(c.at)}${c.answered?' · <b style="color:var(--ok)">✓ رديت</b>':' · <b style="color:var(--ac)">بدون رد</b>'}</div>
+  <p style="margin:0;white-space:pre-wrap">${esc(c.text)}</p>
+  ${!c.answered?`<label class="f">الرد المقترح<textarea data-cd="${i}" maxlength="1000" style="min-height:70px">${esc(c.draft||"")}</textarea></label>
+  <div class="row"><button class="btn2" type="button" data-cc="${i}">انسخ الرد وافتح التعليق</button>${c.draft?`<button class="btn3" type="button" data-cx="${i}">تخطّى</button>`:""}</div>`:`<a class="hint" href="${esc(c.url)}" target="_blank" rel="noopener">افتح في يوتيوب</a>`}</article>`).join(""):'<p class="hint">ما فيه تعليقات تحتاج رد 👌</p>';
+ $("cml").querySelectorAll("[data-cc]").forEach(b=>b.addEventListener("click",async()=>{const c=r.comments[+b.dataset.cc],t=$("cml").querySelector(`[data-cd="${b.dataset.cc}"]`).value.trim();
+  if(t){try{await navigator.clipboard.writeText(t);b.textContent="انتسخ ✓ الصقه بيوتيوب"}catch(e){const ta=$("cml").querySelector(`[data-cd="${b.dataset.cc}"]`);ta.select();b.textContent="انسخ النص المحدد"}}
+  window.open(c.url,"_blank","noopener");if(c.draft)call({action:"draft_set",id:c.id,status:"used"},QFN).catch(()=>{})}));
+ $("cml").querySelectorAll("[data-cx]").forEach(b=>b.addEventListener("click",async()=>{const c=r.comments[+b.dataset.cx];try{await call({action:"draft_set",id:c.id,status:"dismissed"},QFN);loadComments()}catch(e){}}))}
+async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="هالصفحة لصاحب القناة بس"&&getTS()){try{localStorage.removeItem("salfa_session")}catch(x){}boot();return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;$("nick").textContent="شنو السالفة؟";$("av").innerHTML='<img src="assets/icon-96.png" alt="">';loadBuffer();loadAQ();loadComments();loadInbox();loadIdeas();loadHits();loadAdmins();return}$("gerr").textContent=e.message;return}
  const c=S.creator;$("nick").textContent=c.creator_nickname||"";$("user").textContent=c.creator_username?"@"+c.creator_username:"";
  $("av").innerHTML=c.creator_avatar_url?`<img src="${esc(c.creator_avatar_url)}" alt="">`:"؟";
  let locked=false;for(const k of ["comment","duet","stitch"]){const d=!!c[k+"_disabled"];$("c-"+k).disabled=d;$("t-"+k).setAttribute("aria-disabled",d);locked=locked||d}$("lockhint").hidden=!locked;
- renderHistory(S.history||[]);loadBuffer();loadAQ();loadAdmins();loadInbox();loadIdeas();loadHits();$("dr").hidden=!S.drafts;show()}
+ renderHistory(S.history||[]);loadBuffer();loadAQ();loadComments();loadAdmins();loadInbox();loadIdeas();loadHits();$("dr").hidden=!S.drafts;show()}
 async function startTT(errEl){const a=new Uint8Array(24);crypto.getRandomValues(a);const st="studio-"+Array.from(a,b=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b%62]).join("");
  try{sessionStorage.setItem("tt_state",st)}catch(e){}try{const j=await call({action:"auth_url",state:st});location.href=j.url}catch(e){errEl.className="msg err";errEl.textContent=e.message==="SETUP"?"الإعداد ما خلص: ناقص "+(e.missing||[]).join("، "):e.message}}
 // supabase-js runs onAuthStateChange callbacks while it holds its auth lock: awaiting any SB.auth call inside one
