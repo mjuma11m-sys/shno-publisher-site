@@ -129,7 +129,7 @@ const MUSIC='<a href="https://www.tiktok.com/legal/page/global/music-usage-confi
 const BRAND='<a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank" rel="noopener">Branded Content Policy</a>';
 let S=null,cur=null;
 const getTS=()=>{try{return localStorage.getItem("salfa_session")}catch(e){return null}};
-async function call(body){const h={"Content-Type":"application/json",apikey:"sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla"};const ts=getTS();if(ts)h["X-Salfa-Session"]=ts;else{const {data:{session}}=await SB.auth.getSession();if(session)h.Authorization="Bearer "+session.access_token}
+async function call(body){const h={"Content-Type":"application/json",apikey:"sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla"};const ts=getTS();if(ts)h["X-Salfa-Session"]=ts;else{let session=null;try{session=(await withTimeout(SB.auth.getSession(),8000)).data.session}catch(e){}if(session)h.Authorization="Bearer "+session.access_token}
  const r=await fetch(FN,{method:"POST",headers:h,body:JSON.stringify(body)});const j=await r.json().catch(()=>({error:"رد غير مفهوم"}));if(!r.ok){const e=new Error(j.error||("خطأ "+r.status));e.missing=j.missing;throw e}return j}
 function ovcap(){const t=$("cap").value.replace(AI,"").trim();const short=t.length>150?t.slice(0,150)+"… المزيد":t;$("ovc").innerHTML=esc(short).replace(/(#[^\s#]+)/g,'<span class="tg">$1</span>');$("ovn").textContent=S&&S.creator.creator_username?"@"+S.creator.creator_username:""}
 function refresh(){if(!cur)return;ovcap();const priv=$("priv").value,disc=$("disc").checked,own=$("b-own").checked;$("discbox").hidden=!disc;const self=priv==="SELF_ONLY";$("b-paid").disabled=self;$("t-paid").setAttribute("aria-disabled",self);if(self)$("b-paid").checked=false;const paid=$("b-paid").checked;
@@ -185,12 +185,18 @@ async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").
  renderHistory(S.history||[]);loadBuffer();loadInbox();loadIdeas();loadHits();$("dr").hidden=!S.drafts;show()}
 async function startTT(errEl){const a=new Uint8Array(24);crypto.getRandomValues(a);const st="studio-"+Array.from(a,b=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b%62]).join("");
  try{sessionStorage.setItem("tt_state",st)}catch(e){}try{const j=await call({action:"auth_url",state:st});location.href=j.url}catch(e){errEl.className="msg err";errEl.textContent=e.message==="SETUP"?"الإعداد ما خلص: ناقص "+(e.missing||[]).join("، "):e.message}}
-async function boot(){
+// supabase-js runs onAuthStateChange callbacks while it holds its auth lock: awaiting any SB.auth call inside one
+// deadlocks the page. So the callback only hands over its session, outside the lock, and boot() runs one at a time.
+let BOOTING=null,BOOTAGAIN=false;
+function boot(given){if(BOOTING){BOOTAGAIN=true;return BOOTING}
+ BOOTING=boot1(given).catch(e=>{$("lm").className="msg err";$("lm").textContent="ما قدرت أكمل الدخول: "+e.message}).finally(()=>{BOOTING=null;if(BOOTAGAIN){BOOTAGAIN=false;boot()}});return BOOTING}
+const withTimeout=(p,ms)=>Promise.race([p,new Promise((_,no)=>setTimeout(()=>no(new Error("انتهت المهلة")),ms))]);
+async function boot1(given){
  const u=new URLSearchParams(location.search),code=u.get("tt_code"),st=u.get("tt_state");
  if(code){window.history.replaceState(null,"",location.pathname);let saved=null;try{saved=sessionStorage.getItem("tt_state")}catch(e){}
   if(!saved||saved!==st){$("lm").className="msg err";$("lm").textContent="رابط الدخول غير صالح، جرّب مرة ثانية."}
   else{try{const j=await call({action:"login",code});try{localStorage.setItem("salfa_session",j.session);sessionStorage.removeItem("tt_state")}catch(e){}}catch(e){$("lm").className="msg err";$("lm").textContent=e.message}}}
- const {data:{session}}=await SB.auth.getSession();const ok=!!getTS()||!!session;$("login").hidden=ok;$("app").hidden=!ok;if(ok)load()}
+ let session=given;if(session===undefined){try{session=(await withTimeout(SB.auth.getSession(),8000)).data.session}catch(e){session=null}}const ok=!!getTS()||!!session;$("login").hidden=ok;$("app").hidden=!ok;if(ok)load()}
 $("ttl").addEventListener("click",()=>startTT($("lm")));
 $("ytl").addEventListener("click",async()=>{const {error}=await SB.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+location.pathname,queryParams:{prompt:"select_account"}}});
  if(error){$("lm").className="msg err";$("lm").textContent=/provider is not enabled|Unsupported provider/i.test(error.message)?"دخول يوتيوب ما تفعّل للحين في Supabase.":("ما اشتغل: "+error.message)}});
@@ -231,6 +237,6 @@ $("f").addEventListener("submit",async e=>{e.preventDefault();if($("go").disable
   $("msg").className="msg ok";$("msg").textContent="انرفع. تيك توك يعالج الفيديو، وممكن ياخذ كم دقيقة.";
   for(let i=0;i<20;i++){await new Promise(z=>setTimeout(z,4000));const s=await call({action:"status",publish_id:j.publish_id});if(s.status==="PUBLISH_COMPLETE"){$("msg").textContent="انتشر ✓";break}if(s.status==="FAILED"){$("msg").className="msg err";$("msg").textContent="تيك توك رفض الفيديو: "+(s.fail_reason||"");break}}
   const m=[$("msg").className,$("msg").textContent];await load();$("msg").className=m[0];$("msg").textContent=m[1]}catch(err){$("msg").className="msg err";$("msg").textContent=err.message;refresh()}});
-SB.auth.onAuthStateChange(()=>boot());boot();
+SB.auth.onAuthStateChange((ev,session)=>{setTimeout(()=>boot(session||null),0)});setTimeout(()=>{if(!BOOTING&&$("login").hidden&&$("app").hidden)boot()},1500);
 })();
 </script>
