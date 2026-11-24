@@ -60,10 +60,24 @@
 .cal .d b{display:block;font:900 1.15rem "Tajawal",sans-serif}.cal .d small{color:var(--mut);font-size:.72rem}
 @media (max-width:980px){.kgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.kgrid .k:last-child:nth-child(odd){grid-column:span 2}.row2{grid-template-columns:1fr}}
 .gp{display:grid;gap:12px;margin-top:6px}.gp .r{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:4px 12px;align-items:center}.gp .bar{grid-column:1/-1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}.gp .bar i{display:block;height:100%;background:var(--ac);border-radius:99px}.gp .v{text-align:left;font-variant-numeric:tabular-nums;direction:ltr}.gp small{color:var(--mut)}
+.live{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:8px}
+.live .lv{background:var(--bg2,#111a2e);border:1px solid var(--line);border-radius:16px;padding:14px 16px;min-width:0}
+.live .lv b{display:block;font-size:clamp(28px,6vw,40px);line-height:1.1;font-variant-numeric:tabular-nums;direction:ltr;text-align:right}
+.live .lv span{color:var(--mut);font-size:14px}
+.live .lv.up b{color:var(--ok,#4cc38a)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#ef4444;margin-inline-end:8px;animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.6)}70%{box-shadow:0 0 0 10px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+.ypp{display:grid;gap:10px;margin-top:14px}.ypp .r{display:grid;gap:4px}.ypp .bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}.ypp .bar i{display:block;height:100%;background:var(--ac)}
+@media (max-width:700px){.live{grid-template-columns:1fr 1fr}}
 </style>
 <div class="wrap"><section class="dash" aria-label="لوحة تحكم سالفة ستوديو">
  <div class="dhead"><div><h1>لوحة التحكم</h1><p>أرقام قناة «شنو السالفة؟» الحقيقية من YouTube Data API، وتتحدث كل يوم.</p></div><span class="pill" id="upd2"></span></div>
  <div class="kgrid" id="kg"></div>
+ <div class="card2" id="livec" hidden><h2><span class="dot" aria-hidden="true"></span>مباشر الحين</h2><p class="sub" id="lvsub">الأرقام تتحدث كل دقيقة والصفحة مفتوحة. يوتيوب نفسه يحدّث أرقامه بتأخير بسيط.</p>
+  <div class="live" id="lv"></div>
+  <h2 style="margin-top:18px">الأرباح</h2><p class="sub" id="ernsub">القناة للحين مو داخلة برنامج شركاء يوتيوب، فما فيه أرباح. هذا الباقي على الشروط (تقدير):</p>
+  <div class="ypp" id="ypp"></div></div>
  <div class="card2" id="gpc" hidden><h2>خطة النمو · 90 يوم</h2><p class="sub">الأهداف من <a href="https://github.com/mjuma11m-sys/claude/blob/claude/zealous-maxwell-yg7vha/shno-publisher/GROWTH-PLAN.md" rel="noopener">خطة النمو</a> (24/11/2026). أهداف، مو توقعات. الشريط = الطريق لهدف 30 يوم.</p><div class="gp" id="gp"></div></div>
  <div class="card2"><h2>المشاهدات مع الوقت</h2><p class="sub" id="hsub">مجموع مشاهدات القناة بكل سحبة يومية</p><div id="hc" style="direction:ltr"></div></div>
  <div class="row2">
@@ -115,6 +129,22 @@ function table(D){const rows=D.videos.filter(v=>F==="all"||v.type===F);
  document.getElementById("vt").innerHTML=rows.map(v=>`<tr><td><a href="https://youtu.be/${v.id}" rel="noopener" target="_blank">${v.title}</a><span class="tag">${v.type==="long"?"طويل":"شورت"}</span></td><td class="n">${fmt(v.views)}</td><td class="n">${v.per_day!=null?fmt(Math.round(v.per_day)):"–"}</td><td class="n" style="color:${v.delta>0?"var(--ok)":"var(--mut)"}">${v.delta>0?"+"+fmt(v.delta):"–"}</td><td class="n">${v.likes}</td><td class="n">${v.comments}</td></tr>`).join("");}
 document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{F=b.dataset.f;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));table(window.DASH)}));
 draw(window.DASH);
+// live counters: salfa-live Edge Function (60 s cache server-side); poll every 60 s while the tab is visible
+(function(){const FN="https://frowdhbazytcmwhrlnmv.supabase.co/functions/v1/salfa-live";let last={},timer=null;
+ const fmt=n=>Number(n).toLocaleString("en-US");
+ function tween(el,from,to){if(from===undefined||from===to||matchMedia("(prefers-reduced-motion: reduce)").matches){el.textContent=fmt(to);return}
+  const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/900),e=1-Math.pow(1-k,3);el.textContent=fmt(Math.round(from+(to-from)*e));if(k<1)requestAnimationFrame(f)})(t0)}
+ function render(d){const items=[];if(d.youtube){items.push(["yts","مشتركين يوتيوب",d.youtube.subs],["ytv","مشاهدات يوتيوب",d.youtube.views])}
+  if(d.tiktok){items.push(["ttf","متابعين تيك توك",d.tiktok.followers],["ttl","لايكات تيك توك",d.tiktok.likes])}
+  if(!items.length)return;document.getElementById("livec").hidden=false;const box=document.getElementById("lv");
+  items.forEach(([k,l,v])=>{let c=document.getElementById("lv-"+k);if(!c){c=document.createElement("div");c.className="lv";c.id="lv-"+k;c.innerHTML=`<b></b><span>${l}</span>`;box.appendChild(c)}
+   const up=last[k]!==undefined&&v>last[k];c.classList.toggle("up",up);tween(c.querySelector("b"),last[k],v);last[k]=v});
+  const s=Math.max(0,Math.round((Date.now()-new Date(d.at))/1000));document.getElementById("lvsub").textContent=`آخر تحديث قبل ${s<60?s+" ثانية":Math.round(s/60)+" دقيقة"} · يتحدث كل دقيقة والصفحة مفتوحة. يوتيوب نفسه يحدّث أرقامه بتأخير بسيط.`;
+  if(d.youtube){const Y=[["مشتركين (الشرط 1,000)",d.youtube.subs,1000],["مشاهدات القناة (الشرط 10 مليون مشاهدة شورتس بآخر 90 يوم · هذا مجموع القناة كله)",d.youtube.views,10000000]];
+   document.getElementById("ypp").innerHTML=Y.map(([l,v,t])=>`<div class="r"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><span>${l}</span><b dir="ltr" style="unicode-bidi:isolate">${fmt(v)} / ${fmt(t)}</b></div><div class="bar" role="img" aria-label="${(v/t*100).toFixed(1)}%"><i style="width:${Math.max(1,Math.min(100,v/t*100))}%"></i></div></div>`).join("")+`<p class="sub">الشرط الثاني بديل الأول: 4,000 ساعة مشاهدة للفيديوهات الطويلة بآخر 12 شهر. الرقم الدقيق للساعات وللشورتس بآخر 90 يوم يطلع بـ YouTube Studio بس.</p>`}}
+ async function tick(){if(document.hidden)return;try{const r=await fetch(FN,{cache:"no-store"});if(r.ok)render(await r.json())}catch(e){}}
+ tick();timer=setInterval(tick,60000);document.addEventListener("visibilitychange",()=>{if(!document.hidden)tick()})})();
+
 fetch("https://frowdhbazytcmwhrlnmv.supabase.co/rest/v1/rpc/salfa_list_ideas",{method:"POST",headers:{"Content-Type":"application/json",apikey:"sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla",Authorization:"Bearer sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla"},body:"{}"}).then(r=>r.ok?r.json():[]).then(a=>{const t=(a||[]).filter(x=>x.status!=="done").slice(0,5);const e=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
  document.getElementById("topideas").innerHTML=t.length?t.map(x=>`<li><b>👍 ${x.votes}${x.status==="planned"?" · بنسويها":""}</b>${e(x.title)}</li>`).join(""):"<li>ما في أفكار منشورة للحين.</li>"}).catch(()=>{document.getElementById("topideas").innerHTML="<li>ما قدرنا نجيب الأفكار.</li>"});
 fetch("data/dashboard.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.updated!==window.DASH.updated){window.DASH=d;draw(d)}}).catch(()=>{});
