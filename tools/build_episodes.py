@@ -187,7 +187,7 @@ CSS = """<style>
 .tk{margin:0;padding:0;list-style:none;counter-reset:k;display:grid;gap:10px}.tk li{counter-increment:k;display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start;line-height:1.8}
 .tk li::before{content:counter(k);width:32px;height:32px;border-radius:50%;background:var(--ac);color:#1a1300;font:900 1rem/32px "Tajawal",sans-serif;text-align:center}
 .card3 small{color:var(--mut)}
-.share{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.share a,.share button{all:unset;cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;color:var(--fg)}.share a:hover,.share button:hover{color:var(--ac)}.share a:focus-visible,.share button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}.share input{width:min(100%,360px);font:inherit;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--fg)}.cpm{color:var(--mut);font-size:.85rem}
+.subcta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:0}.subcta span{color:var(--mut);font-size:.95rem}.share{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.share a,.share button{all:unset;cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;color:var(--fg)}.share a:hover,.share button:hover{color:var(--ac)}.share a:focus-visible,.share button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}.share input{width:min(100%,360px);font:inherit;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--fg)}.cpm{color:var(--mut);font-size:.85rem}
 .pwrap{display:grid;gap:6px}.pnote{margin:0;color:var(--mut);font-size:.8rem}.pnote a{color:var(--mut)}iframe.poster{width:100%;height:auto}iframe.sh{width:100%;height:auto}
 .cta{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--card);border:1px dashed var(--ac);border-radius:16px;padding:14px 18px;color:var(--fg);text-decoration:none}.cta span{color:var(--ac)}.cta:hover b{color:var(--ac)}
 .chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);font-size:.85rem}
@@ -258,6 +258,7 @@ def build():
  <section class="box"><h2>الفصول</h2><ol class="chap">{''.join(f'<li><a href="{watch}&amp;t={c["t"]}s" target="_blank" rel="noopener"><b>{c["label"]}</b><span>{e_(c["title"])}</span></a></li>' for c in chapters)}</ol></section>
 </div>
 <div class="share" role="group" aria-label="شارك الحلقة"><button type="button" class="cp" data-u="{url}">انسخ الرابط</button><a href="https://wa.me/?text={urllib.parse.quote(e['title'] + ' ' + url)}" target="_blank" rel="noopener">واتساب</a><span class="cpm" role="status" aria-live="polite"></span></div>
+<p class="subcta"><a class="btn pri" href="https://www.youtube.com/@shnoalsalfa_bh?sub_confirmation=1" target="_blank" rel="noopener">🔔 اشترك بالقناة</a><span>كل يوم رقم جديد، موثّق من مصدرين.</span></p>
 {rel_html}
 {tr_html}
 {pn_html}
@@ -327,7 +328,7 @@ def build():
               '<script>document.querySelectorAll(".sh[data-yt]").forEach(a=>a.addEventListener("click",e=>{if(e.ctrlKey||e.metaKey||e.shiftKey)return;e.preventDefault();const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+a.dataset.yt+"?autoplay=1&rel=0";f.title=a.querySelector("img").alt;f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;f.className="sh";f.style.border="0";a.replaceWith(f);f.focus()}))</script>'
               f'<div style="display:grid;gap:16px"><section class="box"><h2>عن الشورت</h2><p class="lead">{e_(desc)}</p></section>'
               + (f'<a class="card3" href="episode-{parent["id"]}.html"><img src="https://i.ytimg.com/vi/{parent["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><small>الحلقة الكاملة</small><b>{e_(parent["title"])}</b></div></a>' if parent else "")
-              + '</div></div></article></div><style>@media (max-width:640px){.scol{grid-template-columns:1fr!important}.scol .sh{max-width:260px}}</style>')
+              + '<p class="subcta"><a class="btn pri" href="https://www.youtube.com/@shnoalsalfa_bh?sub_confirmation=1" target="_blank" rel="noopener">🔔 اشترك بالقناة</a><span>كل يوم رقم جديد، موثّق من مصدرين.</span></p></div></div></article></div><style>@media (max-width:640px){.scol{grid-template-columns:1fr!important}.scol .sh{max-width:260px}}</style>')
         sc = [("الرئيسية", BASE), ("الحلقات", f"{BASE}episodes.html")] + ([(TOPIC_PAGES[k][1], f"{BASE}topic-{TOPIC_PAGES[k][0]}.html")] if k in TOPIC_PAGES else []) + [(x["title"], f"{BASE}short-{x['id']}.html")]
         page(f"short-{x['id']}.html", f"{x['title']} · شنو السالفة؟", desc[:155], sb, nav="episodes.html", image=x["thumb"], og_type="video.other", ld=graph(sld, sc))
     # home page: latest episodes and shorts between <!--LATEST--> markers

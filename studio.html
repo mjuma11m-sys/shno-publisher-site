@@ -71,6 +71,13 @@
 
  <div id="app" hidden data-tab="tp-post" style="display:grid;gap:18px">
   <div class="row" style="justify-content:space-between"><div class="sbox who" style="flex:1 1 260px"><div class="av" id="av"></div><div><b id="nick"></b><span id="user"></span></div></div><button class="btn3" type="button" id="out">تسجيل خروج</button></div>
+  <div class="sbox" id="today" style="display:grid;gap:10px"><h2>ملخص اليوم</h2>
+   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px" id="tdg">
+    <a class="sbox" href="dashboard.html" style="padding:10px 12px;text-decoration:none;color:inherit"><b id="td-subs" style="font-size:1.6em;display:block">—</b><span class="hint">مشتركين يوتيوب</span></a>
+    <button type="button" class="sbox" data-go="tp-msg" style="padding:10px 12px;text-align:start;color:inherit;font:inherit;cursor:pointer"><b id="td-msg" style="font-size:1.6em;display:block">—</b><span class="hint">رسائل جديدة</span></button>
+    <button type="button" class="sbox" data-go="tp-cmt" style="padding:10px 12px;text-align:start;color:inherit;font:inherit;cursor:pointer"><b id="td-cmt" style="font-size:1.6em;display:block">—</b><span class="hint">تعليقات تنتظر رد</span></button>
+    <button type="button" class="sbox" data-go="tp-post" style="padding:10px 12px;text-align:start;color:inherit;font:inherit;cursor:pointer"><b id="td-next" style="font-size:1.1em;display:block;line-height:1.6">—</b><span class="hint">النشر الجاي · 8:43 بالليل</span></button>
+   </div></div>
   <div class="tabs3" role="tablist" aria-label="أقسام صفحة النشر">
    <button type="button" role="tab" data-t="tp-post" aria-selected="true">النشر</button>
    <button type="button" role="tab" data-t="tp-msg" aria-selected="false">الرسائل <span class="tc" id="tcm"></span></button>
@@ -235,6 +242,12 @@ async function loadComments(){let r;try{r=await call({action:"comments"},QFN)}ca
   if(t){try{await navigator.clipboard.writeText(t);b.textContent="انتسخ ✓ الصقه بيوتيوب"}catch(e){const ta=$("cml").querySelector(`[data-cd="${b.dataset.cc}"]`);ta.select();b.textContent="انسخ النص المحدد"}}
   window.open(c.url,"_blank","noopener");if(c.draft)call({action:"draft_set",id:c.id,status:"used"},QFN).catch(()=>{})}));
  $("cml").querySelectorAll("[data-cx]").forEach(b=>b.addEventListener("click",async()=>{const c=r.comments[+b.dataset.cx];try{await call({action:"draft_set",id:c.id,status:"dismissed"},QFN);loadComments()}catch(e){}}))}
+// «ملخص اليوم»: mirrors the tab counters and the next auto-post; live subscribers from salfa-live
+function renderToday(){const n=x=>{const t=$(x).textContent.trim();return t||"0"};$("td-msg").textContent=n("tcm");$("td-cmt").textContent=n("tcc");
+ const f=document.querySelector("#aql li b");$("td-next").textContent=f?f.textContent:"—"}
+document.querySelectorAll("#today [data-go]").forEach(b=>b.addEventListener("click",()=>{tab(b.dataset.go);document.querySelector(".tabs3").scrollIntoView({behavior:"smooth",block:"start"})}));
+fetch("https://frowdhbazytcmwhrlnmv.supabase.co/functions/v1/salfa-live",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.youtube)$("td-subs").textContent=Number(d.youtube.subs).toLocaleString("en-US");else return fetch("data/dashboard.json").then(r=>r.json()).then(x=>{$("td-subs").textContent=x.channel.subscribers})}).catch(()=>{});
+setInterval(renderToday,1500);
 async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="هالصفحة لصاحب القناة بس"&&getTS()){try{localStorage.removeItem("salfa_session")}catch(x){}boot();return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;$("nick").textContent="شنو السالفة؟";$("av").innerHTML='<img src="assets/icon-96.png" alt="">';loadBuffer();loadAQ();loadComments();loadInbox();loadIdeas();loadHits();loadAdmins();return}$("gerr").textContent=e.message;return}
  const c=S.creator;$("nick").textContent=c.creator_nickname||"";$("user").textContent=c.creator_username?"@"+c.creator_username:"";
  $("av").innerHTML=c.creator_avatar_url?`<img src="${esc(c.creator_avatar_url)}" alt="">`:"؟";
