@@ -34,7 +34,7 @@
 .tabs3 button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .tc{display:inline-block;min-width:1.4em;padding:0 5px;border-radius:999px;background:#dc2626;color:#fff;font-size:.75rem;text-align:center}.tc:empty{display:none}
 #app[data-tab] [data-tp]{display:none!important}
-#app[data-tab="tp-post"] [data-tp="tp-post"]:not([hidden]),#app[data-tab="tp-msg"] [data-tp="tp-msg"],#app[data-tab="tp-ideas"] [data-tp="tp-ideas"],#app[data-tab="tp-hits"] [data-tp="tp-hits"]{display:revert!important}
+#app[data-tab="tp-post"] [data-tp="tp-post"]:not([hidden]),#app[data-tab="tp-msg"] [data-tp="tp-msg"],#app[data-tab="tp-ideas"] [data-tp="tp-ideas"],#app[data-tab="tp-hits"] [data-tp="tp-hits"],#app[data-tab="tp-tools"] [data-tp="tp-tools"]{display:revert!important}
 #app[data-tab="tp-post"] form[data-tp]:not([hidden]){display:grid!important}
 @media (max-width:760px){.sgrid2{grid-template-columns:1fr}}
 </style>
@@ -59,6 +59,7 @@
    <button type="button" role="tab" data-t="tp-msg" aria-selected="false">الرسائل <span class="tc" id="tcm"></span></button>
    <button type="button" role="tab" data-t="tp-ideas" aria-selected="false">الأفكار <span class="tc" id="tci"></span></button>
    <button type="button" role="tab" data-t="tp-hits" aria-selected="false">الزيارات</button>
+   <button type="button" role="tab" data-t="tp-tools" aria-selected="false">أدوات يوتيوب</button>
   </div>
   <p class="msg err" id="gerr" role="alert"></p>
   <div class="sbox" id="setup" data-tp="tp-post" hidden><h2>الإعداد ما خلص</h2><p class="hint">ناقص هالأسرار في Supabase (مشروع sports-hub ← Edge Functions ← Secrets). صاحب الحساب يحطها بنفسه:</p><ul id="miss" style="margin:8px 0 0;line-height:2"></ul></div>
@@ -97,6 +98,17 @@
     <div class="row"><button class="btn2" id="go" type="submit" disabled>انشر على تيك توك</button><button class="btn2" id="dr" type="button" hidden style="background:var(--bg2);color:var(--fg);border:1px solid var(--line)">أرسل كمسودة لتطبيق تيك توك</button><span class="msg" id="msg" role="status" aria-live="polite"></span></div>
    </div>
   </form>
+  <section class="sbox" data-tp="tp-tools" style="display:grid;gap:12px"><h2>فاحص العنوان والكفر</h2><p class="hint">يقيس الطول (الكمبيوتر يقص عند 60 حرف والجوال عند 40)، ويدوّر الكلام العام، ويتأكد إن الكفر ما يكرر العنوان.</p>
+   <label class="f">العنوان<input type="text" id="yt-t" maxlength="150"></label>
+   <label class="f">كلام الكفر (اختياري)<input type="text" id="yt-h" maxlength="80"></label>
+   <div id="yt-tr" aria-live="polite"></div></section>
+  <section class="sbox" data-tp="tp-tools" style="display:grid;gap:12px"><h2>فصول الفيديو من الترجمة</h2><p class="hint">ارفع ملف الترجمة (SRT أو VTT). يطلع لك فصول تلصقها بالوصف: تبدأ من 00:00، وثلاث فصول على الأقل، وكل فصل 10 ثواني أو أكثر. العناوين مسودة من كلمات الحلقة، عدّلها قبل اللصق.</p>
+   <div class="row"><input type="file" id="yt-sf" accept=".srt,.vtt,text/vtt"><label class="f" style="max-width:140px">كم فصل؟<input type="text" inputmode="numeric" id="yt-n" value="7"></label></div>
+   <div id="yt-cr" aria-live="polite"></div></section>
+  <section class="sbox" data-tp="tp-tools" style="display:grid;gap:12px"><h2>وين يطلع المشاهدين؟</h2><p class="hint">من YouTube Studio: Analytics ← الفيديو ← Engagement ← رسم Audience retention ← زر التنزيل. ارفع الملف، ولو رفعت الترجمة فوق يطلع لك شنو كنت تقول لحظة ما طلعوا.</p>
+   <div class="row"><input type="file" id="yt-rf" accept=".csv,text/csv"><label class="f" style="max-width:160px">مدة الفيديو (ثانية)<input type="text" inputmode="numeric" id="yt-d" placeholder="مثلاً 600"></label></div>
+   <div id="yt-rr" aria-live="polite"></div></section>
+  <p class="hint" data-tp="tp-tools">الأدوات تشتغل داخل المتصفح، والملفات ما تنرفع لأي مكان. مأخوذة ومعدّلة للعربي من <a href="https://github.com/jakeschincariol/youtube-agent-skill" rel="noopener">youtube-agent-skill</a> (رخصة MIT، Jake Schincariol).</p>
   <section class="sbox" id="hitsbox" data-tp="tp-hits"><h2>زيارات الموقع <span class="hint" id="hitn"></span></h2><p class="hint" style="margin-bottom:10px">كم مرة انفتحت كل صفحة بآخر 7 أيام. أرقام إجمالية بس، بدون أي معلومة عن الزوار.</p><div id="hitd" style="display:flex;gap:4px;align-items:flex-end;height:60px;margin-bottom:10px" aria-hidden="true"></div><ol id="hitl" style="margin:0;padding-inline-start:20px;display:grid;gap:4px;font-size:.9rem"></ol></section>
   <section class="sbox" id="ideasbox" data-tp="tp-ideas"><h2>أفكار الحلقات <span class="hint" id="idn"></span></h2><p class="hint" style="margin-bottom:10px">من <a href="ideas.html">صفحة الأفكار</a>. الفكرة الجديدة ما تطلع للناس إلا لما تضغط «انشرها».</p><div id="idl" style="display:grid;gap:10px"></div></section>
   <section class="sbox" id="inbox" data-tp="tp-msg"><h2>رسائل الزوار <span class="hint" id="inbn"></span></h2><p class="hint" style="margin-bottom:10px">من <a href="contact.html">صفحة التواصل</a>. التصحيحات تطلع أول.</p><div id="inbl" style="display:grid;gap:10px"></div></section>
@@ -104,6 +116,7 @@
  </div>
 </section></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="assets/yttools.js"></script>
 <script>
 (function(){
 const SB=supabase.createClient("https://frowdhbazytcmwhrlnmv.supabase.co","sb_publishable_-ZhbJ86HAd40XTHqx1iWcg_088ibnla",{auth:{flowType:"implicit",detectSessionInUrl:true,persistSession:true}});
@@ -147,6 +160,24 @@ $("bgo").addEventListener("click",async()=>{const pf=[["youtube","b-yt"],["tikto
  $("bgo").disabled=true;m.textContent="جاري النشر…";
  try{const r=await call({action:"buffer_post",id:$("bpick").value,platforms:pf,caption:$("bcap").value,title:$("btitle").value});m.className="msg ok";m.textContent=Object.entries(r.results).map(([p,v])=>`${BPL[p]}: ${v}`).join(" · ");await loadBuffer()}
  catch(e){m.className="msg err";m.textContent=e.message}finally{$("bgo").disabled=false;barm=false;$("bgo").textContent="انشر الحين"}});
+(function(){const Y=window.YTT;if(!Y)return;let CUES=null;
+ const li=(ok,m)=>`<li style="color:var(${ok?"--ok":"--fg"})">${ok?"✓":"✗"} ${esc(m)}</li>`;
+ function title(){const r=Y.checkTitle($("yt-t").value,$("yt-h").value);$("yt-tr").innerHTML=$("yt-t").value.trim()?`<p><b style="font-size:1.4em">${r.score}</b>/100 · ${r.chars} حرف</p><ul style="margin:6px 0 0;padding-inline-start:18px;line-height:1.9">${r.issues.map(i=>li(false,i[1])).join("")}${r.good.map(g=>li(true,g)).join("")}</ul>`:""}
+ $("yt-t").addEventListener("input",title);$("yt-h").addEventListener("input",title);
+ const read=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result));r.onerror=no;r.readAsText(f)});
+ async function chap(){const f=$("yt-sf").files[0];if(!f)return;CUES=Y.parseSubs(await read(f));const n=Math.max(3,Math.min(20,parseInt($("yt-n").value,10)||7));const r=Y.chapters(CUES,n);
+  if(r.error){$("yt-cr").innerHTML=`<p class="msg err">${esc(r.error)}</p>`;return}
+  const txt=r.chapters.map(c=>c.label+" "+c.draft).join("\n");
+  $("yt-cr").innerHTML=`<p class="msg ${r.valid?"ok":"err"}">${r.valid?r.chapters.length+" فصول، تنفع ليوتيوب":"ما تنفع ليوتيوب: تحتاج 3 فصول على الأقل، أول واحد 00:00، وكل فصل 10 ثواني"}</p><textarea id="yt-ct" dir="auto" style="min-height:140px">${esc(txt)}</textarea><div class="row"><button class="btn3" type="button" id="yt-cc">انسخ</button></div>`;
+  $("yt-cc").onclick=async()=>{try{await navigator.clipboard.writeText($("yt-ct").value);$("yt-cc").textContent="انتسخ ✓"}catch(e){$("yt-ct").select()}};if($("yt-rf").files[0])ret()}
+ async function ret(){const f=$("yt-rf").files[0];if(!f)return;const r=Y.retention(await read(f),parseFloat($("yt-d").value)||0,CUES);
+  if(r.error){$("yt-rr").innerHTML=`<p class="msg err">${esc(r.error)}</p>`;return}
+  const where=c=>c.seconds!==null?Y.mmss(c.seconds):c.from+(r.pctAxis?"%":"");
+  $("yt-rr").innerHTML=`<p>${r.points} نقطة · من ${r.start.toFixed(1)}% إلى ${r.end.toFixed(1)}%</p>
+  <p><b>تسريب البداية:</b> ${r.hookLeak}% راحوا بأول 30 ثانية (${esc(r.verdict)}). تحت 25% زين. صلّح أول جملة قبل أي شي.</p>
+  <p><b>أقوى لحظات الطلعة:</b></p><ul style="margin:0;padding-inline-start:18px;line-height:1.9">${r.cliffs.length?r.cliffs.map(c=>`<li>−${c.lost}% عند ${esc(String(where(c)))}${c.said?` · «${esc(c.said)}»`:""}</li>`).join(""):"<li>ما فيه نزلة حادة، النزول تدريجي</li>"}</ul>
+  <p style="margin-top:8px"><b>النزول بالنص:</b> ${r.slide} لكل وحدة. النزول الثابت مشكلة إيقاع، قصّر النص بدل ما تعيد كتابته.</p>${r.pctAxis&&!(parseFloat($("yt-d").value)>0)?'<p class="hint">حط مدة الفيديو عشان تطلع اللحظات بالدقيقة والثانية.</p>':""}`}
+ $("yt-sf").addEventListener("change",chap);$("yt-n").addEventListener("change",chap);$("yt-rf").addEventListener("change",ret);$("yt-d").addEventListener("change",ret)})();
 async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="هالصفحة لصاحب القناة بس"&&getTS()){try{localStorage.removeItem("salfa_session")}catch(x){}boot();return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;$("nick").textContent="شنو السالفة؟";$("av").innerHTML='<img src="assets/icon-96.png" alt="">';loadBuffer();loadInbox();loadIdeas();loadHits();return}$("gerr").textContent=e.message;return}
  const c=S.creator;$("nick").textContent=c.creator_nickname||"";$("user").textContent=c.creator_username?"@"+c.creator_username:"";
  $("av").innerHTML=c.creator_avatar_url?`<img src="${esc(c.creator_avatar_url)}" alt="">`:"؟";
