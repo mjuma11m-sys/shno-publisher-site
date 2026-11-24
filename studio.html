@@ -77,7 +77,9 @@
     <button type="button" class="sbox" data-go="tp-msg" style="padding:10px 12px;text-align:start;color:inherit;font:inherit;cursor:pointer"><b id="td-msg" style="font-size:1.6em;display:block">—</b><span class="hint">رسائل جديدة</span></button>
     <button type="button" class="sbox" data-go="tp-cmt" style="padding:10px 12px;text-align:start;color:inherit;font:inherit;cursor:pointer"><b id="td-cmt" style="font-size:1.6em;display:block">—</b><span class="hint">تعليقات تنتظر رد</span></button>
     <button type="button" class="sbox" data-go="tp-post" style="padding:10px 12px;text-align:start;color:inherit;font:inherit;cursor:pointer"><b id="td-next" style="font-size:1.1em;display:block;line-height:1.6">—</b><span class="hint">النشر الجاي · 8:43 بالليل</span></button>
-   </div></div>
+   </div>
+   <form id="ttf" class="row" novalidate style="align-items:end;gap:10px"><label class="f" style="flex:1 1 180px">متابعين تيك توك (من TikTok Studio)<input type="text" inputmode="numeric" id="tt-f" placeholder="مثلاً 250" autocomplete="off"></label><button class="btn3" type="submit">احفظ</button><span class="hint" id="tt-m" role="status"></span></form>
+  </div>
   <div class="tabs3" role="tablist" aria-label="أقسام صفحة النشر">
    <button type="button" role="tab" data-t="tp-post" aria-selected="true">النشر</button>
    <button type="button" role="tab" data-t="tp-msg" aria-selected="false">الرسائل <span class="tc" id="tcm"></span></button>
@@ -248,11 +250,16 @@ function renderToday(){const n=x=>{const t=$(x).textContent.trim();return t||"0"
 document.querySelectorAll("#today [data-go]").forEach(b=>b.addEventListener("click",()=>{tab(b.dataset.go);document.querySelector(".tabs3").scrollIntoView({behavior:"smooth",block:"start"})}));
 fetch("https://frowdhbazytcmwhrlnmv.supabase.co/functions/v1/salfa-live",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.youtube)$("td-subs").textContent=Number(d.youtube.subs).toLocaleString("en-US");else return fetch("data/dashboard.json").then(r=>r.json()).then(x=>{$("td-subs").textContent=x.channel.subscribers})}).catch(()=>{});
 setInterval(renderToday,1500);
-async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="هالصفحة لصاحب القناة بس"&&getTS()){try{localStorage.removeItem("salfa_session")}catch(x){}boot();return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;$("nick").textContent="شنو السالفة؟";$("av").innerHTML='<img src="assets/icon-96.png" alt="">';loadBuffer();loadAQ();loadComments();loadInbox();loadIdeas();loadHits();loadAdmins();return}$("gerr").textContent=e.message;return}
+// TikTok followers typed in by hand (until the TikTok stats API is connected) -> dashboard + live card
+function loadManual(){call({action:"manual"},QFN).then(r=>{const f=(r.manual||[]).find(x=>x.key==="tiktok_followers");if(f){$("tt-f").value=f.value;$("tt-m").textContent="آخر تحديث "+new Date(f.at).toLocaleDateString("ar-BH",{day:"numeric",month:"short"})}}).catch(()=>{});}
+$("ttf").addEventListener("submit",async e=>{e.preventDefault();const v=$("tt-f").value.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[,\s٬،.]/g,"");
+ if(!/^\d{1,9}$/.test(v)){$("tt-m").textContent="اكتب رقم بس";return}
+ try{await call({action:"manual_set",key:"tiktok_followers",value:+v},QFN);$("tt-m").textContent="انحفظ ✓ يطلع بلوحة التحكم"}catch(x){$("tt-m").textContent=x.message}});
+async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="هالصفحة لصاحب القناة بس"&&getTS()){try{localStorage.removeItem("salfa_session")}catch(x){}boot();return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;$("nick").textContent="شنو السالفة؟";$("av").innerHTML='<img src="assets/icon-96.png" alt="">';loadBuffer();loadAQ();loadComments();loadManual();loadInbox();loadIdeas();loadHits();loadAdmins();return}$("gerr").textContent=e.message;return}
  const c=S.creator;$("nick").textContent=c.creator_nickname||"";$("user").textContent=c.creator_username?"@"+c.creator_username:"";
  $("av").innerHTML=c.creator_avatar_url?`<img src="${esc(c.creator_avatar_url)}" alt="">`:"؟";
  let locked=false;for(const k of ["comment","duet","stitch"]){const d=!!c[k+"_disabled"];$("c-"+k).disabled=d;$("t-"+k).setAttribute("aria-disabled",d);locked=locked||d}$("lockhint").hidden=!locked;
- renderHistory(S.history||[]);loadBuffer();loadAQ();loadComments();loadAdmins();loadInbox();loadIdeas();loadHits();$("dr").hidden=!S.drafts;show()}
+ renderHistory(S.history||[]);loadBuffer();loadAQ();loadComments();loadManual();loadAdmins();loadInbox();loadIdeas();loadHits();$("dr").hidden=!S.drafts;show()}
 async function startTT(errEl){const a=new Uint8Array(24);crypto.getRandomValues(a);const st="studio-"+Array.from(a,b=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b%62]).join("");
  try{sessionStorage.setItem("tt_state",st)}catch(e){}try{const j=await call({action:"auth_url",state:st});location.href=j.url}catch(e){errEl.className="msg err";errEl.textContent=e.message==="SETUP"?"الإعداد ما خلص: ناقص "+(e.missing||[]).join("، "):e.message}}
 // supabase-js runs onAuthStateChange callbacks while it holds its auth lock: awaiting any SB.auth call inside one
