@@ -257,15 +257,25 @@ function loadManual(){call({action:"manual"},QFN).then(r=>{const f=(r.manual||[]
 $("ttf").addEventListener("submit",async e=>{e.preventDefault();const v=$("tt-f").value.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[,\s٬،.]/g,"");
  if(!/^\d{1,9}$/.test(v)){$("tt-m").textContent="اكتب رقم بس";return}
  try{await call({action:"manual_set",key:"tiktok_followers",value:+v},QFN);$("tt-m").textContent="انحفظ ✓ يطلع بلوحة التحكم"}catch(x){$("tt-m").textContent=x.message}});
+function thumb(u){const m=u.match(/^(https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/)(thumb\/)?([0-9a-f]\/[0-9a-f]{2}\/)([^/]+)(\/[^/]+)?$/);return m?`${m[1]}thumb/${m[3]}${m[4]}/330px-${m[4]}`:u}
 async function loadHeld(){let r;try{r=await call({action:"held"},QFN)}catch(e){return}
  if(!r.held.length){$("hp").hidden=true;return}$("hp").hidden=false;
  $("hpl").innerHTML=r.held.map((h,i)=>`<div style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:8px">
   <b>${esc(h.id)} · ${esc(h.caption.replace(/\s*#\S+/g,"").slice(0,70))}</b>
   ${h.uploads.length?`<div class="row" style="gap:8px">${h.uploads.map(u=>`<a href="${esc(u.url)}" target="_blank" rel="noopener"><img src="${esc(u.url)}" alt="صورة مرفوعة" width="72" height="72" style="object-fit:cover;border-radius:10px"></a><span class="hint">${u.status==="new"?"⏳ تنتظر النشر اليومي":u.status==="used"?"✓ انستخدمت":"✗ ما تنفع"}</span>`).join("")}</div>`:""}
+  ${(h.candidates||[]).length?`<div class="hint">صور مقترحة برخصة مفتوحة. افتح الصورة وتأكد إنها نفس الشي قبل ما تختارها:</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px">${h.candidates.map((c,j)=>`<div style="display:grid;gap:4px;min-width:0">
+   <a href="${esc(c.page)}" target="_blank" rel="noopener"><img src="${esc(thumb(c.image))}" alt="${esc(c.title)}" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;background:var(--line)"></a>
+   <span class="hint" style="font-size:.75rem;overflow-wrap:anywhere">${esc(c.credit)}</span>
+   <button class="btn2" type="button" data-hp="${i}:${j}">استخدم هذي</button></div>`).join("")}</div>
+  <div class="hint">أو ارفع صورتك:</div>`:""}
   <label class="f">الصورة<input type="file" accept="image/jpeg,image/png,image/webp" data-hf="${i}"></label>
   <label class="f">مين صورها؟<input type="text" maxlength="120" data-hc="${i}" value="صورة: شنو السالفة"></label>
   <label class="tog"><input type="checkbox" data-hr="${i}"> صورتها بنفسي أو عندي حق استخدامها</label>
   <div class="row"><button class="btn2" type="button" data-hu="${i}">ارفع</button></div></div>`).join("");
+ $("hpl").querySelectorAll("[data-hp]").forEach(b=>b.addEventListener("click",async()=>{const [i,j]=b.dataset.hp.split(":").map(Number),m=$("hpm");
+  $("hpl").querySelectorAll("[data-hp]").forEach(x=>x.disabled=true);m.className="msg";m.textContent="جاري جلب الصورة…";
+  try{await call({action:"photo_pick",id:r.held[i].id,i:j},QFN);m.className="msg ok";m.textContent="انحفظت ✓ النشر اليومي بيسوي الفيديو";loadHeld()}catch(e){m.className="msg err";m.textContent=e.message||"ما انحفظت";$("hpl").querySelectorAll("[data-hp]").forEach(x=>x.disabled=false)}}));
  $("hpl").querySelectorAll("[data-hu]").forEach(b=>b.addEventListener("click",async()=>{const i=b.dataset.hu,h=r.held[+i],f=$("hpl").querySelector(`[data-hf="${i}"]`).files[0],cr=$("hpl").querySelector(`[data-hc="${i}"]`).value.trim(),ok=$("hpl").querySelector(`[data-hr="${i}"]`).checked,m=$("hpm");m.className="msg err";
   if(!f){m.textContent="اختار صورة";return}if(f.size>15*1024*1024){m.textContent="الصورة أكبر من 15 ميقا";return}if(!ok){m.textContent="لازم تأكد إن عندك حق الصورة";return}if(cr.length<2){m.textContent="اكتب مين صورها";return}
   b.disabled=true;m.className="msg";m.textContent="جاري الرفع…";
