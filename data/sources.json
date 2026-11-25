@@ -313,5 +313,14 @@
    "https://axiomspace.com/missions/ax2",
    "https://techcrunch.com/2023/05/31/welcome-home-ax-2-crew-axiom-space-concludes-second-private-mission-to-iss"
   ]
+ },
+ {
+  "id": "short-170",
+  "caption": "الذكاء الاصطناعي يغلط؟ شلون تتأكد من أي معلومة 🤖 #الذكاء_الاصطناعي #تعلم_على_تيك_توك #شنو_السالفة",
+  "claim": "الذكاء الاصطناعي ممكن يقول معلومة غلط بثقة («هلوسة»)؛ الحل: اطلب المصدر وتأكد منه بمصدر ثاني",
+  "sources": [
+   "https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations",
+   "https://www.nngroup.com/articles/ai-hallucinations/"
+  ]
  }
 ]
