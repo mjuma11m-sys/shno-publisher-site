@@ -360,10 +360,20 @@ def build():
     if "<!--LATEST-->" in home:
         lc = "".join(f'<a class="lc" href="episode-{x["id"]}.html"><img src="https://i.ytimg.com/vi/{x["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><b>{e_(x["title"])}</b><small>{ardate(x["published"])} · {mmss(x["secs"])} دقيقة</small></a>' for x in eps[:3])
         ls = "".join(f'<a class="ls" href="short-{x["id"]}.html"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in shorts[:4])
-        strip = ('<section class="latest"><h2 class="sec">آخر الحلقات</h2><div class="lgrid">' + lc + '</div>'
+        # the channel in numbers (all from the daily pulls: YouTube Data API + Buffer TikTok metrics + sources table)
+        _ch, _tt = _dj.get("channel", {}), _dj.get("tiktok", {})
+        _nsrc = sum(1 for x in shorts if SRC_YT.get(x["id"]) or SRC.get(norm(x["title"])))
+        _k = [(f'{_ch["views"]:,}', "مشاهدة يوتيوب")] if _ch.get("views") else []
+        _k += [(f'{_tt["views"]:,}', "مشاهدة تيك توك")] if _tt.get("views") else []
+        _k += [(str(_nsrc), "رقم موثّق بمصدرين")] if _nsrc else []
+        kstrip = ('<div class="hk">' + "".join(f'<div><b>{v}</b><span>{l}</span></div>' for v, l in _k)
+                  + '<a href="sources.html">شوف المصادر ←</a></div>') if _k else ""
+        strip = (kstrip + '<section class="latest"><h2 class="sec">آخر الحلقات</h2><div class="lgrid">' + lc + '</div>'
                  + ('<h3 style="margin:18px 0 10px">آخر الشورتس</h3><div class="sgr">' + ls + '</div>' if ls else "")
                  + '<p style="margin:14px 0 0;display:flex;gap:18px;flex-wrap:wrap"><a href="episodes.html">كل الحلقات والشورتس ←</a><a href="ideas.html">💡 اقترح حلقة وصوّت ←</a></p></section>'
-                 '<style>.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}'
+                 '<style>.hk{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:0 0 22px}.hk div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 16px;display:grid;min-width:0}'
+                 '.hk b{font-size:1.4rem;direction:ltr;text-align:right;font-variant-numeric:tabular-nums}.hk span{color:var(--mut);font-size:.85rem}.hk a{font-weight:700}'
+                 '.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}'
                  '.lc{display:grid;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;color:var(--fg);text-decoration:none;padding-bottom:12px}'
                  '.lc img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:var(--bg2)}.lc b,.lc small{padding-inline:14px;line-height:1.5}.lc small{color:var(--mut)}.lc:hover b{color:var(--ac)}'
                  '.sgr{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.ls{position:relative;display:block;aspect-ratio:9/16;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--bg2);color:#fff;text-decoration:none}'
