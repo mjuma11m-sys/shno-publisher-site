@@ -20,6 +20,7 @@
 ## عن الموقع / About
 - [من نحن](https://salfa-studio.vercel.app/about.html): شلون نشتغل وقواعدنا وتصحيح الأخطاء
 - [English](https://salfa-studio.vercel.app/en.html): what Salfa Studio is, permissions and data handling
+- [المصادر](https://salfa-studio.vercel.app/sources.html): كل رقم ومصدرينه
 - [بحث](https://salfa-studio.vercel.app/search.html)
 - [أفكار الحلقات](https://salfa-studio.vercel.app/ideas.html): اقتراح مواضيع والتصويت عليها
 - [تواصل](https://salfa-studio.vercel.app/contact.html): تصحيح معلومة أو سؤال

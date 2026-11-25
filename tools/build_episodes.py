@@ -329,7 +329,7 @@ def build():
         host = lambda u: re.sub(r"^www\.", "", re.sub(r"^https?://([^/]+).*$", r"\1", u))
         srcbox = (f'<section class="box"><h2>المصادر</h2><p class="lead">{e_(src["claim"])}</p><ol style="margin:0;padding-inline-start:20px;line-height:2">'
                   + "".join(f'<li><a href="{e_(u)}" target="_blank" rel="noopener nofollow">{e_(host(u))}</a></li>' for u in src["sources"])
-                  + '</ol></section>') if src else ""
+                  + '</ol><p class="hint" style="margin:6px 0 0"><a href="sources.html">كل المصادر ←</a></p></section>') if src else ""
         sb = (f'{CSS}<div class="wrap"><article class="ep" style="max-width:720px">'
               f'<nav class="crumb" aria-label="مسار الصفحة"><a href="episodes.html">الحلقات</a> ‹ شورت</nav>'
               f'<h1>{e_(x["title"])}</h1>'
@@ -375,6 +375,24 @@ def build():
     json.dump(idx, open("data/search.json", "w"), ensure_ascii=False)
     sbody = CSS + open("search.src.html").read()
     page("search.html", "بحث · شنو السالفة؟", "ابحث في حلقات «شنو السالفة؟»: العناوين والفصول والنص الكامل.", sbody, nav="search.html")
+    # one page with every published number and its two sources (DW-126)
+    rows = []
+    for x in shorts:
+        sx = SRC_YT.get(x["id"]) or SRC.get(norm(x["title"]))
+        if not sx:
+            continue
+        hs = lambda u: re.sub(r"^www\.", "", re.sub(r"^https?://([^/]+).*$", r"\1", u))
+        rows.append(f'<li class="srow"><a class="st" href="short-{x["id"]}.html">{e_(x["title"])}</a><span class="sc">{e_(sx["claim"])}</span>'
+                    f'<span class="sl">' + " · ".join(f'<a href="{e_(u)}" target="_blank" rel="noopener nofollow">{e_(hs(u))}</a>' for u in sx["sources"]) + f'</span><small>{ardate(x["published"])}</small></li>')
+    srcbody = (f'{CSS}<style>.srcs{{list-style:none;margin:0;padding:0;display:grid;gap:10px}}.srow{{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 16px;display:grid;gap:4px;min-width:0}}'
+               f'.st{{font-weight:800;color:var(--fg);text-decoration:none}}.st:hover{{color:var(--ac)}}.sc{{line-height:1.8}}.sl{{overflow-wrap:anywhere;font-size:.9rem}}.srow small{{color:var(--mut)}}</style>'
+               f'<div class="wrap"><section class="ep" style="max-width:820px"><nav class="crumb" aria-label="مسار الصفحة"><a href="episodes.html">الحلقات</a> ‹ المصادر</nav>'
+               f'<div><h1>المصادر</h1><p class="lead" style="color:var(--mut);margin-top:6px">كل رقم بالقناة من مصدرين مستقلين. هني {len(rows)} رقم نزل بشورت، مع مصادره. لو لقيت رقم غلط أو مصدر ما يفتح، '
+               f'<a href="contact.html">قول لنا</a> ونصلحه ونكتب التصحيح.</p></div><ol class="srcs">{"".join(rows)}</ol>'
+               f'<p class="lead" style="color:var(--mut)">الحلقات الطويلة مصادرها مكتوبة بصفحة كل حلقة تحت «المصادر والحقوق».</p></section></div>')
+    page("sources.html", "المصادر · شنو السالفة؟", f"كل رقم نزل بقناة «شنو السالفة؟» مع مصدرينه: {len(rows)} رقم موثّق.", srcbody, nav="episodes.html",
+         ld=graph({"@context": "https://schema.org", "@type": "CollectionPage", "name": "المصادر · شنو السالفة؟", "url": f"{BASE}sources.html"},
+                  [("الرئيسية", BASE), ("المصادر", f"{BASE}sources.html")]))
     # RSS feed
     from email.utils import format_datetime
     import datetime as dt
@@ -403,14 +421,14 @@ def build():
         if any(topic(x["title"]) == k for x in eps + shorts):
             L.append(f"- [{name}]({BASE}topic-{slug}.html): {intro}")
     L += ["", "## عن الموقع / About", f"- [من نحن]({BASE}about.html): شلون نشتغل وقواعدنا وتصحيح الأخطاء",
-          f"- [English]({BASE}en.html): what Salfa Studio is, permissions and data handling", f"- [بحث]({BASE}search.html)", f"- [أفكار الحلقات]({BASE}ideas.html): اقتراح مواضيع والتصويت عليها", f"- [تواصل]({BASE}contact.html): تصحيح معلومة أو سؤال", f"- [أعلن معنا]({BASE}advertise.html): الإعلان والرعاية",
+          f"- [English]({BASE}en.html): what Salfa Studio is, permissions and data handling", f"- [المصادر]({BASE}sources.html): كل رقم ومصدرينه", f"- [بحث]({BASE}search.html)", f"- [أفكار الحلقات]({BASE}ideas.html): اقتراح مواضيع والتصويت عليها", f"- [تواصل]({BASE}contact.html): تصحيح معلومة أو سؤال", f"- [أعلن معنا]({BASE}advertise.html): الإعلان والرعاية",
           f"- [RSS]({BASE}feed.xml)", ""]
     open("llms.txt", "w").write("\n".join(L))
     # sitemap
     sm = open("sitemap.xml").read()
-    sm = re.sub(r"<url><loc>[^<]*(?:episodes|episode-|topic-|short-|en\\.html)[^<]*</loc>.*?</url>", "", sm)
+    sm = re.sub(r"<url><loc>[^<]*(?:episodes|episode-|topic-|short-|sources\\.html|en\\.html)[^<]*</loc>.*?</url>", "", sm)
     add = "".join(f"<url><loc>{BASE}{p}</loc><lastmod>{d}</lastmod></url>" for p, d in
-                  [("episodes.html", eps[0]["published"][:10]), ("en.html", "2026-11-23")] + [(f"episode-{e['id']}.html", e["published"][:10]) for e in eps]
+                  [("episodes.html", eps[0]["published"][:10]), ("sources.html", shorts[0]["published"][:10]), ("en.html", "2026-11-23")] + [(f"episode-{e['id']}.html", e["published"][:10]) for e in eps]
                   + [(f"short-{x['id']}.html", x["published"][:10]) for x in shorts]
                   + [(f"topic-{v[0]}.html", eps[0]["published"][:10]) for k, v in TOPIC_PAGES.items() if any(topic(x["title"]) == k for x in eps + shorts)])
     open("sitemap.xml", "w").write(sm.replace("</urlset>", add + "</urlset>"))
