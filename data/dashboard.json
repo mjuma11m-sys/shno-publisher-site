@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25T10:55+03:00",
+ "updated": "2026-11-25T11:31+03:00",
  "channel": {
   "subscribers": 27,
   "views": 34194,
@@ -491,7 +491,7 @@
    "platform": "youtube",
    "label": "يوتيوب",
    "done": 128,
-   "total": 165,
+   "total": 169,
    "next": [
     {
      "id": "short-160",
@@ -515,7 +515,7 @@
    "platform": "tiktok",
    "label": "تيك توك",
    "done": 43,
-   "total": 165,
+   "total": 169,
    "next": [
     {
      "id": "short-168",
