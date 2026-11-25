@@ -338,6 +338,9 @@ def build():
         if src:
             sld["citation"] = src["sources"]
         host = lambda u: re.sub(r"^www\.", "", re.sub(r"^https?://([^/]+).*$", r"\1", u))
+        cfix = [c for c in (json.load(open("data/corrections.json")) if os.path.exists("data/corrections.json") else []) if c.get("yt") == x["id"]]
+        corshort = "".join(f'<section class="box"><h2>{e_(c["kind"])} · {e_(c["date"])}</h2><p class="lead">{e_(c["fix"])}</p>'
+                           f'<p class="hint" style="margin:6px 0 0"><a href="sources.html#corrections">سجل التصحيحات ←</a></p></section>' for c in cfix)
         srcbox = (f'<section class="box"><h2>المصادر</h2><p class="lead">{e_(src["claim"])}</p><ol style="margin:0;padding-inline-start:20px;line-height:2">'
                   + "".join(f'<li><a href="{e_(u)}" target="_blank" rel="noopener nofollow">{e_(host(u))}</a></li>' for u in src["sources"])
                   + '</ol><p class="hint" style="margin:6px 0 0"><a href="sources.html">كل المصادر ←</a></p></section>') if src else ""
@@ -350,7 +353,7 @@ def build():
               f'<div class="pwrap"><a class="sh" href="{yurl}" target="_blank" rel="noopener" data-yt="{x["id"]}"><img src="{x["thumb"]}" alt="غلاف شورت {e_(x["title"])}" width="480" height="360"><span>▶ شغّل هني</span></a><p class="pnote">التشغيل من يوتيوب ويبدأ لما تضغط · <a href="{yurl}" target="_blank" rel="noopener">أو على يوتيوب</a></p></div>'
               '<script>document.querySelectorAll(".sh[data-yt]").forEach(a=>a.addEventListener("click",e=>{if(e.ctrlKey||e.metaKey||e.shiftKey)return;e.preventDefault();const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+a.dataset.yt+"?autoplay=1&rel=0";f.title=a.querySelector("img").alt;f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;f.className="sh";f.style.border="0";a.replaceWith(f);f.focus()}))</script>'
               f'<div style="display:grid;gap:16px"><section class="box"><h2>عن الشورت</h2><p class="lead">{e_(desc)}</p></section>'
-              + srcbox
+              + srcbox + corshort
               + (f'<a class="card3" href="episode-{parent["id"]}.html"><img src="https://i.ytimg.com/vi/{parent["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><small>الحلقة الكاملة</small><b>{e_(parent["title"])}</b></div></a>' if parent else "")
               + '<p class="subcta"><a class="btn pri" href="https://www.youtube.com/@shnoalsalfa_bh?sub_confirmation=1" target="_blank" rel="noopener">🔔 اشترك بالقناة</a><span>كل يوم رقم جديد، موثّق من مصدرين.</span></p></div></div></article></div><style>@media (max-width:640px){.scol{grid-template-columns:1fr!important}.scol .sh{max-width:260px}}</style>')
         sc = [("الرئيسية", BASE), ("الحلقات", f"{BASE}episodes.html")] + ([(TOPIC_PAGES[k][1], f"{BASE}topic-{TOPIC_PAGES[k][0]}.html")] if k in TOPIC_PAGES else []) + [(x["title"], f"{BASE}short-{x['id']}.html")]
@@ -405,12 +408,20 @@ def build():
         hs = lambda u: re.sub(r"^www\.", "", re.sub(r"^https?://([^/]+).*$", r"\1", u))
         rows.append(f'<li class="srow"><a class="st" href="short-{x["id"]}.html">{e_(x["title"])}</a><span class="sc">{e_(sx["claim"])}</span>'
                     f'<span class="sl">' + " · ".join(f'<a href="{e_(u)}" target="_blank" rel="noopener nofollow">{e_(hs(u))}</a>' for u in sx["sources"]) + f'</span><small>{ardate(x["published"])}</small></li>')
+    cors = json.load(open("data/corrections.json")) if os.path.exists("data/corrections.json") else []
+    corbox = ('<h2 id="corrections" style="margin:10px 0 0;scroll-margin-top:110px">التصحيحات والتوضيحات</h2>'
+              '<p class="lead" style="color:var(--mut)">لو طلع إن معلومة نشرناها ناقصة أو غلط، نكتبها هني بتاريخها وبصفحة الشورت.</p>'
+              + ('<ol class="srcs">' + "".join(
+                  f'<li class="srow"><span class="st">{e_(c["kind"])} · {e_(c["date"])}</span><span class="sc">انقال: «{e_(c["said"])}»</span><span class="sc">{e_(c["fix"])}</span>'
+                  + (f'<span class="sl"><a href="short-{e_(c["yt"])}.html">صفحة الشورت</a></span>' if c["yt"] and os.path.exists(f'short-{c["yt"]}.html') else "") + '</li>'
+                  for c in cors) + '</ol>' if cors else '<p class="lead">ما فيه تصحيحات للحين.</p>'))
     srcbody = (f'{CSS}<style>.srcs{{list-style:none;margin:0;padding:0;display:grid;gap:10px}}.srow{{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 16px;display:grid;gap:4px;min-width:0}}'
                f'.st{{font-weight:800;color:var(--fg);text-decoration:none}}.st:hover{{color:var(--ac)}}.sc{{line-height:1.8}}.sl{{overflow-wrap:anywhere;font-size:.9rem}}.srow small{{color:var(--mut)}}</style>'
                f'<div class="wrap"><section class="ep" style="max-width:820px"><nav class="crumb" aria-label="مسار الصفحة"><a href="episodes.html">الحلقات</a> ‹ المصادر</nav>'
                f'<div><h1>المصادر</h1><p class="lead" style="color:var(--mut);margin-top:6px">كل رقم بالقناة من مصدرين مستقلين. هني {len(rows)} رقم نزل بشورت، مع مصادره. لو لقيت رقم غلط أو مصدر ما يفتح، '
                f'<a href="contact.html">قول لنا</a> ونصلحه ونكتب التصحيح.</p></div><ol class="srcs">{"".join(rows)}</ol>'
-               f'<p class="lead" style="color:var(--mut)">الحلقات الطويلة مصادرها مكتوبة بصفحة كل حلقة تحت «المصادر والحقوق».</p></section></div>')
+               f'<p class="lead" style="color:var(--mut)">الحلقات الطويلة مصادرها مكتوبة بصفحة كل حلقة تحت «المصادر والحقوق».</p>'
+               + corbox + '</section></div>')
     page("sources.html", "المصادر · شنو السالفة؟", f"كل رقم نزل بقناة «شنو السالفة؟» مع مصدرينه: {len(rows)} رقم موثّق.", srcbody, nav="episodes.html",
          ld=graph({"@context": "https://schema.org", "@type": "CollectionPage", "name": "المصادر · شنو السالفة؟", "url": f"{BASE}sources.html"},
                   [("الرئيسية", BASE), ("المصادر", f"{BASE}sources.html")]))
