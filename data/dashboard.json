@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25T11:31+03:00",
+ "updated": "2026-11-25T11:34+03:00",
  "channel": {
   "subscribers": 27,
   "views": 34194,
@@ -438,6 +438,10 @@
  ],
  "lessons": [
   {
+   "agent": "analyst",
+   "text": "25/11/2026 · تيك توك (أرقام Buffer لـ39 شورت): شورتات تاريخ البحرين تكسب. «أول نفط بالخليج» 48,725 مشاهدة (44% مدة مشاهدة)، و«فرانك هولمز» 1,284 بمدة مشاهدة 80%، و«معنى اسم المنامة» 726 (48%). شورتات GTA بين 300 و440 مشاهدة ومدة مشاهدتها 29–53%. آخر دفعة نيون (الرياض، GTA 3.79 ولا 2.36) الناس تتفرج ثانيتين بس (11–14%)، يعني الهوك ما يمسك."
+  },
+  {
    "agent": "publisher",
    "text": "23/11/2026 · The channel's Instagram account was disabled automatically on 19/11 after a plan to post a large number of reels. The rule: a new account starts at 1 post a day at most, with the platform's own «AI info» label. One publishing route per video (Buffer or Chrome, never both): a GTA short got duplicated on 22/11. Evidence: the Chrome report and Buffer."
   },
@@ -616,6 +620,444 @@
     "t90": 1500,
     "better": "up",
     "note": "يدوي من TikTok Studio"
+   }
+  ]
+ },
+ "tiktok": {
+  "posts": 39,
+  "views": 59322,
+  "likes": 1119,
+  "updated": "2026-11-25T01:34",
+  "avg_ret": 39,
+  "rows": [
+   {
+    "item": "short-167",
+    "text": "الإمارات خامس دولة توصل المريخ 🚀",
+    "sent": "2026-11-24T17:38:03.156Z",
+    "views": 4,
+    "likes": 0,
+    "comments": 0,
+    "avg_watch": 4.67,
+    "dur": 14.7,
+    "ret": 32
+   },
+   {
+    "item": "short-162",
+    "text": "البحرين كبرت أكثر من 70 كم² من البحر 🇧🇭",
+    "sent": "2026-11-24T17:36:59.801Z",
+    "views": 770,
+    "likes": 5,
+    "comments": 0,
+    "avg_watch": 7.64,
+    "dur": 12.9,
+    "ret": 59
+   },
+   {
+    "item": "short-165",
+    "text": "أكثر من 70 مليون دولار جوايز بطولة ألعاب بالرياض 🏆",
+    "sent": "2026-11-24T17:36:32.570Z",
+    "views": 80,
+    "likes": 2,
+    "comments": 0,
+    "avg_watch": 1.8,
+    "dur": 15.2,
+    "ret": 12
+   },
+   {
+    "item": "short-160",
+    "text": "GTA 6 بأول يوم: 3.79 مليار ولا 2.36؟ 🤔",
+    "sent": "2026-11-24T17:35:23.360Z",
+    "views": 65,
+    "likes": 0,
+    "comments": 0,
+    "avg_watch": 2.25,
+    "dur": 18.0,
+    "ret": 12
+   },
+   {
+    "item": "short-159",
+    "text": "GTA 5 وصلت 230 مليون نسخة بعد 13 سنة 🎮",
+    "sent": "2026-11-24T14:45:39.842Z",
+    "views": 58,
+    "likes": 3,
+    "comments": 0,
+    "avg_watch": 4.1,
+    "dur": 12.7,
+    "ret": 32
+   },
+   {
+    "item": null,
+    "text": "اللوفر انسرق مرة ثانية 2025 💎",
+    "sent": "2026-11-23T18:00:00.000Z",
+    "views": 7,
+    "likes": 2,
+    "comments": 0,
+    "avg_watch": 4.04,
+    "dur": 14.1,
+    "ret": 29
+   },
+   {
+    "item": "short-158",
+    "text": "GTA 6 باعت 32.5 مليون نسخة قبل لا تنزل! 🎮",
+    "sent": "2026-11-23T14:50:33.061Z",
+    "views": 2,
+    "likes": 1,
+    "comments": 0,
+    "avg_watch": 5.29,
+    "dur": 10.7,
+    "ret": 49
+   },
+   {
+    "item": null,
+    "text": "GTA 5 ضد GTA 6: أول يوم 📊 GTA 6 بأول يوم: 3.79 مليار دولار حسب Take-Two. المصادر: Take-Two عبر ABC News وFox Business وD",
+    "sent": "2026-11-23T10:00:00.000Z",
+    "views": 11,
+    "likes": 1,
+    "comments": 0,
+    "avg_watch": 3.83,
+    "dur": 11.5,
+    "ret": 33
+   },
+   {
+    "item": "short-021",
+    "text": "منو ملك الطائرة بالبحرين؟",
+    "sent": "2026-11-22T19:00:00.000Z",
+    "views": 7,
+    "likes": 2,
+    "comments": 0,
+    "avg_watch": 5.86,
+    "dur": 13.9,
+    "ret": 42
+   },
+   {
+    "item": null,
+    "text": "الموناليزا سنتين بصندوق مخفي 📦",
+    "sent": "2026-11-22T18:00:00.000Z",
+    "views": 378,
+    "likes": 7,
+    "comments": 0,
+    "avg_watch": 4.76,
+    "dur": 9.5,
+    "ret": 50
+   },
+   {
+    "item": "short-004",
+    "text": "دينار = 2.66 دولار… يعني البحرين أغنى من أمريكا؟ 💰",
+    "sent": "2026-11-22T18:00:00.000Z",
+    "views": 4,
+    "likes": 2,
+    "comments": 0,
+    "avg_watch": 9.54,
+    "dur": 23.6,
+    "ret": 40
+   },
+   {
+    "item": "short-020",
+    "text": "دار كليب ضد المحرق… منو بياخذ الدوري؟",
+    "sent": "2026-11-22T18:00:00.000Z",
+    "views": 5,
+    "likes": 2,
+    "comments": 0,
+    "avg_watch": 6.8,
+    "dur": 14.5,
+    "ret": 47
+   },
+   {
+    "item": null,
+    "text": "GTA 6 جابت 3.79 مليار بيوم واحد! 💰 أكبر رقم بيوم واحد بتاريخ الترفيه حسب Take-Two (ABC News، Fox Business) · رسم توضيحي",
+    "sent": "2026-11-22T16:34:00.695Z",
+    "views": 390,
+    "likes": 7,
+    "comments": 0,
+    "avg_watch": 3.44,
+    "dur": 11.6,
+    "ret": 30
+   },
+   {
+    "item": null,
+    "text": "GTA 5 باعت 11 مليون بأول يوم… وGTA 6؟ (توقعات) · توقعات Piper Sandler",
+    "sent": "2026-11-22T10:00:00.000Z",
+    "views": 331,
+    "likes": 6,
+    "comments": 0,
+    "avg_watch": 6.41,
+    "dur": 12.6,
+    "ret": 51
+   },
+   {
+    "item": "short-019",
+    "text": "الطائرة البحرينية بطلة آسيا! 🏐🇧🇭",
+    "sent": "2026-11-21T19:00:00.000Z",
+    "views": 147,
+    "likes": 5,
+    "comments": 0,
+    "avg_watch": 4.93,
+    "dur": 16.4,
+    "ret": 30
+   },
+   {
+    "item": null,
+    "text": "بيكاسو متهم بسرقة الموناليزا؟!",
+    "sent": "2026-11-21T18:00:00.000Z",
+    "views": 294,
+    "likes": 2,
+    "comments": 0,
+    "avg_watch": 2.73,
+    "dur": 8.8,
+    "ret": 31
+   },
+   {
+    "item": "short-018",
+    "text": "شباب البحرين أبطال العرب والخليج بالسلة!",
+    "sent": "2026-11-21T18:00:00.000Z",
+    "views": 140,
+    "likes": 8,
+    "comments": 0,
+    "avg_watch": 6.86,
+    "dur": 13.4,
+    "ret": 51
+   },
+   {
+    "item": null,
+    "text": "GTA 6 بـ 80 دولار والعلبة بدون قرص! 💿",
+    "sent": "2026-11-21T10:00:00.000Z",
+    "views": 403,
+    "likes": 3,
+    "comments": 0,
+    "avg_watch": 5.54,
+    "dur": 11.1,
+    "ret": 50
+   },
+   {
+    "item": "short-017",
+    "text": "المحرق ثلاثية تاريخية بالسلة! محرق ولا منامة؟",
+    "sent": "2026-11-20T19:00:00.000Z",
+    "views": 153,
+    "likes": 6,
+    "comments": 1,
+    "avg_watch": 4.31,
+    "dur": 18.5,
+    "ret": 23
+   },
+   {
+    "item": null,
+    "text": "سرقة الموناليزا بمريول أبيض 🖼️",
+    "sent": "2026-11-20T18:00:00.000Z",
+    "views": 340,
+    "likes": 5,
+    "comments": 0,
+    "avg_watch": 4.37,
+    "dur": 11.4,
+    "ret": 38
+   },
+   {
+    "item": "short-016",
+    "text": "ملك السلة البحرينية؟ المنامة بـ25 لقب 🏀",
+    "sent": "2026-11-20T18:00:00.000Z",
+    "views": 163,
+    "likes": 10,
+    "comments": 0,
+    "avg_watch": 4.44,
+    "dur": 17.8,
+    "ret": 25
+   },
+   {
+    "item": null,
+    "text": "GTA 6 تأخرت مرتين قبل ما تنزل 🎮",
+    "sent": "2026-11-20T10:00:00.000Z",
+    "views": 437,
+    "likes": 9,
+    "comments": 0,
+    "avg_watch": 4.57,
+    "dur": 15.8,
+    "ret": 29
+   },
+   {
+    "item": "short-015",
+    "text": "النجمة بطل آسيا مرتين بكرة اليد!",
+    "sent": "2026-11-19T19:00:00.000Z",
+    "views": 511,
+    "likes": 13,
+    "comments": 0,
+    "avg_watch": 7.03,
+    "dur": 16.8,
+    "ret": 42
+   },
+   {
+    "item": "short-141",
+    "text": "روابط GTA 6 المجانية = خطر ⚠️",
+    "sent": "2026-11-19T18:00:00.000Z",
+    "views": 149,
+    "likes": 3,
+    "comments": 0,
+    "avg_watch": 3.02,
+    "dur": 10.4,
+    "ret": 29
+   },
+   {
+    "item": "short-014",
+    "text": "أول فوز أولمبي لمنتخب بحريني بلعبة جماعية 🤾",
+    "sent": "2026-11-19T18:00:00.000Z",
+    "views": 293,
+    "likes": 9,
+    "comments": 0,
+    "avg_watch": 7.1,
+    "dur": 16.7,
+    "ret": 43
+   },
+   {
+    "item": "short-013",
+    "text": "البحرين بطل آسيا لكرة اليد لأول مرة! 🏆🇧🇭",
+    "sent": "2026-11-18T19:00:00.000Z",
+    "views": 165,
+    "likes": 5,
+    "comments": 0,
+    "avg_watch": 4.75,
+    "dur": 21.0,
+    "ret": 23
+   },
+   {
+    "item": "short-140",
+    "text": "السعودية وشركة GTA 🎮",
+    "sent": "2026-11-18T18:00:00.000Z",
+    "views": 170,
+    "likes": 4,
+    "comments": 0,
+    "avg_watch": 3.7,
+    "dur": 11.3,
+    "ret": 33
+   },
+   {
+    "item": "short-009",
+    "text": "من وين النادي البحريني يجيب فلوسه؟ 💰",
+    "sent": "2026-11-18T18:00:00.000Z",
+    "views": 174,
+    "likes": 6,
+    "comments": 0,
+    "avg_watch": 7.23,
+    "dur": 23.3,
+    "ret": 31
+   },
+   {
+    "item": "short-151",
+    "text": "شنو معنى اسم المنامة؟ 🤔",
+    "sent": "2026-11-18T18:00:00.000Z",
+    "views": 726,
+    "likes": 8,
+    "comments": 1,
+    "avg_watch": 9.27,
+    "dur": 19.4,
+    "ret": 48
+   },
+   {
+    "item": "short-008",
+    "text": "موسم واحد يغيّر مصير نادي كامل! ناديك بالممتاز ولا بالأولى؟",
+    "sent": "2026-11-17T19:00:00.000Z",
+    "views": 275,
+    "likes": 5,
+    "comments": 0,
+    "avg_watch": 6.49,
+    "dur": 23.0,
+    "ret": 28
+   },
+   {
+    "item": "short-139",
+    "text": "GTA V جابت مليار دولار بثلاث أيام!",
+    "sent": "2026-11-17T18:00:00.000Z",
+    "views": 307,
+    "likes": 6,
+    "comments": 0,
+    "avg_watch": 4.39,
+    "dur": 8.6,
+    "ret": 51
+   },
+   {
+    "item": "short-003",
+    "text": "الغوص على اللؤلؤ: حجر، ونَفَس واحد، ودين ما يخلص",
+    "sent": "2026-11-17T18:00:00.000Z",
+    "views": 226,
+    "likes": 8,
+    "comments": 0,
+    "avg_watch": 10.68,
+    "dur": 24.2,
+    "ret": 44
+   },
+   {
+    "item": "short-007",
+    "text": "٣٦ لقب دوري لنادي واحد… منو يقدر يوقف المحرق؟ ⚽",
+    "sent": "2026-11-17T18:00:00.000Z",
+    "views": 278,
+    "likes": 10,
+    "comments": 0,
+    "avg_watch": 8.66,
+    "dur": 24.3,
+    "ret": 36
+   },
+   {
+    "item": "short-002",
+    "text": "فرانك هولمز «أبو النفط»… كنت بتصبر 7 سنين؟",
+    "sent": "2026-11-16T18:00:00.000Z",
+    "views": 1284,
+    "likes": 23,
+    "comments": 0,
+    "avg_watch": 21.66,
+    "dur": 27.1,
+    "ret": 80
+   },
+   {
+    "item": "short-001",
+    "text": "أول نفط بالخليج طلع من البحرين 🛢️",
+    "sent": "2026-11-15T18:00:00.000Z",
+    "views": 120,
+    "likes": 0,
+    "comments": 0,
+    "avg_watch": 6.72,
+    "dur": 26.6,
+    "ret": 25
+   },
+   {
+    "item": "short-001",
+    "text": "أول نفط بالخليج طلع من البحرين 🛢️",
+    "sent": "2026-11-15T18:00:00.000Z",
+    "views": 48725,
+    "likes": 916,
+    "comments": 36,
+    "avg_watch": 11.71,
+    "dur": 26.6,
+    "ret": 44
+   },
+   {
+    "item": null,
+    "text": "صفقة… استنزاف… ولا تصعيد؟ 3 سيناريوهات 🤔 قول رايك بالكومنت",
+    "sent": "2026-11-10T18:00:00.000Z",
+    "views": 843,
+    "likes": 6,
+    "comments": 0,
+    "avg_watch": 8.61,
+    "dur": 20.9,
+    "ret": 41
+   },
+   {
+    "item": null,
+    "text": "ليش الخليج بنص الحرب؟ قواعد أمريكا من البحرين للسعودية 🇧🇭",
+    "sent": "2026-11-09T18:00:00.000Z",
+    "views": 491,
+    "likes": 4,
+    "comments": 0,
+    "avg_watch": 15.97,
+    "dur": 23.7,
+    "ret": 67
+   },
+   {
+    "item": null,
+    "text": "يوم إيران سكّرت مضيق هرمز… خُمس نفط العالم وقف 🛢️ الحلقة كاملة على يوتيوب",
+    "sent": "2026-11-08T13:21:30.000Z",
+    "views": 396,
+    "likes": 5,
+    "comments": 0,
+    "avg_watch": 12.64,
+    "dur": 23.7,
+    "ret": 53
    }
   ]
  }
