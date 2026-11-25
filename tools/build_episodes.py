@@ -218,7 +218,9 @@ def build():
     shorts = json.load(open("data/shorts.json")) if os.path.exists("data/shorts.json") else []
     # two sources per short (DW-124), matched by caption without hashtags (YouTube titles are the caption + #Shorts)
     norm = lambda t: re.sub(r"\s+", " ", re.sub(r"#\S+", "", t)).strip()
-    SRC = {norm(x["caption"]): x for x in (json.load(open("data/sources.json")) if os.path.exists("data/sources.json") else [])}
+    _sj = json.load(open("data/sources.json")) if os.path.exists("data/sources.json") else []
+    SRC = {norm(x["caption"]): x for x in _sj if x.get("caption")}
+    SRC_YT = {x["yt"]: x for x in _sj if x.get("yt")}
     e_ = html.escape
     for i, e in enumerate(eps):
         summary, chapters, credits, tags = parse(e["description"])
@@ -321,7 +323,7 @@ def build():
                "embedUrl": f"https://www.youtube.com/embed/{x['id']}", "publisher": {"@type": "Organization", "name": "شنو السالفة؟", "url": BASE}}
         if x.get("duration"):
             sld["duration"] = x["duration"]
-        src = SRC.get(norm(x["title"]))
+        src = SRC_YT.get(x["id"]) or SRC.get(norm(x["title"]))
         if src:
             sld["citation"] = src["sources"]
         host = lambda u: re.sub(r"^www\.", "", re.sub(r"^https?://([^/]+).*$", r"\1", u))
