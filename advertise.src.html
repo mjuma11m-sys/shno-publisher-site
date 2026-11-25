@@ -24,9 +24,9 @@
    <div><b id="a-subs">—</b><span>مشتركين يوتيوب</span></div>
    <div><b id="a-views">—</b><span>مشاهدات يوتيوب</span></div>
    <div><b id="a-best">—</b><span>أعلى شورت</span></div>
-   <div><b id="a-tt">—</b><span>منشورات تيك توك</span></div>
+   <div><b id="a-tt">—</b><span>مشاهدات تيك توك</span></div>
   </div>
-  <p class="hint" id="a-at">من YouTube Data API عن طريق موقعنا. التفاصيل الكاملة في <a href="dashboard.html">لوحة التحكم</a>.</p>
+  <p class="hint" id="a-at">يوتيوب من YouTube Data API، وتيك توك من إحصائيات Buffer (تتحدث مرة باليوم). التفاصيل الكاملة في <a href="dashboard.html">لوحة التحكم</a>.</p>
  </div>
 
  <div class="abox"><h2>المواضيع اللي تجيب مشاهدين</h2><ul id="a-top"></ul></div>
@@ -59,8 +59,9 @@
  fetch("data/dashboard.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(!d)return;
   if(!LIVE){$("a-subs").textContent=fmt(d.channel.subscribers);$("a-views").textContent=fmt(d.channel.views)}
   const best=(d.videos||[]).reduce((a,v)=>v.views>a?v.views:a,0);$("a-best").textContent=fmt(best);
-  const tt=(d.queue||[]).find(q=>q.platform==="tiktok");if(tt)$("a-tt").textContent=fmt(tt.done);
-  $("a-top").innerHTML=(d.topics||[]).filter(t=>t.views>100).slice(0,4).map(t=>`<li>${t.name}: ${fmt(t.views)} مشاهدة من ${t.n} فيديو</li>`).join("")}).catch(()=>{});
+  $("a-top").innerHTML=(d.topics||[]).filter(t=>t.views>100).slice(0,4).map(t=>`<li>${t.name}: ${fmt(t.views)} مشاهدة بيوتيوب من ${t.n} فيديو</li>`).join("");
+  if(d.tiktok&&d.tiktok.views){$("a-tt").textContent=fmt(d.tiktok.views);const top=[...d.tiktok.rows].sort((a,b)=>b.views-a.views)[0];
+   if(top){const li=document.createElement("li");li.textContent=`أعلى شورت بتيك توك: «${top.text}» ${fmt(top.views)} مشاهدة`;$("a-top").prepend(li)}}}).catch(()=>{});
  fetch("https://frowdhbazytcmwhrlnmv.supabase.co/functions/v1/salfa-live",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(!d||!d.youtube)return;LIVE=true;
   $("a-subs").textContent=fmt(d.youtube.subs);$("a-views").textContent=fmt(d.youtube.views);
   $("a-at").innerHTML=`مباشر من يوتيوب (${new Date(d.at).toLocaleTimeString("ar-BH",{hour:"2-digit",minute:"2-digit"})}). التفاصيل الكاملة في <a href="dashboard.html">لوحة التحكم</a>.`}).catch(()=>{});
