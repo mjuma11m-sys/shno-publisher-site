@@ -216,6 +216,15 @@ def build():
     adopt_pending(eps)
     takeaways = json.load(open("data/takeaways.json")) if os.path.exists("data/takeaways.json") else {}
     shorts = json.load(open("data/shorts.json")) if os.path.exists("data/shorts.json") else []
+    # public YouTube counts (from the daily stats pull) for VideoObject.interactionStatistic
+    _dj = json.load(open("data/dashboard.json")) if os.path.exists("data/dashboard.json") else {}
+    STATS = {v["id"]: v for v in _dj.get("videos", [])}
+    def stat(vid):
+        v = STATS.get(vid)
+        if not v:
+            return {}
+        return {"interactionStatistic": [{"@type": "InteractionCounter", "interactionType": {"@type": t}, "userInteractionCount": int(v[k])}
+                                         for t, k in (("WatchAction", "views"), ("LikeAction", "likes"), ("CommentAction", "comments")) if v.get(k) is not None]}
     # two sources per short (DW-124), matched by caption without hashtags (YouTube titles are the caption + #Shorts)
     norm = lambda t: re.sub(r"\s+", " ", re.sub(r"#\S+", "", t)).strip()
     _sj = json.load(open("data/sources.json")) if os.path.exists("data/sources.json") else []
@@ -234,6 +243,7 @@ def build():
               "hasPart": [{"@type": "Clip", "name": c["title"], "startOffset": c["t"],
                            "endOffset": (chapters[i + 1]["t"] if i + 1 < len(chapters) else e["secs"]),
                            "url": f"{watch}&t={c['t']}s"} for i, c in enumerate(chapters)]}
+        ld.update(stat(e["id"]))
         rel = [x for x in shorts if topic(x["title"]) == topic(e["title"]) != "أخرى"][:6]
         rel_html = ("" if not rel else '<section class="box"><h2>شورتس من نفس الموضوع</h2><div class="sgrid">'
                     + "".join(f'<a class="sh" href="short-{x["id"]}.html"><img src="{x["thumb"]}" alt="" loading="lazy" width="480" height="360"><span>{e_(x["title"])}</span></a>' for x in rel) + "</div></section>")
@@ -323,6 +333,7 @@ def build():
                "embedUrl": f"https://www.youtube.com/embed/{x['id']}", "publisher": {"@type": "Organization", "name": "شنو السالفة؟", "url": BASE}}
         if x.get("duration"):
             sld["duration"] = x["duration"]
+        sld.update(stat(x["id"]))
         src = SRC_YT.get(x["id"]) or SRC.get(norm(x["title"]))
         if src:
             sld["citation"] = src["sources"]
