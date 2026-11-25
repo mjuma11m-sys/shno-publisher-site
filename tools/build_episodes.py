@@ -216,6 +216,9 @@ def build():
     adopt_pending(eps)
     takeaways = json.load(open("data/takeaways.json")) if os.path.exists("data/takeaways.json") else {}
     shorts = json.load(open("data/shorts.json")) if os.path.exists("data/shorts.json") else []
+    # two sources per short (DW-124), matched by caption without hashtags (YouTube titles are the caption + #Shorts)
+    norm = lambda t: re.sub(r"\s+", " ", re.sub(r"#\S+", "", t)).strip()
+    SRC = {norm(x["caption"]): x for x in (json.load(open("data/sources.json")) if os.path.exists("data/sources.json") else [])}
     e_ = html.escape
     for i, e in enumerate(eps):
         summary, chapters, credits, tags = parse(e["description"])
@@ -318,6 +321,13 @@ def build():
                "embedUrl": f"https://www.youtube.com/embed/{x['id']}", "publisher": {"@type": "Organization", "name": "شنو السالفة؟", "url": BASE}}
         if x.get("duration"):
             sld["duration"] = x["duration"]
+        src = SRC.get(norm(x["title"]))
+        if src:
+            sld["citation"] = src["sources"]
+        host = lambda u: re.sub(r"^www\.", "", re.sub(r"^https?://([^/]+).*$", r"\1", u))
+        srcbox = (f'<section class="box"><h2>المصادر</h2><p class="lead">{e_(src["claim"])}</p><ol style="margin:0;padding-inline-start:20px;line-height:2">'
+                  + "".join(f'<li><a href="{e_(u)}" target="_blank" rel="noopener nofollow">{e_(host(u))}</a></li>' for u in src["sources"])
+                  + '</ol></section>') if src else ""
         sb = (f'{CSS}<div class="wrap"><article class="ep" style="max-width:720px">'
               f'<nav class="crumb" aria-label="مسار الصفحة"><a href="episodes.html">الحلقات</a> ‹ شورت</nav>'
               f'<h1>{e_(x["title"])}</h1>'
@@ -327,6 +337,7 @@ def build():
               f'<div class="pwrap"><a class="sh" href="{yurl}" target="_blank" rel="noopener" data-yt="{x["id"]}"><img src="{x["thumb"]}" alt="غلاف شورت {e_(x["title"])}" width="480" height="360"><span>▶ شغّل هني</span></a><p class="pnote">التشغيل من يوتيوب ويبدأ لما تضغط · <a href="{yurl}" target="_blank" rel="noopener">أو على يوتيوب</a></p></div>'
               '<script>document.querySelectorAll(".sh[data-yt]").forEach(a=>a.addEventListener("click",e=>{if(e.ctrlKey||e.metaKey||e.shiftKey)return;e.preventDefault();const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+a.dataset.yt+"?autoplay=1&rel=0";f.title=a.querySelector("img").alt;f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;f.className="sh";f.style.border="0";a.replaceWith(f);f.focus()}))</script>'
               f'<div style="display:grid;gap:16px"><section class="box"><h2>عن الشورت</h2><p class="lead">{e_(desc)}</p></section>'
+              + srcbox
               + (f'<a class="card3" href="episode-{parent["id"]}.html"><img src="https://i.ytimg.com/vi/{parent["id"]}/mqdefault.jpg" alt="" loading="lazy" width="320" height="180"><div><small>الحلقة الكاملة</small><b>{e_(parent["title"])}</b></div></a>' if parent else "")
               + '<p class="subcta"><a class="btn pri" href="https://www.youtube.com/@shnoalsalfa_bh?sub_confirmation=1" target="_blank" rel="noopener">🔔 اشترك بالقناة</a><span>كل يوم رقم جديد، موثّق من مصدرين.</span></p></div></div></article></div><style>@media (max-width:640px){.scol{grid-template-columns:1fr!important}.scol .sh{max-width:260px}}</style>')
         sc = [("الرئيسية", BASE), ("الحلقات", f"{BASE}episodes.html")] + ([(TOPIC_PAGES[k][1], f"{BASE}topic-{TOPIC_PAGES[k][0]}.html")] if k in TOPIC_PAGES else []) + [(x["title"], f"{BASE}short-{x['id']}.html")]
