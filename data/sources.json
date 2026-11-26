@@ -322,5 +322,14 @@
    "https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations",
    "https://www.nngroup.com/articles/ai-hallucinations/"
   ]
+ },
+ {
+  "id": "short-171",
+  "caption": "تعلّم كلود للمبتدئين · الدرس 1: شلون تسأله صح 🎓 #كلود #Claude #الذكاء_الاصطناعي #تعلم_على_تيك_توك #شنو_السالفة",
+  "claim": "اكتب طلب واضح ومحدد (لمين، ليش، الطول، الأسلوب)، وعدّل بالمحادثة نفسها",
+  "sources": [
+   "https://support.claude.com/en/articles/8114491-getting-started-with-claude",
+   "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/be-clear-and-direct"
+  ]
  }
 ]
