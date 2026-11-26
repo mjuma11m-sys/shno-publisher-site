@@ -319,7 +319,7 @@
   "caption": "الذكاء الاصطناعي يغلط؟ شلون تتأكد من أي معلومة 🤖 #الذكاء_الاصطناعي #تعلم_على_تيك_توك #شنو_السالفة",
   "claim": "الذكاء الاصطناعي ممكن يقول معلومة غلط بثقة («هلوسة»)؛ الحل: اطلب المصدر وتأكد منه بمصدر ثاني",
   "sources": [
-   "https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations",
+   "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations",
    "https://www.nngroup.com/articles/ai-hallucinations/"
   ]
  },
@@ -328,8 +328,17 @@
   "caption": "تعلّم كلود للمبتدئين · الدرس 1: شلون تسأله صح 🎓 #كلود #Claude #الذكاء_الاصطناعي #تعلم_على_تيك_توك #شنو_السالفة",
   "claim": "اكتب طلب واضح ومحدد (لمين، ليش، الطول، الأسلوب)، وعدّل بالمحادثة نفسها",
   "sources": [
-   "https://support.claude.com/en/articles/8114491-getting-started-with-claude",
-   "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/be-clear-and-direct"
+   "https://support.claude.com/en/articles/8114491-get-started-with-claude",
+   "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+  ]
+ },
+ {
+  "id": "short-172",
+  "caption": "المهارات بكلود خطوة خطوة 🎓 من الإعدادات للرفع، وحتى بالخطة المجانية. احفظه 📌 #كلود #Claude #الذكاء_الاصطناعي #تعلم_على_تيك_توك #شنو_السالفة",
+  "claim": "تشغيل Code execution and file creation من Settings › Capabilities؛ مجلد بحروف صغيرة فيه SKILL.md (name + description)؛ ZIP للمجلد نفسه؛ Customize › Skills › + › Create skill › Upload a skill؛ تشغيل المفتاح؛ متاحة حتى للخطة المجانية (Free وPro وMax وTeam وEnterprise)",
+  "sources": [
+   "https://support.claude.com/en/articles/12512180-use-skills-in-claude",
+   "https://claude.com/docs/skills/how-to"
   ]
  }
 ]
