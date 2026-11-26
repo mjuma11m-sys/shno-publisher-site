@@ -1,60 +1,60 @@
 {
- "updated": "2026-11-26T16:47+03:00",
+ "updated": "2026-11-27T00:12+03:00",
  "channel": {
-  "subscribers": 29,
-  "views": 37992,
-  "videos": 30,
-  "views_delta": 3798,
-  "subs_delta": 2
+  "subscribers": 30,
+  "views": 41088,
+  "videos": 32,
+  "views_delta": 3096,
+  "subs_delta": 1
  },
  "videos": [
   {
    "id": "dudDdusvHw8",
    "title": "GTA 6 بـ 80 دولار والعلبة بدون قرص! 💿",
    "type": "short",
-   "views": 8320,
+   "views": 8382,
    "likes": 25,
    "comments": 0,
    "published": "2026-11-21",
-   "delta": 223,
+   "delta": 62,
    "topic": "GTA والألعاب",
-   "per_day": 2080.0
+   "per_day": 1676.4
   },
   {
    "id": "YQwl1MiJYKY",
    "title": "GTA 5 ضد GTA 6: أول يوم 📊",
    "type": "short",
-   "views": 3952,
+   "views": 3989,
    "likes": 27,
    "comments": 2,
    "published": "2026-11-23",
-   "delta": 480,
+   "delta": 37,
    "topic": "GTA والألعاب",
-   "per_day": 1976.0
+   "per_day": 1329.7
   },
   {
    "id": "cQ6yKBx4KLY",
    "title": "GTA 6 تأخرت مرتين قبل ما تنزل 🎮",
    "type": "short",
-   "views": 3910,
+   "views": 3911,
    "likes": 31,
    "comments": 1,
    "published": "2026-11-20",
-   "delta": 2,
+   "delta": 1,
    "topic": "GTA والألعاب",
-   "per_day": 782.0
+   "per_day": 651.8
   },
   {
    "id": "IUSenn3CDlY",
    "title": "GTA 6 باعت 32.5 مليون نسخة قبل لا تنزل!",
    "type": "short",
-   "views": 3353,
+   "views": 3763,
    "likes": 15,
    "comments": 0,
    "published": "2026-11-23",
-   "delta": 1160,
+   "delta": 410,
    "topic": "GTA والألعاب",
-   "per_day": 1676.5
+   "per_day": 1254.3
   },
   {
    "id": "MhOtMbXRrrU",
@@ -66,7 +66,7 @@
    "published": "2026-11-08",
    "delta": 0,
    "topic": "إيران والخليج",
-   "per_day": 105.2
+   "per_day": 99.3
   },
   {
    "id": "Dgtomveeovc",
@@ -78,7 +78,7 @@
    "published": "2026-11-08",
    "delta": 0,
    "topic": "إيران والخليج",
-   "per_day": 99.2
+   "per_day": 93.7
   },
   {
    "id": "47jNdTR02hE",
@@ -90,7 +90,7 @@
    "published": "2026-11-15",
    "delta": 0,
    "topic": "تاريخ البحرين",
-   "per_day": 131.2
+   "per_day": 119.3
   },
   {
    "id": "vQK_HP-DPiE",
@@ -102,31 +102,43 @@
    "published": "2026-11-19",
    "delta": 0,
    "topic": "GTA والألعاب",
-   "per_day": 217.2
+   "per_day": 186.1
   },
   {
    "id": "D-MDEp6pXvk",
    "title": "GTA 6 جابت 3.79 مليار بيوم واحد! 💰",
    "type": "short",
-   "views": 1248,
+   "views": 1276,
    "likes": 5,
    "comments": 0,
    "published": "2026-11-22",
-   "delta": 47,
+   "delta": 28,
    "topic": "GTA والألعاب",
-   "per_day": 416.0
+   "per_day": 319.0
   },
   {
    "id": "rb87oV2KeYA",
    "title": "GTA 5 باعت 11 مليون بأول يوم… وGTA 6؟ (توقعات)",
    "type": "short",
-   "views": 1247,
+   "views": 1274,
    "likes": 10,
    "comments": 0,
    "published": "2026-11-22",
-   "delta": 48,
+   "delta": 27,
    "topic": "GTA والألعاب",
-   "per_day": 415.7
+   "per_day": 318.5
+  },
+  {
+   "id": "qNikzjKCNtc",
+   "title": "GTA 5 وصلت 230 مليون نسخة بعد 13 سنة 🎮",
+   "type": "short",
+   "views": 1251,
+   "likes": 8,
+   "comments": 0,
+   "published": "2026-11-24",
+   "delta": 196,
+   "topic": "GTA والألعاب",
+   "per_day": 625.5
   },
   {
    "id": "eQbh6vkSU6Q",
@@ -138,7 +150,7 @@
    "published": "2026-11-17",
    "delta": 0,
    "topic": "GTA والألعاب",
-   "per_day": 152.8
+   "per_day": 135.8
   },
   {
    "id": "wqoMptARZMQ",
@@ -150,19 +162,31 @@
    "published": "2026-11-17",
    "delta": 0,
    "topic": "تاريخ البحرين",
-   "per_day": 147.0
+   "per_day": 130.7
+  },
+  {
+   "id": "YVnNwmJ-6Xw",
+   "title": "ليش البحرين اسمها البحرين؟ 🌊",
+   "type": "short",
+   "views": 1109,
+   "likes": 6,
+   "comments": 0,
+   "published": "2026-11-25",
+   "delta": 159,
+   "topic": "تاريخ البحرين",
+   "per_day": 1109.0
   },
   {
    "id": "yNhHe_33oXo",
    "title": "فرانك هولمز «أبو النفط»… كنت بتصبر 7 سنين؟",
    "type": "short",
-   "views": 1103,
+   "views": 1104,
    "likes": 12,
    "comments": 2,
    "published": "2026-11-16",
    "delta": 1,
    "topic": "تاريخ البحرين",
-   "per_day": 122.6
+   "per_day": 110.4
   },
   {
    "id": "6b3TJIP7qu0",
@@ -174,31 +198,19 @@
    "published": "2026-11-18",
    "delta": 0,
    "topic": "GTA والألعاب",
-   "per_day": 154.6
+   "per_day": 135.2
   },
   {
    "id": "tleiGKGcrfA",
    "title": "شنو معنى اسم المنامة؟ 🤔",
    "type": "short",
-   "views": 1057,
+   "views": 1058,
    "likes": 7,
    "comments": 0,
    "published": "2026-11-18",
-   "delta": 2,
+   "delta": 1,
    "topic": "تاريخ البحرين",
-   "per_day": 151.0
-  },
-  {
-   "id": "qNikzjKCNtc",
-   "title": "GTA 5 وصلت 230 مليون نسخة بعد 13 سنة 🎮",
-   "type": "short",
-   "views": 1055,
-   "likes": 8,
-   "comments": 0,
-   "published": "2026-11-24",
-   "delta": 664,
-   "topic": "GTA والألعاب",
-   "per_day": 1055.0
+   "per_day": 132.2
   },
   {
    "id": "J0WzDnpqrW0",
@@ -210,19 +222,7 @@
    "published": "2026-11-08",
    "delta": 0,
    "topic": "إيران والخليج",
-   "per_day": 58.0
-  },
-  {
-   "id": "YVnNwmJ-6Xw",
-   "title": "ليش البحرين اسمها البحرين؟ 🌊",
-   "type": "short",
-   "views": 950,
-   "likes": 5,
-   "comments": 0,
-   "published": "2026-11-25",
-   "delta": 0,
-   "topic": "تاريخ البحرين",
-   "per_day": 950.0
+   "per_day": 54.8
   },
   {
    "id": "xpZ5Xyko8oo",
@@ -232,205 +232,235 @@
    "likes": 14,
    "comments": 0,
    "published": "2026-11-23",
-   "delta": 27,
+   "delta": 0,
    "topic": "أخرى",
-   "per_day": 473.5
+   "per_day": 315.7
+  },
+  {
+   "id": "izszK8aE2Yg",
+   "title": "اسم مثلث برمودا مو قديم!",
+   "type": "short",
+   "views": 900,
+   "likes": 2,
+   "comments": 0,
+   "published": "2026-11-25",
+   "delta": 0,
+   "topic": "أخرى",
+   "per_day": 900.0
   },
   {
    "id": "Nth7EGqZTBo",
    "title": "الموناليزا سنتين بصندوق مخفي 📦",
    "type": "short",
-   "views": 581,
+   "views": 583,
    "likes": 12,
    "comments": 0,
    "published": "2026-11-22",
    "delta": 2,
    "topic": "الموناليزا",
-   "per_day": 193.7
+   "per_day": 145.8
   },
   {
    "id": "Az24UGALWdc",
    "title": "بيكاسو متهم بسرقة الموناليزا؟!",
    "type": "short",
-   "views": 389,
+   "views": 392,
    "likes": 3,
    "comments": 0,
    "published": "2026-11-21",
-   "delta": 0,
+   "delta": 3,
    "topic": "الموناليزا",
-   "per_day": 97.2
+   "per_day": 78.4
   },
   {
    "id": "IUaW08O3GG0",
    "title": "GTA 6: ليش لعبة وحدة صارت بهالحجم؟ القصة والأرقام",
    "type": "long",
-   "views": 305,
+   "views": 308,
    "likes": 3,
    "comments": 5,
    "published": "2026-11-18",
-   "delta": 2,
+   "delta": 3,
    "topic": "GTA والألعاب",
-   "per_day": 43.6
+   "per_day": 38.5
+  },
+  {
+   "id": "sCMtf94yZiY",
+   "title": "ما فيه دليل إن الاختفاءات أكثر",
+   "type": "short",
+   "views": 192,
+   "likes": 0,
+   "comments": 0,
+   "published": "2026-11-26",
+   "delta": 0,
+   "topic": "أخرى",
+   "per_day": 192.0
   },
   {
    "id": "F_lXv1wMpPE",
    "title": "إيران وأمريكا: القصة الكاملة من 1953 لين حرب 2026",
    "type": "long",
-   "views": 167,
+   "views": 169,
    "likes": 2,
    "comments": 0,
    "published": "2026-11-08",
-   "delta": 0,
+   "delta": 2,
    "topic": "إيران والخليج",
-   "per_day": 9.8
+   "per_day": 9.4
   },
   {
    "id": "EmYkYIhy8yk",
    "title": "أول نفط بالخليج طلع من البحرين… بس ليش ما صارت أغنى دولة؟",
    "type": "long",
-   "views": 112,
+   "views": 115,
    "likes": 1,
    "comments": 1,
    "published": "2026-11-15",
-   "delta": 2,
+   "delta": 3,
    "topic": "تاريخ البحرين",
-   "per_day": 11.2
+   "per_day": 10.5
   },
   {
    "id": "aQrTHARZVI8",
    "title": "سرقة الموناليزا: الوثائقي الكامل",
    "type": "long",
-   "views": 101,
+   "views": 102,
    "likes": 1,
    "comments": 1,
    "published": "2026-11-20",
-   "delta": 0,
+   "delta": 1,
    "topic": "الموناليزا",
-   "per_day": 20.2
+   "per_day": 17.0
   },
   {
    "id": "cBy4uzqup7I",
    "title": "سرقة الموناليزا بمريول أبيض 🖼️",
    "type": "short",
-   "views": 80,
+   "views": 82,
    "likes": 2,
    "comments": 0,
    "published": "2026-11-20",
-   "delta": 4,
-   "topic": "الموناليزا",
-   "per_day": 16.0
-  },
-  {
-   "id": "5M9vUdqWoZA",
-   "title": "دينار = 2.66 دولار… يعني البحرين أغنى من أمريكا؟ 💰",
-   "type": "short",
-   "views": 10,
-   "likes": 0,
-   "comments": 0,
-   "published": "2026-11-22",
-   "delta": 1,
-   "topic": "اقتصاد",
-   "per_day": 3.3
-  },
-  {
-   "id": "ruFmH60jGrw",
-   "title": "ليش الدينار البحريني غالي؟ (مو لأن البحرين أغنى من أمريكا)",
-   "type": "long",
-   "views": 7,
-   "likes": 2,
-   "comments": 0,
-   "published": "2026-11-22",
    "delta": 2,
-   "topic": "اقتصاد",
-   "per_day": 2.3
-  },
-  {
-   "id": "aXgV3zbghdc",
-   "title": "أبوظبي كانت تستخدم الدينار البحريني! 🇧🇭🇦🇪",
-   "type": "short",
-   "views": 4,
-   "likes": 0,
-   "comments": 0,
-   "published": "2026-11-23",
-   "delta": 4,
-   "topic": "اقتصاد",
-   "per_day": 2.0
+   "topic": "الموناليزا",
+   "per_day": 13.7
   },
   {
    "id": "8zsSaAulBnY",
    "title": "مثلث برمودا: لغز حقيقي ولا قصة مبالغ فيها؟",
    "type": "long",
-   "views": 0,
+   "views": 18,
    "likes": 0,
    "comments": 0,
    "published": "2026-11-25",
-   "delta": 0,
+   "delta": 18,
    "topic": "أخرى",
-   "per_day": 0.0
+   "per_day": 18.0
+  },
+  {
+   "id": "5M9vUdqWoZA",
+   "title": "دينار = 2.66 دولار… يعني البحرين أغنى من أمريكا؟ 💰",
+   "type": "short",
+   "views": 16,
+   "likes": 0,
+   "comments": 0,
+   "published": "2026-11-22",
+   "delta": 6,
+   "topic": "اقتصاد",
+   "per_day": 4.0
+  },
+  {
+   "id": "ruFmH60jGrw",
+   "title": "ليش الدينار البحريني غالي؟ (مو لأن البحرين أغنى من أمريكا)",
+   "type": "long",
+   "views": 13,
+   "likes": 2,
+   "comments": 0,
+   "published": "2026-11-22",
+   "delta": 6,
+   "topic": "اقتصاد",
+   "per_day": 3.2
+  },
+  {
+   "id": "aXgV3zbghdc",
+   "title": "أبوظبي كانت تستخدم الدينار البحريني! 🇧🇭🇦🇪",
+   "type": "short",
+   "views": 5,
+   "likes": 0,
+   "comments": 0,
+   "published": "2026-11-23",
+   "delta": 1,
+   "topic": "اقتصاد",
+   "per_day": 1.7
   }
  ],
  "topics": [
   {
    "name": "GTA والألعاب",
-   "views": 26997,
+   "views": 27761,
    "n": 11,
    "series": [
     11426,
     15704,
     24371,
-    26997
+    26997,
+    27761
    ]
   },
   {
    "name": "تاريخ البحرين",
-   "views": 5710,
+   "views": 5874,
    "n": 6,
    "series": [
     4728,
     4735,
     4755,
-    5710
+    5710,
+    5874
    ]
   },
   {
    "name": "إيران والخليج",
-   "views": 4627,
+   "views": 4629,
    "n": 4,
    "series": [
     4622,
     4627,
     4627,
-    4627
+    4627,
+    4629
+   ]
+  },
+  {
+   "name": "أخرى",
+   "views": 2057,
+   "n": 4,
+   "series": [
+    920,
+    947,
+    2057
    ]
   },
   {
    "name": "الموناليزا",
-   "views": 1151,
+   "views": 1159,
    "n": 4,
    "series": [
     587,
     812,
     1145,
-    1151
-   ]
-  },
-  {
-   "name": "أخرى",
-   "views": 947,
-   "n": 2,
-   "series": [
-    920,
-    947
+    1151,
+    1159
    ]
   },
   {
    "name": "اقتصاد",
-   "views": 21,
+   "views": 34,
    "n": 3,
    "series": [
     1,
     14,
-    21
+    21,
+    34
    ]
   }
  ],
@@ -524,7 +554,7 @@
   {
    "platform": "youtube",
    "label": "يوتيوب",
-   "done": 128,
+   "done": 129,
    "total": 172,
    "next": [
     {
@@ -548,13 +578,9 @@
   {
    "platform": "tiktok",
    "label": "تيك توك",
-   "done": 44,
+   "done": 45,
    "total": 172,
    "next": [
-    {
-     "id": "short-169",
-     "text": "أول سعودية بالفضاء: ريانة برناوي 🚀"
-    },
     {
      "id": "short-161",
      "text": "أكثر لعبة انباعت بالتاريخ؟ مو GTA 🧱"
@@ -566,6 +592,10 @@
     {
      "id": "short-164",
      "text": "أول فورمولا 1 بالشرق الأوسط كانت بالبحرين 🏎️"
+    },
+    {
+     "id": "short-166",
+     "text": "مبنى بالمنامة فيه 3 مراوح هوا 🌬️"
     }
    ]
   }
@@ -590,22 +620,27 @@
    "d": "2026-11-25",
    "views": 37992,
    "subs": 29
+  },
+  {
+   "d": "2026-11-26",
+   "views": 41088,
+   "subs": 30
   }
  ],
  "week_topic": {
   "name": "GTA والألعاب",
-  "gain": 15571,
+  "gain": 16335,
   "since": "2026-11-22",
-  "days": 3
+  "days": 4
  },
  "by_type": {
   "short": {
-   "n": 24,
-   "avg_per_day": 478.2
+   "n": 26,
+   "avg_per_day": 389.7
   },
   "long": {
    "n": 6,
-   "avg_per_day": 14.5
+   "avg_per_day": 16.1
   }
  },
  "comments": {
@@ -619,21 +654,21 @@
    {
     "key": "subs_per_1k",
     "label": "مشترك لكل 1000 مشاهدة",
-    "now": 0.76,
+    "now": 0.73,
     "t30": 3,
     "t90": 5,
     "better": "up",
     "week": {
-     "subs_per_1k": 0.4,
-     "views": 24792,
-     "subs": 10,
+     "subs_per_1k": 0.39,
+     "views": 27888,
+     "subs": 11,
      "since": "2026-11-22"
     }
    },
    {
     "key": "subscribers",
     "label": "مشتركين يوتيوب",
-    "now": 29,
+    "now": 30,
     "t30": 150,
     "t90": 1000,
     "better": "up"
@@ -641,7 +676,7 @@
    {
     "key": "top_share",
     "label": "حصة أكبر موضوع %",
-    "now": 68.4,
+    "now": 66.9,
     "t30": 50,
     "t90": 40,
     "better": "down",
@@ -659,66 +694,88 @@
   ]
  },
  "tiktok": {
-  "posts": 39,
-  "views": 59322,
-  "likes": 1119,
-  "updated": "2026-11-25T01:34",
+  "posts": 41,
+  "views": 60304,
+  "likes": 1139,
+  "updated": "2026-11-26T20:49",
   "avg_ret": 39,
   "rows": [
+   {
+    "item": "short-169",
+    "text": "أول سعودية بالفضاء: ريانة برناوي 🚀",
+    "sent": "2026-11-26T20:49:44.030Z",
+    "views": 0,
+    "likes": 0,
+    "comments": 0,
+    "avg_watch": 0,
+    "dur": 13.5,
+    "ret": 0
+   },
+   {
+    "item": "short-168",
+    "text": "سلطان النيادي: 186 يوم بالفضاء، وأول عربي يمشي بالفضاء 🚀 المصادر: NPR · المكتب الإعلامي لحكومة دبي",
+    "sent": "2026-11-25T17:57:05.129Z",
+    "views": 92,
+    "likes": 3,
+    "comments": 0,
+    "avg_watch": 4.46,
+    "dur": 13.5,
+    "ret": 33
+   },
    {
     "item": "short-167",
     "text": "الإمارات خامس دولة توصل المريخ 🚀",
     "sent": "2026-11-24T17:38:03.156Z",
-    "views": 4,
+    "views": 9,
     "likes": 0,
     "comments": 0,
-    "avg_watch": 4.67,
+    "avg_watch": 3.92,
     "dur": 14.7,
-    "ret": 32
+    "ret": 27
    },
    {
     "item": "short-162",
     "text": "البحرين كبرت أكثر من 70 كم² من البحر 🇧🇭",
     "sent": "2026-11-24T17:36:59.801Z",
-    "views": 770,
-    "likes": 5,
+    "views": 1327,
+    "likes": 13,
     "comments": 0,
-    "avg_watch": 7.64,
+    "avg_watch": 8.07,
     "dur": 12.9,
-    "ret": 59
+    "ret": 63
    },
    {
     "item": "short-165",
     "text": "أكثر من 70 مليون دولار جوايز بطولة ألعاب بالرياض 🏆",
     "sent": "2026-11-24T17:36:32.570Z",
-    "views": 80,
-    "likes": 2,
+    "views": 124,
+    "likes": 3,
     "comments": 0,
-    "avg_watch": 1.8,
+    "avg_watch": 2.16,
     "dur": 15.2,
-    "ret": 12
+    "ret": 14
    },
    {
     "item": "short-160",
     "text": "GTA 6 بأول يوم: 3.79 مليار ولا 2.36؟ 🤔",
     "sent": "2026-11-24T17:35:23.360Z",
-    "views": 65,
+    "views": 121,
     "likes": 0,
     "comments": 0,
-    "avg_watch": 2.25,
+    "avg_watch": 3.21,
     "dur": 18.0,
-    "ret": 12
+    "ret": 18
    },
    {
     "item": "short-159",
     "text": "GTA 5 وصلت 230 مليون نسخة بعد 13 سنة 🎮",
     "sent": "2026-11-24T14:45:39.842Z",
-    "views": 58,
-    "likes": 3,
+    "views": 63,
+    "likes": 4,
     "comments": 0,
-    "avg_watch": 4.1,
+    "avg_watch": 4.44,
     "dur": 12.7,
-    "ret": 32
+    "ret": 35
    },
    {
     "item": null,
@@ -727,51 +784,51 @@
     "views": 7,
     "likes": 2,
     "comments": 0,
-    "avg_watch": 4.04,
+    "avg_watch": 4.41,
     "dur": 14.1,
-    "ret": 29
+    "ret": 31
    },
    {
     "item": "short-158",
     "text": "GTA 6 باعت 32.5 مليون نسخة قبل لا تنزل! 🎮",
     "sent": "2026-11-23T14:50:33.061Z",
-    "views": 2,
+    "views": 3,
     "likes": 1,
     "comments": 0,
-    "avg_watch": 5.29,
+    "avg_watch": 3.82,
     "dur": 10.7,
-    "ret": 49
+    "ret": 36
    },
    {
     "item": null,
     "text": "GTA 5 ضد GTA 6: أول يوم 📊 GTA 6 بأول يوم: 3.79 مليار دولار حسب Take-Two. المصادر: Take-Two عبر ABC News وFox Business وD",
     "sent": "2026-11-23T10:00:00.000Z",
-    "views": 11,
+    "views": 12,
     "likes": 1,
     "comments": 0,
-    "avg_watch": 3.83,
+    "avg_watch": 3.58,
     "dur": 11.5,
-    "ret": 33
+    "ret": 31
    },
    {
     "item": "short-021",
     "text": "منو ملك الطائرة بالبحرين؟",
     "sent": "2026-11-22T19:00:00.000Z",
-    "views": 7,
+    "views": 9,
     "likes": 2,
     "comments": 0,
-    "avg_watch": 5.86,
+    "avg_watch": 7.03,
     "dur": 13.9,
-    "ret": 42
+    "ret": 51
    },
    {
     "item": null,
     "text": "الموناليزا سنتين بصندوق مخفي 📦",
     "sent": "2026-11-22T18:00:00.000Z",
-    "views": 378,
+    "views": 380,
     "likes": 7,
     "comments": 0,
-    "avg_watch": 4.76,
+    "avg_watch": 4.74,
     "dur": 9.5,
     "ret": 50
    },
@@ -779,32 +836,32 @@
     "item": "short-004",
     "text": "دينار = 2.66 دولار… يعني البحرين أغنى من أمريكا؟ 💰",
     "sent": "2026-11-22T18:00:00.000Z",
-    "views": 4,
+    "views": 5,
     "likes": 2,
     "comments": 0,
-    "avg_watch": 9.54,
+    "avg_watch": 12.9,
     "dur": 23.6,
-    "ret": 40
+    "ret": 55
    },
    {
     "item": "short-020",
     "text": "دار كليب ضد المحرق… منو بياخذ الدوري؟",
     "sent": "2026-11-22T18:00:00.000Z",
-    "views": 5,
+    "views": 8,
     "likes": 2,
     "comments": 0,
-    "avg_watch": 6.8,
+    "avg_watch": 6.21,
     "dur": 14.5,
-    "ret": 47
+    "ret": 43
    },
    {
     "item": null,
     "text": "GTA 6 جابت 3.79 مليار بيوم واحد! 💰 أكبر رقم بيوم واحد بتاريخ الترفيه حسب Take-Two (ABC News، Fox Business) · رسم توضيحي",
     "sent": "2026-11-22T16:34:00.695Z",
-    "views": 390,
+    "views": 391,
     "likes": 7,
     "comments": 0,
-    "avg_watch": 3.44,
+    "avg_watch": 3.43,
     "dur": 11.6,
     "ret": 30
    },
@@ -812,10 +869,10 @@
     "item": null,
     "text": "GTA 5 باعت 11 مليون بأول يوم… وGTA 6؟ (توقعات) · توقعات Piper Sandler",
     "sent": "2026-11-22T10:00:00.000Z",
-    "views": 331,
+    "views": 332,
     "likes": 6,
     "comments": 0,
-    "avg_watch": 6.41,
+    "avg_watch": 6.39,
     "dur": 12.6,
     "ret": 51
    },
@@ -823,10 +880,10 @@
     "item": "short-019",
     "text": "الطائرة البحرينية بطلة آسيا! 🏐🇧🇭",
     "sent": "2026-11-21T19:00:00.000Z",
-    "views": 147,
+    "views": 148,
     "likes": 5,
     "comments": 0,
-    "avg_watch": 4.93,
+    "avg_watch": 4.89,
     "dur": 16.4,
     "ret": 30
    },
@@ -834,21 +891,21 @@
     "item": null,
     "text": "بيكاسو متهم بسرقة الموناليزا؟!",
     "sent": "2026-11-21T18:00:00.000Z",
-    "views": 294,
+    "views": 388,
     "likes": 2,
     "comments": 0,
-    "avg_watch": 2.73,
+    "avg_watch": 2.92,
     "dur": 8.8,
-    "ret": 31
+    "ret": 33
    },
    {
     "item": "short-018",
     "text": "شباب البحرين أبطال العرب والخليج بالسلة!",
     "sent": "2026-11-21T18:00:00.000Z",
-    "views": 140,
+    "views": 141,
     "likes": 8,
     "comments": 0,
-    "avg_watch": 6.86,
+    "avg_watch": 6.82,
     "dur": 13.4,
     "ret": 51
    },
@@ -856,10 +913,10 @@
     "item": null,
     "text": "GTA 6 بـ 80 دولار والعلبة بدون قرص! 💿",
     "sent": "2026-11-21T10:00:00.000Z",
-    "views": 403,
+    "views": 405,
     "likes": 3,
     "comments": 0,
-    "avg_watch": 5.54,
+    "avg_watch": 5.52,
     "dur": 11.1,
     "ret": 50
    },
@@ -867,10 +924,10 @@
     "item": "short-017",
     "text": "المحرق ثلاثية تاريخية بالسلة! محرق ولا منامة؟",
     "sent": "2026-11-20T19:00:00.000Z",
-    "views": 153,
+    "views": 155,
     "likes": 6,
     "comments": 1,
-    "avg_watch": 4.31,
+    "avg_watch": 4.27,
     "dur": 18.5,
     "ret": 23
    },
@@ -878,7 +935,7 @@
     "item": null,
     "text": "سرقة الموناليزا بمريول أبيض 🖼️",
     "sent": "2026-11-20T18:00:00.000Z",
-    "views": 340,
+    "views": 341,
     "likes": 5,
     "comments": 0,
     "avg_watch": 4.37,
@@ -889,10 +946,10 @@
     "item": "short-016",
     "text": "ملك السلة البحرينية؟ المنامة بـ25 لقب 🏀",
     "sent": "2026-11-20T18:00:00.000Z",
-    "views": 163,
+    "views": 166,
     "likes": 10,
     "comments": 0,
-    "avg_watch": 4.44,
+    "avg_watch": 4.42,
     "dur": 17.8,
     "ret": 25
    },
@@ -900,10 +957,10 @@
     "item": null,
     "text": "GTA 6 تأخرت مرتين قبل ما تنزل 🎮",
     "sent": "2026-11-20T10:00:00.000Z",
-    "views": 437,
+    "views": 438,
     "likes": 9,
     "comments": 0,
-    "avg_watch": 4.57,
+    "avg_watch": 4.56,
     "dur": 15.8,
     "ret": 29
    },
@@ -911,10 +968,10 @@
     "item": "short-015",
     "text": "النجمة بطل آسيا مرتين بكرة اليد!",
     "sent": "2026-11-19T19:00:00.000Z",
-    "views": 511,
+    "views": 514,
     "likes": 13,
     "comments": 0,
-    "avg_watch": 7.03,
+    "avg_watch": 6.99,
     "dur": 16.8,
     "ret": 42
    },
@@ -922,10 +979,10 @@
     "item": "short-141",
     "text": "روابط GTA 6 المجانية = خطر ⚠️",
     "sent": "2026-11-19T18:00:00.000Z",
-    "views": 149,
+    "views": 150,
     "likes": 3,
     "comments": 0,
-    "avg_watch": 3.02,
+    "avg_watch": 3.04,
     "dur": 10.4,
     "ret": 29
    },
@@ -933,10 +990,10 @@
     "item": "short-014",
     "text": "أول فوز أولمبي لمنتخب بحريني بلعبة جماعية 🤾",
     "sent": "2026-11-19T18:00:00.000Z",
-    "views": 293,
+    "views": 297,
     "likes": 9,
     "comments": 0,
-    "avg_watch": 7.1,
+    "avg_watch": 7.15,
     "dur": 16.7,
     "ret": 43
    },
@@ -944,10 +1001,10 @@
     "item": "short-013",
     "text": "البحرين بطل آسيا لكرة اليد لأول مرة! 🏆🇧🇭",
     "sent": "2026-11-18T19:00:00.000Z",
-    "views": 165,
+    "views": 166,
     "likes": 5,
     "comments": 0,
-    "avg_watch": 4.75,
+    "avg_watch": 4.84,
     "dur": 21.0,
     "ret": 23
    },
@@ -955,10 +1012,10 @@
     "item": "short-140",
     "text": "السعودية وشركة GTA 🎮",
     "sent": "2026-11-18T18:00:00.000Z",
-    "views": 170,
+    "views": 171,
     "likes": 4,
     "comments": 0,
-    "avg_watch": 3.7,
+    "avg_watch": 3.74,
     "dur": 11.3,
     "ret": 33
    },
@@ -966,7 +1023,7 @@
     "item": "short-009",
     "text": "من وين النادي البحريني يجيب فلوسه؟ 💰",
     "sent": "2026-11-18T18:00:00.000Z",
-    "views": 174,
+    "views": 175,
     "likes": 6,
     "comments": 0,
     "avg_watch": 7.23,
@@ -977,10 +1034,10 @@
     "item": "short-151",
     "text": "شنو معنى اسم المنامة؟ 🤔",
     "sent": "2026-11-18T18:00:00.000Z",
-    "views": 726,
+    "views": 731,
     "likes": 8,
     "comments": 1,
-    "avg_watch": 9.27,
+    "avg_watch": 9.29,
     "dur": 19.4,
     "ret": 48
    },
@@ -988,7 +1045,7 @@
     "item": "short-008",
     "text": "موسم واحد يغيّر مصير نادي كامل! ناديك بالممتاز ولا بالأولى؟",
     "sent": "2026-11-17T19:00:00.000Z",
-    "views": 275,
+    "views": 276,
     "likes": 5,
     "comments": 0,
     "avg_watch": 6.49,
@@ -999,7 +1056,7 @@
     "item": "short-139",
     "text": "GTA V جابت مليار دولار بثلاث أيام!",
     "sent": "2026-11-17T18:00:00.000Z",
-    "views": 307,
+    "views": 308,
     "likes": 6,
     "comments": 0,
     "avg_watch": 4.39,
@@ -1010,7 +1067,7 @@
     "item": "short-003",
     "text": "الغوص على اللؤلؤ: حجر، ونَفَس واحد، ودين ما يخلص",
     "sent": "2026-11-17T18:00:00.000Z",
-    "views": 226,
+    "views": 228,
     "likes": 8,
     "comments": 0,
     "avg_watch": 10.68,
@@ -1021,7 +1078,7 @@
     "item": "short-007",
     "text": "٣٦ لقب دوري لنادي واحد… منو يقدر يوقف المحرق؟ ⚽",
     "sent": "2026-11-17T18:00:00.000Z",
-    "views": 278,
+    "views": 279,
     "likes": 10,
     "comments": 0,
     "avg_watch": 8.66,
@@ -1032,12 +1089,12 @@
     "item": "short-002",
     "text": "فرانك هولمز «أبو النفط»… كنت بتصبر 7 سنين؟",
     "sent": "2026-11-16T18:00:00.000Z",
-    "views": 1284,
+    "views": 1287,
     "likes": 23,
     "comments": 0,
-    "avg_watch": 21.66,
+    "avg_watch": 20.67,
     "dur": 27.1,
-    "ret": 80
+    "ret": 76
    },
    {
     "item": "short-001",
@@ -1054,10 +1111,10 @@
     "item": "short-001",
     "text": "أول نفط بالخليج طلع من البحرين 🛢️",
     "sent": "2026-11-15T18:00:00.000Z",
-    "views": 48725,
-    "likes": 916,
+    "views": 48807,
+    "likes": 923,
     "comments": 36,
-    "avg_watch": 11.71,
+    "avg_watch": 11.7,
     "dur": 26.6,
     "ret": 44
    },
