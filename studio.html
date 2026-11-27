@@ -102,8 +102,12 @@
     <div class="row"><button class="btn2" type="button" id="bgo">انشر الحين</button><span class="msg" id="bmsg" role="status"></span></div>
     <ul id="bhist" class="hint" style="margin:0;padding-inline-start:18px;line-height:1.9"></ul>
    </div></div>
-  <div class="sbox" id="aq" data-tp="tp-post" hidden><h2>النشر التلقائي الجاي</h2><p class="hint">كل يوم الساعة 8:43 بالليل ينزل أول فيديو بهالقائمة على تيك توك (ويوتيوب إذا مسموح). «بكرة» يقدّمه للنشر الجاي، و«تخطّى» يشيله من النشر التلقائي.</p>
-   <ol id="aql" style="margin:8px 0 0;padding-inline-start:22px;display:grid;gap:8px"></ol><p class="msg" id="aqm" role="status"></p>
+  <div class="sbox" id="aq" data-tp="tp-post" hidden><h2>النشر التلقائي الجاي</h2>
+   <label class="row" style="gap:10px;align-items:center;margin:4px 0 6px"><input type="checkbox" id="aqauto" style="width:22px;height:22px"> <b id="aqautot">النشر التلقائي شغّال</b></label>
+   <p class="hint">كل يوم الساعة 8:43 بالليل (بتوقيت البحرين) ينزل فيديو واحد على تيك توك (ويوتيوب إذا مسموح). «بكرة» يقدّمه للنشر الجاي، «📅 جدول» يحدد له يوم، و«تخطّى» يشيله من النشر التلقائي. لو طفّيت النشر التلقائي، ما ينزل شي لين ترجّعه.</p>
+   <div id="aqsch" hidden><h3 style="margin:10px 0 4px;font-size:1rem">📅 المجدولة</h3><ol id="aqschl" style="margin:0;padding-inline-start:22px;display:grid;gap:8px"></ol></div>
+   <h3 style="margin:10px 0 4px;font-size:1rem">بالدور</h3>
+   <ol id="aql" style="margin:0;padding-inline-start:22px;display:grid;gap:8px"></ol><p class="msg" id="aqm" role="status"></p>
    <details id="aqs" hidden><summary class="hint">المتخطّاة</summary><ul id="aqsl" style="margin:8px 0 0;padding-inline-start:20px;display:grid;gap:6px"></ul></details></div>
   <div class="sbox" id="hp" data-tp="tp-post" hidden><h2>فيديوهات تنتظر صورة</h2><p class="hint">هذي موقوفة لأن ما عندنا صورة حقيقية بحقوق واضحة. إذا عندك صورة صورتها بنفسك أو عندك حق استخدامها، ارفعها هني، والنشر اليومي يسوي الفيديو بالشكل الوثائقي ويرجعه للطابور.</p>
    <div id="hpl" style="display:grid;gap:12px"></div><p class="msg" id="hpm" role="status"></p></div>
@@ -226,14 +230,22 @@ $("adf").addEventListener("submit",async ev=>{ev.preventDefault();const e=$("ade
  if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(e)){m.className="msg err";m.textContent="اكتب إيميل صحيح";return}
  $("adb").disabled=true;try{const r=await call({action:"admin_add",email:e});renderAdmins(r.admins);$("ade").value="";m.className="msg ok";m.textContent="انضاف. يقدر يدخل الحين."}catch(x){m.className="msg err";m.textContent=x.message}finally{$("adb").disabled=false}});
 const QFN="https://frowdhbazytcmwhrlnmv.supabase.co/functions/v1/salfa-queue";
-function aqRow(x,i){const tag=x.flag==="next"?' <span class="tc" style="background:var(--ac);color:#1a1300">بكرة</span>':(i===0?' <span class="hint">(الليلة/بكرة)</span>':"");
- const b=x.flag==="skip"?`<button class="btn3" type="button" data-q="${esc(x.id)}" data-f="">رجّعه</button>`:(x.flag==="next"?`<button class="btn3" type="button" data-q="${esc(x.id)}" data-f="">إلغاء</button>`:`<button class="btn3" type="button" data-q="${esc(x.id)}" data-f="next">بكرة</button><button class="btn3" type="button" data-q="${esc(x.id)}" data-f="skip">تخطّى</button>`);
- return `<li><div class="row" style="justify-content:space-between;gap:8px"><span style="min-width:0;flex:1 1 220px"><b>${esc(x.id)}</b> · ${esc(x.caption.slice(0,70))}${tag}</span><span class="row" style="gap:6px">${b}</span></div></li>`}
-async function loadAQ(body){try{const r=await call(body||{action:"list"},QFN);$("aq").hidden=false;
+const bhDay=o=>new Date(Date.now()+3*36e5+o*864e5).toISOString().slice(0,10);
+const fmtDue=d=>new Date(d+"T12:00:00Z").toLocaleDateString("ar-BH",{weekday:"long",day:"numeric",month:"long"});
+function aqRow(x,i){const tag=x.flag==="next"?' <span class="tc" style="background:var(--ac);color:#1a1300">بكرة</span>':x.flag==="date"?` <span class="tc" style="background:var(--ac);color:#1a1300">${esc(fmtDue(x.due))}</span>`:(i===0?' <span class="hint">(الليلة/بكرة)</span>':"");
+ const b=x.flag==="skip"?`<button class="btn3" type="button" data-q="${esc(x.id)}" data-f="">رجّعه</button>`:(x.flag==="next"||x.flag==="date")?`<button class="btn3" type="button" data-q="${esc(x.id)}" data-f="">إلغاء</button>`:`<button class="btn3" type="button" data-q="${esc(x.id)}" data-f="next">بكرة</button><button class="btn3" type="button" data-d="${esc(x.id)}">📅 جدول</button><button class="btn3" type="button" data-q="${esc(x.id)}" data-f="skip">تخطّى</button>`;
+ return `<li><div class="row" style="justify-content:space-between;gap:8px"><span style="min-width:0;flex:1 1 220px"><b>${esc(x.id)}</b> · ${esc(x.caption.slice(0,70))}${tag}</span><span class="row" style="gap:6px">${b}</span></div><div class="row" data-dp="${esc(x.id)}" hidden style="gap:6px;margin-top:6px"><input type="date" min="${bhDay(1)}" max="${bhDay(90)}" value="${bhDay(1)}" aria-label="يوم النشر"><button class="btn2" type="button" data-ds="${esc(x.id)}">ثبّت اليوم</button></div></li>`}
+async function loadAQ(body){const m=$("aqm");try{const r=await call(body||{action:"list"},QFN);$("aq").hidden=false;
+ $("aqauto").checked=r.auto!==false;$("aqautot").textContent=r.auto!==false?"النشر التلقائي شغّال":"النشر التلقائي موقّف ⏸";
+ const sch=r.scheduled||[];$("aqsch").hidden=!sch.length;$("aqschl").innerHTML=sch.map(aqRow).join("");
  $("aql").innerHTML=r.next.length?r.next.map(aqRow).join(""):'<li class="hint">ما فيه شي بالطابور.</li>';
  $("aqs").hidden=!r.skipped.length;$("aqsl").innerHTML=r.skipped.map(aqRow).join("");
- document.querySelectorAll("#aq [data-q]").forEach(b=>b.addEventListener("click",async()=>{b.disabled=true;await loadAQ({action:"flag",id:b.dataset.q,flag:b.dataset.f||null});$("aqm").className="msg ok";$("aqm").textContent=b.dataset.f==="next"?"بينزل بالنشر الجاي":b.dataset.f==="skip"?"انشال من النشر التلقائي":"رجع لمكانه"}))}
- catch(e){$("aq").hidden=false;$("aqm").className="msg err";$("aqm").textContent=e.message}}
+ document.querySelectorAll("#aq [data-q]").forEach(b=>b.addEventListener("click",async()=>{b.disabled=true;await loadAQ({action:"flag",id:b.dataset.q,flag:b.dataset.f||null});if(m.className!=="msg err"){m.className="msg ok";m.textContent=b.dataset.f==="next"?"بينزل بالنشر الجاي":b.dataset.f==="skip"?"انشال من النشر التلقائي":"رجع لمكانه"}}));
+ document.querySelectorAll("#aq [data-d]").forEach(b=>b.addEventListener("click",()=>{const p=document.querySelector(`#aq [data-dp="${b.dataset.d}"]`);p.hidden=!p.hidden;if(!p.hidden)p.querySelector("input").focus()}));
+ document.querySelectorAll("#aq [data-ds]").forEach(b=>b.addEventListener("click",async()=>{const d=document.querySelector(`#aq [data-dp="${b.dataset.ds}"] input`).value;b.disabled=true;
+  m.className="msg";m.textContent="";await loadAQ({action:"flag",id:b.dataset.ds,flag:"date",due:d});if(m.className!=="msg err"){m.className="msg ok";m.textContent=`انجدول: ينزل ${fmtDue(d)} الساعة 8:43 بالليل`}}))}
+ catch(e){$("aq").hidden=false;m.className="msg err";m.textContent=e.message}}
+$("aqauto").addEventListener("change",async ev=>{const on=ev.target.checked;ev.target.disabled=true;await loadAQ({action:"auto",on});ev.target.disabled=false;const m=$("aqm");if(m.className!=="msg err"){m.className="msg ok";m.textContent=on?"النشر التلقائي رجع يشتغل":"وقّفنا النشر التلقائي لين ترجّعه"}});
 async function loadComments(){let r;try{r=await call({action:"comments"},QFN)}catch(e){$("cmm").className="msg err";$("cmm").textContent=e.message;return}
  $("tcc").textContent=r.unanswered?String(r.unanswered):"";const fmtd=t=>t?new Date(t).toLocaleDateString("ar-BH",{day:"numeric",month:"short"}):"";
  $("cmm").className="msg";$("cmm").textContent=r.source==="daily"?"من آخر سحب يومي. لما ينضاف مفتاح يوتيوب بـ Supabase تصير القائمة مباشرة.":"";
