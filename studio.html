@@ -51,7 +51,7 @@
 .tabs3 button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .tc{display:inline-block;min-width:1.4em;padding:0 5px;border-radius:999px;background:#dc2626;color:#fff;font-size:.75rem;text-align:center}.tc:empty{display:none}
 #app[data-tab] [data-tp]{display:none!important}
-#app[data-tab="tp-post"] [data-tp="tp-post"]:not([hidden]),#app[data-tab="tp-msg"] [data-tp="tp-msg"],#app[data-tab="tp-ideas"] [data-tp="tp-ideas"],#app[data-tab="tp-hits"] [data-tp="tp-hits"],#app[data-tab="tp-tools"] [data-tp="tp-tools"],#app[data-tab="tp-cmt"] [data-tp="tp-cmt"],#app[data-tab="tp-admins"] [data-tp="tp-admins"]{display:revert!important}
+#app[data-tab="tp-post"] [data-tp="tp-post"]:not([hidden]),#app[data-tab="tp-msg"] [data-tp="tp-msg"],#app[data-tab="tp-ideas"] [data-tp="tp-ideas"],#app[data-tab="tp-hits"] [data-tp="tp-hits"],#app[data-tab="tp-tools"] [data-tp="tp-tools"],#app[data-tab="tp-gen"] [data-tp="tp-gen"],#app[data-tab="tp-cmt"] [data-tp="tp-cmt"],#app[data-tab="tp-admins"] [data-tp="tp-admins"]{display:revert!important}
 #app[data-tab="tp-post"] form[data-tp]:not([hidden]){display:grid!important}
 @media (max-width:760px){.sgrid2{grid-template-columns:1fr}}
 </style>
@@ -87,6 +87,7 @@
    <button type="button" role="tab" data-t="tp-ideas" aria-selected="false">الأفكار <span class="tc" id="tci"></span></button>
    <button type="button" role="tab" data-t="tp-hits" aria-selected="false">الزيارات</button>
    <button type="button" role="tab" data-t="tp-tools" aria-selected="false">أدوات يوتيوب</button>
+   <button type="button" role="tab" data-t="tp-gen" aria-selected="false">التوليد <span class="tc" id="tcg"></span></button>
    <button type="button" role="tab" data-t="tp-admins" aria-selected="false" id="tab-admins" hidden>المشرفين</button>
   </div>
   <p class="msg err" id="gerr" role="alert"></p>
@@ -135,6 +136,21 @@
     <div class="row"><button class="btn2" id="go" type="submit" disabled>انشر على تيك توك</button><button class="btn2" id="dr" type="button" hidden style="background:var(--bg2);color:var(--fg);border:1px solid var(--line)">أرسل كمسودة لتطبيق تيك توك</button><span class="msg" id="msg" role="status" aria-live="polite"></span></div>
    </div>
   </form>
+  <section class="sbox" data-tp="tp-gen" style="display:grid;gap:12px"><h2>التوليد</h2>
+   <p class="hint">اكتب شنو تبي، وكلود يسويه بالدفعة الجاية (مع النشر اليومي الساعة 8:43 بالليل، أو أسرع لو قلت له «سوّ طلبات التوليد»). اللي يخلص يطلع هني برابط.</p>
+   <form id="gf" style="display:grid;gap:10px">
+    <fieldset style="border:0;padding:0;margin:0;display:grid;gap:6px"><legend class="hint" style="margin-bottom:4px">النوع</legend>
+     <label style="display:flex;gap:8px;align-items:center"><input style="flex:none;width:20px;height:20px" type="radio" name="gk" value="motion" checked> 🎬 فيديو موشن (شرح، أرقام، آيفون 3D) · <b style="color:var(--ok)">مجاني</b></label>
+     <label style="display:flex;gap:8px;align-items:center"><input style="flex:none;width:20px;height:20px" type="radio" name="gk" value="voice"> 🎙️ صوت بصوت القناة · من اشتراك ElevenLabs الحالي</label>
+     <label style="display:flex;gap:8px;align-items:center"><input style="flex:none;width:20px;height:20px" type="radio" name="gk" value="hf_image"> 🖼️ صورة بـ Higgsfield · يصرف من رصيدك</label>
+     <label style="display:flex;gap:8px;align-items:center"><input style="flex:none;width:20px;height:20px" type="radio" name="gk" value="hf_video"> 🎥 فيديو بـ Higgsfield · يصرف من رصيدك</label></fieldset>
+    <label class="f"><span id="gpl">الوصف (شنو يقول الفيديو، الأرقام، والمصادر)</span><textarea id="gp" maxlength="1500" required style="min-height:110px"></textarea></label>
+    <div class="row" style="gap:10px;flex-wrap:wrap"><label class="f" style="flex:1 1 140px">المقاس<select id="ga"><option value="9:16">طولي 9:16 (تيك توك/شورتس)</option><option value="16:9">عرضي 16:9 (يوتيوب)</option><option value="1:1">مربع 1:1</option></select></label>
+     <label class="f" id="gmw" hidden style="flex:1 1 140px">الموديل<select id="gm"></select></label></div>
+    <label id="gcw" hidden style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="gc" style="flex:none;width:20px;height:20px"> أعرف إن هالطلب يصرف من رصيد Higgsfield</label>
+    <p class="hint" id="gnote">صور وفيديو الذكاء الاصطناعي ما تنزل بالقناة إلا لمواضيع GTA، وكل شي ينزل عليه علامة الذكاء الاصطناعي.</p>
+    <div class="row"><button class="btn2" type="submit" id="gb">اطلب</button></div><p class="msg" id="gmsg" role="status"></p></form>
+   <h3 style="margin:6px 0 0;font-size:1rem">طلباتك</h3><ul id="gl" style="list-style:none;margin:0;padding:0;display:grid;gap:8px"></ul></section>
   <section class="sbox" data-tp="tp-tools" style="display:grid;gap:12px"><h2>فاحص العنوان والكفر</h2><p class="hint">يقيس الطول (الكمبيوتر يقص عند 60 حرف والجوال عند 40)، ويدوّر الكلام العام، ويتأكد إن الكفر ما يكرر العنوان.</p>
    <label class="f">العنوان<input type="text" id="yt-t" maxlength="150"></label>
    <label class="f">كلام الكفر (اختياري)<input type="text" id="yt-h" maxlength="80"></label>
@@ -246,6 +262,24 @@ async function loadAQ(body){const m=$("aqm");try{const r=await call(body||{actio
   m.className="msg";m.textContent="";await loadAQ({action:"flag",id:b.dataset.ds,flag:"date",due:d});if(m.className!=="msg err"){m.className="msg ok";m.textContent=`انجدول: ينزل ${fmtDue(d)} الساعة 8:43 بالليل`}}))}
  catch(e){$("aq").hidden=false;m.className="msg err";m.textContent=e.message}}
 $("aqauto").addEventListener("change",async ev=>{const on=ev.target.checked;ev.target.disabled=true;await loadAQ({action:"auto",on});ev.target.disabled=false;const m=$("aqm");if(m.className!=="msg err"){m.className="msg ok";m.textContent=on?"النشر التلقائي رجع يشتغل":"وقّفنا النشر التلقائي لين ترجّعه"}});
+const GK={motion:"🎬 موشن",voice:"🎙️ صوت",hf_image:"🖼️ صورة Higgsfield",hf_video:"🎥 فيديو Higgsfield"},GS={new:"ينتظر",running:"قاعد ينسوى",done:"جاهز ✓",failed:"ما زبط",cancelled:"ملغي"};let GM={};
+function genKind(){return document.querySelector('#gf input[name="gk"]:checked').value}
+function genUI(){const k=genKind(),hf=k.startsWith("hf_");$("gmw").hidden=!hf;$("gcw").hidden=!hf;$("gc").checked=false;
+ $("gm").innerHTML=(GM[k]||[]).map(m=>`<option>${esc(m)}</option>`).join("");$("ga").disabled=k==="voice";
+ $("gpl").textContent=k==="voice"?"النص اللي ينقرا (بالبحريني)":k==="motion"?"الوصف (شنو يقول الفيديو، الأرقام، والمصادر)":"وصف الصورة أو اللقطة"}
+document.querySelectorAll('#gf input[name="gk"]').forEach(r=>r.addEventListener("change",genUI));
+function renderGen(r){GM=r.models||GM;const pend=r.jobs.filter(j=>j.status==="new"||j.status==="running").length;$("tcg").textContent=pend?String(pend):"";
+ const fmt=t=>new Date(t).toLocaleString("ar-BH",{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
+ $("gl").innerHTML=r.jobs.length?r.jobs.map(j=>`<li style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:grid;gap:6px">
+  <div class="hint">${GK[j.kind]||esc(j.kind)} · ${esc(j.aspect)}${j.model?" · "+esc(j.model):""} · ${fmt(j.at)} · <b>${GS[j.status]||esc(j.status)}</b></div>
+  <p style="margin:0;white-space:pre-wrap">${esc(j.prompt.slice(0,300))}</p>${j.note?`<p class="hint" style="margin:0">${esc(j.note)}</p>`:""}
+  <div class="row" style="gap:8px">${j.result_url?`<a class="btn2" href="${esc(j.result_url)}" target="_blank" rel="noopener">افتح</a>`:""}${j.status==="new"?`<button class="btn3" type="button" data-gx="${esc(j.id)}">إلغاء</button>`:""}</div></li>`).join(""):'<li class="hint">ما فيه طلبات للحين.</li>';
+ $("gl").querySelectorAll("[data-gx]").forEach(b=>b.addEventListener("click",async()=>{b.disabled=true;try{renderGen(await call({action:"gen_cancel",id:b.dataset.gx},QFN))}catch(e){$("gmsg").className="msg err";$("gmsg").textContent=e.message}}))}
+async function loadGen(){try{renderGen(await call({action:"gen_list"},QFN));genUI()}catch(e){$("gmsg").className="msg err";$("gmsg").textContent=e.message}}
+$("gf").addEventListener("submit",async ev=>{ev.preventDefault();const k=genKind(),m=$("gmsg"),p=$("gp").value.trim();
+ if(p.length<5){m.className="msg err";m.textContent="اكتب وصف أطول شوي";return}
+ if(k.startsWith("hf_")&&!$("gc").checked){m.className="msg err";m.textContent="أكّد إنه يصرف من رصيد Higgsfield";return}
+ $("gb").disabled=true;try{renderGen(await call({action:"gen_create",kind:k,prompt:p,aspect:$("ga").value,model:k.startsWith("hf_")?$("gm").value:undefined,confirm:k.startsWith("hf_")?true:undefined},QFN));$("gp").value="";$("gc").checked=false;m.className="msg ok";m.textContent="انطلب ✓ ينسوى بالدفعة الجاية"}catch(e){m.className="msg err";m.textContent=e.message}finally{$("gb").disabled=false}});
 async function loadComments(){let r;try{r=await call({action:"comments"},QFN)}catch(e){$("cmm").className="msg err";$("cmm").textContent=e.message;return}
  $("tcc").textContent=r.unanswered?String(r.unanswered):"";const fmtd=t=>t?new Date(t).toLocaleDateString("ar-BH",{day:"numeric",month:"short"}):"";
  $("cmm").className="msg";$("cmm").textContent=r.source==="daily"?"من آخر سحب يومي. لما ينضاف مفتاح يوتيوب بـ Supabase تصير القائمة مباشرة.":"";
@@ -293,7 +327,7 @@ async function loadHeld(){let r;try{r=await call({action:"held"},QFN)}catch(e){r
   b.disabled=true;m.className="msg";m.textContent="جاري الرفع…";
   try{const u=await call({action:"photo_url",id:h.id,type:f.type},QFN);const {error}=await SB.storage.from("salfa-photos").uploadToSignedUrl(u.path,u.token,f,{contentType:f.type});if(error)throw error;
    await call({action:"photo_done",id:h.id,path:u.path,credit:cr},QFN);m.className="msg ok";m.textContent="انرفعت ✓ النشر اليومي بيسوي الفيديو";loadHeld()}catch(e){m.className="msg err";m.textContent=e.message||"ما انرفعت"}finally{b.disabled=false}}))}
-async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="هالصفحة لصاحب القناة بس"&&getTS()){try{localStorage.removeItem("salfa_session")}catch(x){}boot();return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;$("nick").textContent="شنو السالفة؟";$("av").innerHTML='<img src="assets/icon-96.png" alt="">';loadBuffer();loadAQ();loadComments();loadManual();loadHeld();loadInbox();loadIdeas();loadHits();loadAdmins();return}$("gerr").textContent=e.message;return}
+async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="هالصفحة لصاحب القناة بس"&&getTS()){try{localStorage.removeItem("salfa_session")}catch(x){}boot();return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;$("nick").textContent="شنو السالفة؟";$("av").innerHTML='<img src="assets/icon-96.png" alt="">';loadBuffer();loadAQ();loadGen();loadComments();loadManual();loadHeld();loadInbox();loadIdeas();loadHits();loadAdmins();return}$("gerr").textContent=e.message;return}
  const c=S.creator;$("nick").textContent=c.creator_nickname||"";$("user").textContent=c.creator_username?"@"+c.creator_username:"";
  $("av").innerHTML=c.creator_avatar_url?`<img src="${esc(c.creator_avatar_url)}" alt="">`:"؟";
  let locked=false;for(const k of ["comment","duet","stitch"]){const d=!!c[k+"_disabled"];$("c-"+k).disabled=d;$("t-"+k).setAttribute("aria-disabled",d);locked=locked||d}$("lockhint").hidden=!locked;
