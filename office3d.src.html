@@ -77,7 +77,7 @@ function panels(D){
  document.getElementById("feed").innerHTML=D.feed.map(f=>`<li><span class="dot" style="background:${KC[f.k]||"#a9b6cc"}"></span><time>${f.t.slice(5,10).split("-").reverse().join("/")} · ${f.t.slice(11)}</time><span>${f.text}</span></li>`).join("");
  intro(D);
 }
-function intro(D){document.getElementById("agent").innerHTML=`<h3>الفريق</h3><p style="margin:0;color:var(--mut)">${D.agents.length} وكيل ذكاء اصطناعي يشتغلون على القناة، وصاحب القناة يعتمد قبل النشر.</p>
+function intro(D){document.getElementById("agent").innerHTML=`<h3>الفريق</h3><p style="margin:0;color:var(--mut)">${D.agents.length} وكيل ذكاء اصطناعي يشتغلون على القناة، وصاحب القناة يعتمد قبل النشر.</p>${(D.standby||[]).length?`<p style="margin:8px 0 0;color:var(--mut);font-size:.9rem">⏸ بالانتظار: ${D.standby.map(s=>`<b>${s.name}</b> (${s.when})`).join(" · ")}</p>`:""}
  <div class="legend">${D.zones.map(z=>`<span class="pill"><i style="background:${z.color}"></i>${z.name}</span>`).join("")}</div>
  <div class="legend">${Object.entries(ST).map(([k,v])=>`<span class="pill"><i style="background:${v[1]};border-radius:50%"></i>${v[0]} · ${D.agents.filter(a=>a.status===k).length}</span>`).join("")}</div>`;}
 function show(a,D){const z=D.zones.find(z=>z.id===a.zone)||{};
