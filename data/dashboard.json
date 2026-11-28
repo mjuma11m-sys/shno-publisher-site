@@ -1,60 +1,60 @@
 {
- "updated": "2026-11-27T00:12+03:00",
+ "updated": "2026-11-28T09:18+03:00",
  "channel": {
-  "subscribers": 30,
-  "views": 41088,
-  "videos": 32,
-  "views_delta": 3096,
-  "subs_delta": 1
+  "subscribers": 32,
+  "views": 42961,
+  "videos": 34,
+  "views_delta": 1873,
+  "subs_delta": 2
  },
  "videos": [
   {
    "id": "dudDdusvHw8",
    "title": "GTA 6 بـ 80 دولار والعلبة بدون قرص! 💿",
    "type": "short",
-   "views": 8382,
+   "views": 8414,
    "likes": 25,
    "comments": 0,
    "published": "2026-11-21",
-   "delta": 62,
+   "delta": 32,
    "topic": "GTA والألعاب",
-   "per_day": 1676.4
+   "per_day": 1202.0
   },
   {
    "id": "YQwl1MiJYKY",
    "title": "GTA 5 ضد GTA 6: أول يوم 📊",
    "type": "short",
-   "views": 3989,
+   "views": 3992,
    "likes": 27,
-   "comments": 2,
+   "comments": 4,
    "published": "2026-11-23",
-   "delta": 37,
+   "delta": 3,
    "topic": "GTA والألعاب",
-   "per_day": 1329.7
+   "per_day": 798.4
   },
   {
    "id": "cQ6yKBx4KLY",
    "title": "GTA 6 تأخرت مرتين قبل ما تنزل 🎮",
    "type": "short",
-   "views": 3911,
+   "views": 3913,
    "likes": 31,
-   "comments": 1,
+   "comments": 2,
    "published": "2026-11-20",
-   "delta": 1,
+   "delta": 2,
    "topic": "GTA والألعاب",
-   "per_day": 651.8
+   "per_day": 489.1
   },
   {
    "id": "IUSenn3CDlY",
    "title": "GTA 6 باعت 32.5 مليون نسخة قبل لا تنزل!",
    "type": "short",
-   "views": 3763,
+   "views": 3792,
    "likes": 15,
    "comments": 0,
    "published": "2026-11-23",
-   "delta": 410,
+   "delta": 29,
    "topic": "GTA والألعاب",
-   "per_day": 1254.3
+   "per_day": 758.4
   },
   {
    "id": "MhOtMbXRrrU",
@@ -66,19 +66,31 @@
    "published": "2026-11-08",
    "delta": 0,
    "topic": "إيران والخليج",
-   "per_day": 99.3
+   "per_day": 89.4
   },
   {
    "id": "Dgtomveeovc",
    "title": "يوم إيران سكّرت مضيق هرمز 🛢️",
    "type": "short",
-   "views": 1686,
+   "views": 1687,
    "likes": 19,
    "comments": 0,
    "published": "2026-11-08",
-   "delta": 0,
+   "delta": 1,
    "topic": "إيران والخليج",
-   "per_day": 93.7
+   "per_day": 84.3
+  },
+  {
+   "id": "qNikzjKCNtc",
+   "title": "GTA 5 وصلت 230 مليون نسخة بعد 13 سنة 🎮",
+   "type": "short",
+   "views": 1422,
+   "likes": 8,
+   "comments": 0,
+   "published": "2026-11-24",
+   "delta": 171,
+   "topic": "GTA والألعاب",
+   "per_day": 355.5
   },
   {
    "id": "47jNdTR02hE",
@@ -90,7 +102,7 @@
    "published": "2026-11-15",
    "delta": 0,
    "topic": "تاريخ البحرين",
-   "per_day": 119.3
+   "per_day": 100.9
   },
   {
    "id": "vQK_HP-DPiE",
@@ -102,43 +114,31 @@
    "published": "2026-11-19",
    "delta": 0,
    "topic": "GTA والألعاب",
-   "per_day": 186.1
+   "per_day": 144.8
   },
   {
    "id": "D-MDEp6pXvk",
    "title": "GTA 6 جابت 3.79 مليار بيوم واحد! 💰",
    "type": "short",
-   "views": 1276,
+   "views": 1279,
    "likes": 5,
    "comments": 0,
    "published": "2026-11-22",
-   "delta": 28,
+   "delta": 3,
    "topic": "GTA والألعاب",
-   "per_day": 319.0
+   "per_day": 213.2
   },
   {
    "id": "rb87oV2KeYA",
    "title": "GTA 5 باعت 11 مليون بأول يوم… وGTA 6؟ (توقعات)",
    "type": "short",
-   "views": 1274,
+   "views": 1275,
    "likes": 10,
    "comments": 0,
    "published": "2026-11-22",
-   "delta": 27,
+   "delta": 1,
    "topic": "GTA والألعاب",
-   "per_day": 318.5
-  },
-  {
-   "id": "qNikzjKCNtc",
-   "title": "GTA 5 وصلت 230 مليون نسخة بعد 13 سنة 🎮",
-   "type": "short",
-   "views": 1251,
-   "likes": 8,
-   "comments": 0,
-   "published": "2026-11-24",
-   "delta": 196,
-   "topic": "GTA والألعاب",
-   "per_day": 625.5
+   "per_day": 212.5
   },
   {
    "id": "eQbh6vkSU6Q",
@@ -150,7 +150,19 @@
    "published": "2026-11-17",
    "delta": 0,
    "topic": "GTA والألعاب",
-   "per_day": 135.8
+   "per_day": 111.1
+  },
+  {
+   "id": "YVnNwmJ-6Xw",
+   "title": "ليش البحرين اسمها البحرين؟ 🌊",
+   "type": "short",
+   "views": 1198,
+   "likes": 6,
+   "comments": 0,
+   "published": "2026-11-25",
+   "delta": 89,
+   "topic": "تاريخ البحرين",
+   "per_day": 399.3
   },
   {
    "id": "wqoMptARZMQ",
@@ -162,19 +174,7 @@
    "published": "2026-11-17",
    "delta": 0,
    "topic": "تاريخ البحرين",
-   "per_day": 130.7
-  },
-  {
-   "id": "YVnNwmJ-6Xw",
-   "title": "ليش البحرين اسمها البحرين؟ 🌊",
-   "type": "short",
-   "views": 1109,
-   "likes": 6,
-   "comments": 0,
-   "published": "2026-11-25",
-   "delta": 159,
-   "topic": "تاريخ البحرين",
-   "per_day": 1109.0
+   "per_day": 106.9
   },
   {
    "id": "yNhHe_33oXo",
@@ -184,9 +184,9 @@
    "likes": 12,
    "comments": 2,
    "published": "2026-11-16",
-   "delta": 1,
+   "delta": 0,
    "topic": "تاريخ البحرين",
-   "per_day": 110.4
+   "per_day": 92.0
   },
   {
    "id": "6b3TJIP7qu0",
@@ -198,7 +198,7 @@
    "published": "2026-11-18",
    "delta": 0,
    "topic": "GTA والألعاب",
-   "per_day": 135.2
+   "per_day": 108.2
   },
   {
    "id": "tleiGKGcrfA",
@@ -208,9 +208,21 @@
    "likes": 7,
    "comments": 0,
    "published": "2026-11-18",
-   "delta": 1,
+   "delta": 0,
    "topic": "تاريخ البحرين",
-   "per_day": 132.2
+   "per_day": 105.8
+  },
+  {
+   "id": "izszK8aE2Yg",
+   "title": "اسم مثلث برمودا مو قديم!",
+   "type": "short",
+   "views": 1001,
+   "likes": 3,
+   "comments": 0,
+   "published": "2026-11-25",
+   "delta": 101,
+   "topic": "أخرى",
+   "per_day": 333.7
   },
   {
    "id": "J0WzDnpqrW0",
@@ -222,7 +234,7 @@
    "published": "2026-11-08",
    "delta": 0,
    "topic": "إيران والخليج",
-   "per_day": 54.8
+   "per_day": 49.3
   },
   {
    "id": "xpZ5Xyko8oo",
@@ -234,19 +246,19 @@
    "published": "2026-11-23",
    "delta": 0,
    "topic": "أخرى",
-   "per_day": 315.7
+   "per_day": 189.4
   },
   {
-   "id": "izszK8aE2Yg",
-   "title": "اسم مثلث برمودا مو قديم!",
+   "id": "pqP3ehQmA_E",
+   "title": "أول سعودية بالفضاء: ريانة برناوي 🚀",
    "type": "short",
-   "views": 900,
-   "likes": 2,
+   "views": 929,
+   "likes": 6,
    "comments": 0,
-   "published": "2026-11-25",
+   "published": "2026-11-26",
    "delta": 0,
    "topic": "أخرى",
-   "per_day": 900.0
+   "per_day": 464.5
   },
   {
    "id": "Nth7EGqZTBo",
@@ -256,9 +268,9 @@
    "likes": 12,
    "comments": 0,
    "published": "2026-11-22",
-   "delta": 2,
+   "delta": 0,
    "topic": "الموناليزا",
-   "per_day": 145.8
+   "per_day": 97.2
   },
   {
    "id": "Az24UGALWdc",
@@ -268,9 +280,9 @@
    "likes": 3,
    "comments": 0,
    "published": "2026-11-21",
-   "delta": 3,
+   "delta": 0,
    "topic": "الموناليزا",
-   "per_day": 78.4
+   "per_day": 56.0
   },
   {
    "id": "IUaW08O3GG0",
@@ -280,57 +292,69 @@
    "likes": 3,
    "comments": 5,
    "published": "2026-11-18",
-   "delta": 3,
+   "delta": 0,
    "topic": "GTA والألعاب",
-   "per_day": 38.5
+   "per_day": 30.8
   },
   {
    "id": "sCMtf94yZiY",
    "title": "ما فيه دليل إن الاختفاءات أكثر",
    "type": "short",
-   "views": 192,
+   "views": 186,
    "likes": 0,
    "comments": 0,
    "published": "2026-11-26",
-   "delta": 0,
+   "delta": -6,
    "topic": "أخرى",
-   "per_day": 192.0
+   "per_day": 93.0
   },
   {
    "id": "F_lXv1wMpPE",
    "title": "إيران وأمريكا: القصة الكاملة من 1953 لين حرب 2026",
    "type": "long",
-   "views": 169,
+   "views": 170,
    "likes": 2,
    "comments": 0,
    "published": "2026-11-08",
-   "delta": 2,
+   "delta": 1,
    "topic": "إيران والخليج",
-   "per_day": 9.4
+   "per_day": 8.5
   },
   {
    "id": "EmYkYIhy8yk",
    "title": "أول نفط بالخليج طلع من البحرين… بس ليش ما صارت أغنى دولة؟",
    "type": "long",
-   "views": 115,
+   "views": 120,
    "likes": 1,
    "comments": 1,
    "published": "2026-11-15",
-   "delta": 3,
+   "delta": 5,
    "topic": "تاريخ البحرين",
-   "per_day": 10.5
+   "per_day": 9.2
   },
   {
    "id": "aQrTHARZVI8",
    "title": "سرقة الموناليزا: الوثائقي الكامل",
    "type": "long",
-   "views": 102,
+   "views": 104,
    "likes": 1,
    "comments": 1,
    "published": "2026-11-20",
-   "delta": 1,
+   "delta": 2,
    "topic": "الموناليزا",
-   "per_day": 17.0
+   "per_day": 13.0
+  },
+  {
+   "id": "_IBpipYzEZk",
+   "title": "التأمين البحري ما يرفع السعر",
+   "type": "short",
+   "views": 89,
+   "likes": 0,
+   "comments": 0,
+   "published": "2026-11-27",
+   "delta": 0,
+   "topic": "أخرى",
+   "per_day": 89.0
   },
   {
    "id": "cBy4uzqup7I",
@@ -340,131 +364,142 @@
    "likes": 2,
    "comments": 0,
    "published": "2026-11-20",
-   "delta": 2,
+   "delta": 0,
    "topic": "الموناليزا",
-   "per_day": 13.7
+   "per_day": 10.2
   },
   {
    "id": "8zsSaAulBnY",
    "title": "مثلث برمودا: لغز حقيقي ولا قصة مبالغ فيها؟",
    "type": "long",
-   "views": 18,
-   "likes": 0,
+   "views": 39,
+   "likes": 1,
    "comments": 0,
    "published": "2026-11-25",
-   "delta": 18,
+   "delta": 21,
    "topic": "أخرى",
-   "per_day": 18.0
-  },
-  {
-   "id": "5M9vUdqWoZA",
-   "title": "دينار = 2.66 دولار… يعني البحرين أغنى من أمريكا؟ 💰",
-   "type": "short",
-   "views": 16,
-   "likes": 0,
-   "comments": 0,
-   "published": "2026-11-22",
-   "delta": 6,
-   "topic": "اقتصاد",
-   "per_day": 4.0
+   "per_day": 13.0
   },
   {
    "id": "ruFmH60jGrw",
    "title": "ليش الدينار البحريني غالي؟ (مو لأن البحرين أغنى من أمريكا)",
    "type": "long",
-   "views": 13,
+   "views": 24,
    "likes": 2,
    "comments": 0,
    "published": "2026-11-22",
-   "delta": 6,
+   "delta": 11,
    "topic": "اقتصاد",
-   "per_day": 3.2
+   "per_day": 4.0
+  },
+  {
+   "id": "5M9vUdqWoZA",
+   "title": "دينار = 2.66 دولار… يعني البحرين أغنى من أمريكا؟ 💰",
+   "type": "short",
+   "views": 18,
+   "likes": 0,
+   "comments": 0,
+   "published": "2026-11-22",
+   "delta": 2,
+   "topic": "اقتصاد",
+   "per_day": 3.0
   },
   {
    "id": "aXgV3zbghdc",
    "title": "أبوظبي كانت تستخدم الدينار البحريني! 🇧🇭🇦🇪",
    "type": "short",
-   "views": 5,
+   "views": 12,
    "likes": 0,
    "comments": 0,
    "published": "2026-11-23",
-   "delta": 1,
+   "delta": 7,
    "topic": "اقتصاد",
-   "per_day": 1.7
+   "per_day": 2.4
   }
  ],
  "topics": [
   {
    "name": "GTA والألعاب",
-   "views": 27761,
+   "views": 28002,
    "n": 11,
    "series": [
     11426,
     15704,
     24371,
     26997,
-    27761
+    27761,
+    28002
    ]
   },
   {
    "name": "تاريخ البحرين",
-   "views": 5874,
+   "views": 5968,
    "n": 6,
    "series": [
     4728,
     4735,
     4755,
     5710,
-    5874
+    5874,
+    5968
    ]
   },
   {
    "name": "إيران والخليج",
-   "views": 4629,
+   "views": 4631,
    "n": 4,
    "series": [
     4622,
     4627,
     4627,
     4627,
-    4629
+    4629,
+    4631
    ]
   },
   {
    "name": "أخرى",
-   "views": 2057,
-   "n": 4,
+   "views": 3191,
+   "n": 6,
    "series": [
     920,
     947,
-    2057
+    2057,
+    3191
    ]
   },
   {
    "name": "الموناليزا",
-   "views": 1159,
+   "views": 1161,
    "n": 4,
    "series": [
     587,
     812,
     1145,
     1151,
-    1159
+    1159,
+    1161
    ]
   },
   {
    "name": "اقتصاد",
-   "views": 34,
+   "views": 54,
    "n": 3,
    "series": [
     1,
     14,
     21,
-    34
+    34,
+    54
    ]
   }
  ],
  "schedule": [
+  {
+   "t": "2026-11-27 13:30",
+   "k": "team",
+   "text": "الرسام رجع يشتغل: صور حقيقية ورسم بالموشن المجاني بدل انتظار رصيد Higgsfield · انضم مخرج الإنفوجرافيك ومدرّس تعلّم كلود"
+  },
   {
    "t": "2026-11-23 13:00",
    "k": "publish",
@@ -625,22 +660,27 @@
    "d": "2026-11-26",
    "views": 41088,
    "subs": 30
+  },
+  {
+   "d": "2026-11-28",
+   "views": 42961,
+   "subs": 32
   }
  ],
  "week_topic": {
   "name": "GTA والألعاب",
-  "gain": 16335,
+  "gain": 16576,
   "since": "2026-11-22",
-  "days": 4
+  "days": 6
  },
  "by_type": {
   "short": {
-   "n": 26,
-   "avg_per_day": 389.7
+   "n": 28,
+   "avg_per_day": 241.4
   },
   "long": {
    "n": 6,
-   "avg_per_day": 16.1
+   "avg_per_day": 13.1
   }
  },
  "comments": {
@@ -654,21 +694,21 @@
    {
     "key": "subs_per_1k",
     "label": "مشترك لكل 1000 مشاهدة",
-    "now": 0.73,
+    "now": 0.74,
     "t30": 3,
     "t90": 5,
     "better": "up",
     "week": {
-     "subs_per_1k": 0.39,
-     "views": 27888,
-     "subs": 11,
+     "subs_per_1k": 0.44,
+     "views": 29761,
+     "subs": 13,
      "since": "2026-11-22"
     }
    },
    {
     "key": "subscribers",
     "label": "مشتركين يوتيوب",
-    "now": 30,
+    "now": 32,
     "t30": 150,
     "t90": 1000,
     "better": "up"
@@ -676,7 +716,7 @@
    {
     "key": "top_share",
     "label": "حصة أكبر موضوع %",
-    "now": 66.9,
+    "now": 65.1,
     "t30": 50,
     "t90": 40,
     "better": "down",
