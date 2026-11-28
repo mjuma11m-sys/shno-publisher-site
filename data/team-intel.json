@@ -1,0 +1,648 @@
+{
+ "median_watch": 35,
+ "n": 47,
+ "rules": [
+  "الطول: **19+ ث** يمسك أكثر (وسيط 40% مقابل 35% للكل، 17 شورت).",
+  "الموضوع: **تاريخ البحرين وأصلها** أعلى مشاهدة كاملة (وسيط 40%، 7 شورت).",
+  "الهوك: **جملة خبرية** الأقوى (وسيط 38%، 19 شورت).",
+  "انتبه: **GTA وصناعة الألعاب** الأضعف (30%) — هوك أقوى أو أقصر، مو وقف الموضوع."
+ ],
+ "scores": {
+  "short-161": {
+   "pred": 30,
+   "weak": true,
+   "tip": "الهوك والطول مضبوطين؛ الموضوع نفسه أضعف عندنا — خلّه بين شورتين أقوى وراقب رقمه"
+  },
+  "short-164": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-166": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-163": {
+   "pred": 30,
+   "weak": true,
+   "tip": "الهوك والطول مضبوطين؛ الموضوع نفسه أضعف عندنا — خلّه بين شورتين أقوى وراقب رقمه"
+  },
+  "short-170": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-171": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-172": {
+   "pred": 44,
+   "weak": false,
+   "tip": ""
+  },
+  "short-032": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-034": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-055": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-037": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-040": {
+   "pred": 31,
+   "weak": true,
+   "tip": "ابدأ بالنتيجة أو الرقم، مو اسم البطولة"
+  },
+  "short-061": {
+   "pred": 30,
+   "weak": true,
+   "tip": "هوك أقوى بأول ثانيتين"
+  },
+  "short-043": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-049": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-064": {
+   "pred": 30,
+   "weak": true,
+   "tip": "هوك أقوى بأول ثانيتين"
+  },
+  "short-052": {
+   "pred": 30,
+   "weak": true,
+   "tip": "الهوك والطول مضبوطين؛ الموضوع نفسه أضعف عندنا — خلّه بين شورتين أقوى وراقب رقمه"
+  },
+  "short-058": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-067": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-097": {
+   "pred": 47,
+   "weak": false,
+   "tip": ""
+  },
+  "short-121": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-070": {
+   "pred": 47,
+   "weak": false,
+   "tip": ""
+  },
+  "short-124": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-130": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-085": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-136": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-046": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-088": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-073": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-077": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-091": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-079": {
+   "pred": 47,
+   "weak": false,
+   "tip": ""
+  },
+  "short-082": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-094": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-148": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-033": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-100": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-035": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-038": {
+   "pred": 25,
+   "weak": true,
+   "tip": "ابدأ بالنتيجة أو الرقم، مو اسم البطولة"
+  },
+  "short-103": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-041": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-044": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-106": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-050": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-053": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-109": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-059": {
+   "pred": 47,
+   "weak": false,
+   "tip": ""
+  },
+  "short-098": {
+   "pred": 47,
+   "weak": false,
+   "tip": ""
+  },
+  "short-112": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-122": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-125": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-115": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-131": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-137": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-118": {
+   "pred": 30,
+   "weak": true,
+   "tip": "هوك أقوى بأول ثانيتين"
+  },
+  "short-047": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-074": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-127": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-078": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-080": {
+   "pred": 31,
+   "weak": true,
+   "tip": "ابدأ بالنتيجة أو الرقم، مو اسم البطولة"
+  },
+  "short-133": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-083": {
+   "pred": 47,
+   "weak": false,
+   "tip": ""
+  },
+  "short-149": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-142": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-036": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-039": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-145": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-042": {
+   "pred": 31,
+   "weak": true,
+   "tip": "ابدأ بالنتيجة أو الرقم، مو اسم البطولة"
+  },
+  "short-045": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-152": {
+   "pred": 49,
+   "weak": false,
+   "tip": ""
+  },
+  "short-051": {
+   "pred": 47,
+   "weak": false,
+   "tip": ""
+  },
+  "short-054": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-154": {
+   "pred": 38,
+   "weak": false,
+   "tip": ""
+  },
+  "short-060": {
+   "pred": 25,
+   "weak": true,
+   "tip": "ابدأ بالنتيجة أو الرقم، مو اسم البطولة"
+  },
+  "short-099": {
+   "pred": 47,
+   "weak": false,
+   "tip": ""
+  },
+  "short-056": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-123": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-126": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-062": {
+   "pred": 31,
+   "weak": true,
+   "tip": "ابدأ بالنتيجة أو الرقم، مو اسم البطولة"
+  },
+  "short-132": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-138": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-065": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-048": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-075": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-068": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-081": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-084": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-071": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-150": {
+   "pred": 47,
+   "weak": false,
+   "tip": ""
+  },
+  "short-086": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-089": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-092": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-095": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-101": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-104": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-107": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-110": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-113": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-116": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-119": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-128": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-134": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-143": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-146": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-155": {
+   "pred": 49,
+   "weak": false,
+   "tip": ""
+  },
+  "short-057": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-063": {
+   "pred": 30,
+   "weak": true,
+   "tip": "هوك أقوى بأول ثانيتين"
+  },
+  "short-066": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-069": {
+   "pred": 30,
+   "weak": true,
+   "tip": "هوك أقوى بأول ثانيتين"
+  },
+  "short-072": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-087": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-090": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-093": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-096": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-102": {
+   "pred": 47,
+   "weak": false,
+   "tip": ""
+  },
+  "short-105": {
+   "pred": 47,
+   "weak": false,
+   "tip": ""
+  },
+  "short-108": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-111": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-114": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-117": {
+   "pred": 36,
+   "weak": false,
+   "tip": ""
+  },
+  "short-120": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-129": {
+   "pred": 30,
+   "weak": true,
+   "tip": "هوك أقوى بأول ثانيتين"
+  },
+  "short-135": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-144": {
+   "pred": 35,
+   "weak": false,
+   "tip": ""
+  },
+  "short-147": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-156": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  },
+  "short-157": {
+   "pred": 41,
+   "weak": false,
+   "tip": ""
+  }
+ },
+ "trend": null
+}
