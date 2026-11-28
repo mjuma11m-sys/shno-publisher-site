@@ -40,3 +40,27 @@ s = open("offline.html").read()
 if 'name="robots"' not in s:
     open("offline.html", "w").write(s.replace("</head>", '<meta name="robots" content="noindex">\n</head>', 1))
 print("offline built")
+
+# «أفضل ما عندنا»: top 10 videos by real YouTube views (from data/dashboard.json) — the bio link page
+import html as _h
+_D = json.load(open("data/dashboard.json"))
+_top = sorted(_D["videos"], key=lambda v: -v.get("views", 0))[:10]
+def _href(v):
+    for p in (f"short-{v['id']}.html", f"episode-{v['id']}.html"):
+        if os.path.exists(p):
+            return p
+    return f"https://www.youtube.com/watch?v={v['id']}"
+_cards = "".join(
+    f'<a class="lc" href="{_href(v)}"><img src="https://i.ytimg.com/vi/{v["id"]}/{"hqdefault" if v["type"]=="short" else "mqdefault"}.jpg" alt="" loading="lazy" width="320" height="180">'
+    f'<b>{_h.escape(v["title"].split("#")[0].strip())}</b><small>{v["views"]:,} مشاهدة · {"شورت" if v["type"]=="short" else "حلقة"} · {v["topic"]}</small></a>'
+    for v in _top)
+_best = f'''<style>.best{{padding-block:28px 8px;display:grid;gap:18px}}.best h1{{margin:0;font:900 clamp(1.6rem,3.6vw,2.4rem)/1.3 "Tajawal",sans-serif;text-wrap:balance}}
+.best .lead{{color:var(--mut);margin:0;max-width:65ch}}.bgrid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}}
+.bgrid .lc{{display:grid;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px;color:var(--fg);text-decoration:none;min-width:0}}
+.bgrid .lc img{{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:10px;background:var(--bg2)}}.bgrid .lc small{{color:var(--mut)}}
+.subbar{{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px}}</style>
+<div class="wrap"><article class="best"><div><h1>أفضل ما عندنا 🔥</h1><p class="lead">أكثر 10 فيديوهات انشافت بقناة «شنو السالفة؟» على يوتيوب (أرقام حقيقية، تحديث {_D["updated"][:10]}). كل رقم بمصدرين، والصوت بالذكاء الاصطناعي.</p></div>
+<div class="subbar"><b style="flex:1 1 200px">عجبك؟ القصة الجاية تنزل الأربعاء والأحد 8 بالليل.</b><a class="btn pri" href="https://www.youtube.com/@shnoalsalfa_bh?sub_confirmation=1" rel="noopener">🔔 اشترك بيوتيوب</a><a class="btn sec" href="https://www.tiktok.com/@shnoalsalfa_bh" rel="noopener">تيك توك</a></div>
+<div class="bgrid">{_cards}</div></article></div>'''
+page("best.html", "أفضل ما عندنا · شنو السالفة؟", "أكثر 10 فيديوهات انشافت بقناة «شنو السالفة؟» البحرينية: تاريخ البحرين، GTA بالأرقام، والخليج — بأرقام حقيقية من يوتيوب.", _best, nav="episodes.html")
+print("best built")
