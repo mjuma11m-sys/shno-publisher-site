@@ -348,9 +348,44 @@
    "task": "ملف القناة للمعلنين وقائمة شركات",
    "x": 7.95,
    "y": 6.8
+  },
+  {
+   "id": "bh-historian",
+   "name": "باحث تاريخ البحرين",
+   "en": "Bahrain historian",
+   "zone": "research",
+   "status": "working",
+   "task": "المصادر الأصلية لسلسلة العيد الوطني",
+   "x": 1.55,
+   "y": 3.3
+  },
+  {
+   "id": "retention",
+   "name": "محلل الاحتفاظ",
+   "en": "Retention analyst",
+   "zone": "publish",
+   "status": "working",
+   "task": "وين الناس يطلعون من الحلقة وليش",
+   "x": 7.95,
+   "y": 3.3
+  },
+  {
+   "id": "distribution",
+   "name": "مدير التوزيع",
+   "en": "Distribution",
+   "zone": "community",
+   "status": "working",
+   "task": "مسودات واتساب وإنستقرام لكل حلقة",
+   "x": 6.55,
+   "y": 8.1
   }
  ],
  "feed": [
+  {
+   "t": "2026-11-28 10:55",
+   "k": "team",
+   "text": "انضم 3: باحث تاريخ البحرين، محلل الاحتفاظ، مدير التوزيع — 34 موظف"
+  },
   {
    "t": "2026-11-28 10:45",
    "k": "team",
