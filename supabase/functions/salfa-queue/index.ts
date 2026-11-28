@@ -87,7 +87,7 @@ async function hayati() {
   const waiting = all.filter((x) => !isDone(x));
   return {
     auto: (st?.value as { on?: boolean } | null)?.on !== false,
-    time: "19:23 Asia/Bahrain", perDay: 1,
+    time: "21:13 Asia/Bahrain", perDay: 1,
     next: [...waiting.filter((x) => fl.get(x.id) === "next"), ...waiting.filter((x) => !fl.get(x.id))].map(pick),
     skipped: waiting.filter((x) => fl.get(x.id) === "skip").map(pick),
     done: all.filter(isDone).map(pick),
