@@ -340,5 +340,41 @@
    "https://support.claude.com/en/articles/12512180-use-skills-in-claude",
    "https://claude.com/docs/skills/how-to"
   ]
+ },
+ {
+  "id": "short-173",
+  "caption": "ليش العيد الوطني 16 ديسمبر؟ البحرين استقلت بأغسطس 1971 🇧🇭 #البحرين #العيد_الوطني #شنو_السالفة",
+  "claim": "الاستقلال عن بريطانيا بأغسطس 1971، والعيد الوطني 16 ديسمبر ذكرى تولي الشيخ عيسى بن سلمان الحكم؛ الإجازة يومين 16 و17",
+  "sources": [
+   "https://en.wikipedia.org/wiki/Independence_Day_(Bahrain",
+   "https://www.timeanddate.com/holidays/bahrain/national-day"
+  ]
+ },
+ {
+  "id": "short-174",
+  "caption": "278: قرار مجلس الأمن اللي فتح طريق استقلال البحرين 🇧🇭 الحلقة كاملة بالقناة #البحرين #العيد_الوطني #شنو_السالفة",
+  "claim": "مجلس الأمن اعتمد تقرير S/9772 بالإجماع 11 مايو 1970",
+  "sources": [
+   "https://digitallibrary.un.org/record/112440",
+   "https://en.wikipedia.org/wiki/United_Nations_Security_Council_Resolution_278"
+  ]
+ },
+ {
+  "id": "short-175",
+  "caption": "+150 سنة من أول معاهدة مع بريطانيا لين استقلال البحرين 1971 🇧🇭 #البحرين #تاريخ_البحرين #شنو_السالفة",
+  "claim": "المعاهدة العامة 1820، والاستقلال 15 أغسطس 1971",
+  "sources": [
+   "https://qdl.qa/en/historical-profile-bahrain",
+   "https://en.wikipedia.org/wiki/State_of_Bahrain"
+  ]
+ },
+ {
+  "id": "short-176",
+  "caption": "أسبوعين وسؤال واحد غيّر البحرين سنة 1970 🇧🇭 الحلقة كاملة بالقناة #البحرين #العيد_الوطني #شنو_السالفة",
+  "claim": "بعثة الأمم المتحدة: وصلت 30 مارس 1970 لمدة أسبوعين تقريباً",
+  "sources": [
+   "https://en.wikipedia.org/wiki/1970_Bahraini_independence_survey",
+   "https://digitallibrary.un.org/record/112440"
+  ]
  }
 ]

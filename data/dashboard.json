@@ -1,24 +1,24 @@
 {
- "updated": "2026-11-28T10:56+03:00",
+ "updated": "2026-11-28T21:06+03:00",
  "channel": {
-  "subscribers": 32,
-  "views": 42961,
-  "videos": 34,
-  "views_delta": 1873,
-  "subs_delta": 2
+  "subscribers": 34,
+  "views": 43140,
+  "videos": 36,
+  "views_delta": 2052,
+  "subs_delta": 4
  },
  "videos": [
   {
    "id": "dudDdusvHw8",
    "title": "GTA 6 بـ 80 دولار والعلبة بدون قرص! 💿",
    "type": "short",
-   "views": 8414,
+   "views": 8444,
    "likes": 25,
    "comments": 0,
    "published": "2026-11-21",
-   "delta": 32,
+   "delta": 62,
    "topic": "GTA والألعاب",
-   "per_day": 1202.0
+   "per_day": 1206.3
   },
   {
    "id": "YQwl1MiJYKY",
@@ -48,13 +48,13 @@
    "id": "IUSenn3CDlY",
    "title": "GTA 6 باعت 32.5 مليون نسخة قبل لا تنزل!",
    "type": "short",
-   "views": 3792,
+   "views": 3793,
    "likes": 15,
    "comments": 0,
    "published": "2026-11-23",
-   "delta": 29,
+   "delta": 30,
    "topic": "GTA والألعاب",
-   "per_day": 758.4
+   "per_day": 758.6
   },
   {
    "id": "MhOtMbXRrrU",
@@ -84,25 +84,25 @@
    "id": "qNikzjKCNtc",
    "title": "GTA 5 وصلت 230 مليون نسخة بعد 13 سنة 🎮",
    "type": "short",
-   "views": 1422,
+   "views": 1498,
    "likes": 8,
    "comments": 0,
    "published": "2026-11-24",
-   "delta": 171,
+   "delta": 247,
    "topic": "GTA والألعاب",
-   "per_day": 355.5
+   "per_day": 374.5
   },
   {
    "id": "47jNdTR02hE",
    "title": "أول نفط بالخليج طلع من البحرين 🛢️",
    "type": "short",
-   "views": 1312,
+   "views": 1314,
    "likes": 15,
    "comments": 0,
    "published": "2026-11-15",
-   "delta": 0,
+   "delta": 2,
    "topic": "تاريخ البحرين",
-   "per_day": 100.9
+   "per_day": 101.1
   },
   {
    "id": "vQK_HP-DPiE",
@@ -141,6 +141,18 @@
    "per_day": 212.5
   },
   {
+   "id": "YVnNwmJ-6Xw",
+   "title": "ليش البحرين اسمها البحرين؟ 🌊",
+   "type": "short",
+   "views": 1228,
+   "likes": 8,
+   "comments": 0,
+   "published": "2026-11-25",
+   "delta": 119,
+   "topic": "تاريخ البحرين",
+   "per_day": 409.3
+  },
+  {
    "id": "eQbh6vkSU6Q",
    "title": "GTA V جابت مليار دولار بثلاث أيام!",
    "type": "short",
@@ -151,18 +163,6 @@
    "delta": 0,
    "topic": "GTA والألعاب",
    "per_day": 111.1
-  },
-  {
-   "id": "YVnNwmJ-6Xw",
-   "title": "ليش البحرين اسمها البحرين؟ 🌊",
-   "type": "short",
-   "views": 1198,
-   "likes": 6,
-   "comments": 0,
-   "published": "2026-11-25",
-   "delta": 89,
-   "topic": "تاريخ البحرين",
-   "per_day": 399.3
   },
   {
    "id": "wqoMptARZMQ",
@@ -213,16 +213,28 @@
    "per_day": 105.8
   },
   {
+   "id": "pqP3ehQmA_E",
+   "title": "أول سعودية بالفضاء: ريانة برناوي 🚀",
+   "type": "short",
+   "views": 1018,
+   "likes": 7,
+   "comments": 0,
+   "published": "2026-11-26",
+   "delta": 0,
+   "topic": "أخرى",
+   "per_day": 509.0
+  },
+  {
    "id": "izszK8aE2Yg",
    "title": "اسم مثلث برمودا مو قديم!",
    "type": "short",
-   "views": 1001,
+   "views": 1003,
    "likes": 3,
    "comments": 0,
    "published": "2026-11-25",
-   "delta": 101,
+   "delta": 103,
    "topic": "أخرى",
-   "per_day": 333.7
+   "per_day": 334.3
   },
   {
    "id": "J0WzDnpqrW0",
@@ -249,28 +261,28 @@
    "per_day": 189.4
   },
   {
-   "id": "pqP3ehQmA_E",
-   "title": "أول سعودية بالفضاء: ريانة برناوي 🚀",
-   "type": "short",
-   "views": 929,
-   "likes": 6,
-   "comments": 0,
-   "published": "2026-11-26",
-   "delta": 0,
-   "topic": "أخرى",
-   "per_day": 464.5
-  },
-  {
    "id": "Nth7EGqZTBo",
    "title": "الموناليزا سنتين بصندوق مخفي 📦",
    "type": "short",
-   "views": 583,
+   "views": 585,
    "likes": 12,
    "comments": 0,
    "published": "2026-11-22",
-   "delta": 0,
+   "delta": 2,
    "topic": "الموناليزا",
-   "per_day": 97.2
+   "per_day": 97.5
+  },
+  {
+   "id": "iyygLW37pwU",
+   "title": "ليش العيد الوطني 16 ديسمبر؟ البحرين استقلت بأغسطس 1971 🇧🇭",
+   "type": "short",
+   "views": 435,
+   "likes": 4,
+   "comments": 0,
+   "published": "2026-11-28",
+   "delta": 0,
+   "topic": "تاريخ البحرين",
+   "per_day": 435.0
   },
   {
    "id": "Az24UGALWdc",
@@ -324,37 +336,37 @@
    "id": "EmYkYIhy8yk",
    "title": "أول نفط بالخليج طلع من البحرين… بس ليش ما صارت أغنى دولة؟",
    "type": "long",
-   "views": 120,
+   "views": 122,
    "likes": 1,
    "comments": 1,
    "published": "2026-11-15",
-   "delta": 5,
+   "delta": 7,
    "topic": "تاريخ البحرين",
-   "per_day": 9.2
+   "per_day": 9.4
   },
   {
    "id": "aQrTHARZVI8",
    "title": "سرقة الموناليزا: الوثائقي الكامل",
    "type": "long",
-   "views": 104,
+   "views": 105,
    "likes": 1,
    "comments": 1,
    "published": "2026-11-20",
-   "delta": 2,
+   "delta": 3,
    "topic": "الموناليزا",
-   "per_day": 13.0
+   "per_day": 13.1
   },
   {
    "id": "_IBpipYzEZk",
    "title": "التأمين البحري ما يرفع السعر",
    "type": "short",
-   "views": 89,
+   "views": 88,
    "likes": 0,
    "comments": 0,
    "published": "2026-11-27",
    "delta": 0,
    "topic": "أخرى",
-   "per_day": 89.0
+   "per_day": 88.0
   },
   {
    "id": "cBy4uzqup7I",
@@ -372,37 +384,37 @@
    "id": "8zsSaAulBnY",
    "title": "مثلث برمودا: لغز حقيقي ولا قصة مبالغ فيها؟",
    "type": "long",
-   "views": 39,
+   "views": 38,
    "likes": 1,
    "comments": 0,
    "published": "2026-11-25",
-   "delta": 21,
+   "delta": 20,
    "topic": "أخرى",
-   "per_day": 13.0
+   "per_day": 12.7
   },
   {
    "id": "ruFmH60jGrw",
    "title": "ليش الدينار البحريني غالي؟ (مو لأن البحرين أغنى من أمريكا)",
    "type": "long",
-   "views": 24,
+   "views": 27,
    "likes": 2,
    "comments": 0,
    "published": "2026-11-22",
-   "delta": 11,
+   "delta": 14,
    "topic": "اقتصاد",
-   "per_day": 4.0
+   "per_day": 4.5
   },
   {
    "id": "5M9vUdqWoZA",
    "title": "دينار = 2.66 دولار… يعني البحرين أغنى من أمريكا؟ 💰",
    "type": "short",
-   "views": 18,
+   "views": 20,
    "likes": 0,
    "comments": 0,
    "published": "2026-11-22",
-   "delta": 2,
+   "delta": 4,
    "topic": "اقتصاد",
-   "per_day": 3.0
+   "per_day": 3.3
   },
   {
    "id": "aXgV3zbghdc",
@@ -415,12 +427,24 @@
    "delta": 7,
    "topic": "اقتصاد",
    "per_day": 2.4
+  },
+  {
+   "id": "eeyjKZw-i7k",
+   "title": "أول فورمولا 1 بالشرق الأوسط كانت بالبحرين 🏎️",
+   "type": "short",
+   "views": 0,
+   "likes": 0,
+   "comments": 0,
+   "published": "2026-11-28",
+   "delta": 0,
+   "topic": "تاريخ البحرين",
+   "per_day": 0.0
   }
  ],
  "topics": [
   {
    "name": "GTA والألعاب",
-   "views": 28002,
+   "views": 28109,
    "n": 11,
    "series": [
     11426,
@@ -428,20 +452,20 @@
     24371,
     26997,
     27761,
-    28002
+    28109
    ]
   },
   {
    "name": "تاريخ البحرين",
-   "views": 5968,
-   "n": 6,
+   "views": 6437,
+   "n": 8,
    "series": [
     4728,
     4735,
     4755,
     5710,
     5874,
-    5968
+    6437
    ]
   },
   {
@@ -459,18 +483,18 @@
   },
   {
    "name": "أخرى",
-   "views": 3191,
+   "views": 3280,
    "n": 6,
    "series": [
     920,
     947,
     2057,
-    3191
+    3280
    ]
   },
   {
    "name": "الموناليزا",
-   "views": 1161,
+   "views": 1164,
    "n": 4,
    "series": [
     587,
@@ -478,19 +502,19 @@
     1145,
     1151,
     1159,
-    1161
+    1164
    ]
   },
   {
    "name": "اقتصاد",
-   "views": 54,
+   "views": 59,
    "n": 3,
    "series": [
     1,
     14,
     21,
     34,
-    54
+    59
    ]
   }
  ],
@@ -619,8 +643,8 @@
   {
    "platform": "youtube",
    "label": "يوتيوب",
-   "done": 129,
-   "total": 172,
+   "done": 131,
+   "total": 176,
    "next": [
     {
      "id": "short-160",
@@ -643,16 +667,12 @@
   {
    "platform": "tiktok",
    "label": "تيك توك",
-   "done": 45,
-   "total": 172,
+   "done": 47,
+   "total": 176,
    "next": [
     {
      "id": "short-161",
      "text": "350 مليون نسخة… أكثر لعبة انباعت بالتاريخ، مو GTA 🧱"
-    },
-    {
-     "id": "short-164",
-     "text": "أول فورمولا 1 بالشرق الأوسط كانت بالبحرين 🏎️"
     },
     {
      "id": "short-166",
@@ -661,6 +681,10 @@
     {
      "id": "short-163",
      "text": "55 مليار دولار… بهالمبلغ انباعت EA 🎮"
+    },
+    {
+     "id": "short-170",
+     "text": "الذكاء الاصطناعي يغلط؟ شلون تتأكد من أي معلومة 🤖"
     }
    ]
   }
@@ -693,24 +717,24 @@
   },
   {
    "d": "2026-11-28",
-   "views": 42961,
-   "subs": 32
+   "views": 43140,
+   "subs": 34
   }
  ],
  "week_topic": {
   "name": "GTA والألعاب",
-  "gain": 16576,
+  "gain": 16683,
   "since": "2026-11-22",
   "days": 6
  },
  "by_type": {
   "short": {
-   "n": 28,
-   "avg_per_day": 241.4
+   "n": 30,
+   "avg_per_day": 242.4
   },
   "long": {
    "n": 6,
-   "avg_per_day": 13.1
+   "avg_per_day": 13.2
   }
  },
  "comments": {
@@ -724,21 +748,21 @@
    {
     "key": "subs_per_1k",
     "label": "مشترك لكل 1000 مشاهدة",
-    "now": 0.74,
+    "now": 0.79,
     "t30": 3,
     "t90": 5,
     "better": "up",
     "week": {
-     "subs_per_1k": 0.44,
-     "views": 29761,
-     "subs": 13,
+     "subs_per_1k": 0.5,
+     "views": 29940,
+     "subs": 15,
      "since": "2026-11-22"
     }
    },
    {
     "key": "subscribers",
     "label": "مشتركين يوتيوب",
-    "now": 32,
+    "now": 34,
     "t30": 150,
     "t90": 1000,
     "better": "up"
@@ -746,7 +770,7 @@
    {
     "key": "top_share",
     "label": "حصة أكبر موضوع %",
-    "now": 65.1,
+    "now": 64.4,
     "t30": 50,
     "t90": 40,
     "better": "down",
@@ -764,12 +788,23 @@
   ]
  },
  "tiktok": {
-  "posts": 47,
+  "posts": 48,
   "views": 62092,
   "likes": 1168,
-  "updated": "2026-11-27T22:37",
+  "updated": "2026-11-28T11:54",
   "avg_ret": 37,
   "rows": [
+   {
+    "item": "short-173",
+    "text": "ليش العيد الوطني 16 ديسمبر؟ البحرين استقلت بأغسطس 1971 🇧🇭 📺 القصص الكاملة على يوتيوب: شنو السالفة؟",
+    "sent": "2026-11-28T11:56:25.928Z",
+    "views": 0,
+    "likes": 0,
+    "comments": 0,
+    "avg_watch": 0,
+    "dur": 17.2,
+    "ret": 0
+   },
    {
     "item": "short-085",
     "text": "قناة بنما تشتغل بالمطر!",
