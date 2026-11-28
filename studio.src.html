@@ -305,8 +305,8 @@ function loadManual(){call({action:"manual"},QFN).then(r=>{const g=k=>(r.manual|
 $("ttf").addEventListener("submit",async e=>{e.preventDefault();const v=$("tt-f").value.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[,\s٬،.]/g,"");
  if(!/^\d{1,9}$/.test(v)){$("tt-m").textContent="اكتب رقم بس";return}
  try{await call({action:"manual_set",key:"tiktok_followers",value:+v},QFN);$("tt-m").textContent="انحفظ ✓ يطلع بلوحة التحكم"}catch(x){$("tt-m").textContent=x.message}});
-$("ytmf").addEventListener("submit",async e=>{e.preventDefault();const n=s=>s.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[,\s٬،.]/g,"");const a=n($("yt-wh").value),b=n($("yt-sv").value);
- if((a&&!/^\d{1,9}$/.test(a))||(b&&!/^\d{1,9}$/.test(b))||(!a&&!b)){$("yt-m").textContent="اكتب رقم بس";return}
+$("ytmf").addEventListener("submit",async e=>{e.preventDefault();const n=s=>s.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[,\s٬،.]/g,"");const a=$("yt-wh").value.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace("٫",".").replace(/[,\s٬،]/g,""),b=n($("yt-sv").value);
+ if((a&&!/^\d{1,9}(\.\d+)?$/.test(a))||(b&&!/^\d{1,9}$/.test(b))||(!a&&!b)){$("yt-m").textContent="اكتب رقم بس";return}
  try{if(a)await call({action:"manual_set",key:"yt_watch_hours",value:+a},QFN);if(b)await call({action:"manual_set",key:"yt_shorts_views_90d",value:+b},QFN);$("yt-m").textContent="انحفظ ✓ مدير الأرباح يحسب منه كل سبت"}catch(x){$("yt-m").textContent=x.message}});
 function thumb(u){const m=u.match(/^(https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/)(thumb\/)?([0-9a-f]\/[0-9a-f]{2}\/)([^/]+)(\/[^/]+)?$/);return m?`${m[1]}thumb/${m[3]}${m[4]}/330px-${m[4]}`:u}
 async function loadHeld(){let r;try{r=await call({action:"held"},QFN)}catch(e){return}
