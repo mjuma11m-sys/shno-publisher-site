@@ -258,7 +258,7 @@ $("adf").addEventListener("submit",async ev=>{ev.preventDefault();const e=$("ade
 const QFN="https://frowdhbazytcmwhrlnmv.supabase.co/functions/v1/salfa-queue";
 const bhDay=o=>new Date(Date.now()+3*36e5+o*864e5).toISOString().slice(0,10);
 const fmtDue=d=>new Date(d+"T12:00:00Z").toLocaleDateString("ar-BH",{weekday:"long",day:"numeric",month:"long"});
-let TI=null;
+var TI=null;
 const md2txt=s=>s.replace(/\*\*/g,"");
 async function loadTI(){try{const r=await fetch("data/team-intel.json",{cache:"no-store"});if(!r.ok)return;TI=await r.json();$("ti").hidden=false;
  $("tirules").textContent="من أرقامنا ("+TI.n+" شورت، وسيط المشاهدة "+TI.median_watch+"%): "+TI.rules.map(md2txt).join(" · ");
