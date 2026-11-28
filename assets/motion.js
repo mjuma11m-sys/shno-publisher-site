@@ -16,9 +16,25 @@
     var c = e.target.closest && e.target.closest(".card,.lc"); if (!c) return;
     var r = c.getBoundingClientRect(); c.style.setProperty("--mx", (e.clientX - r.left) + "px"); c.style.setProperty("--my", (e.clientY - r.top) + "px");
   }, {passive: true});
+  // hover preview: cycle YouTube's auto frames (1/2/3 = 25/50/75% of the video) on episode and short cards
+  if (!reduce) {
+    var timer = null, cur = null;
+    document.addEventListener("pointerover", function(e){
+      var card = e.target.closest && e.target.closest(".lc,.card3,.sh"); if (!card || card === cur) return;
+      var img = card.querySelector('img[src*="i.ytimg.com/vi/"]'); if (!img) return;
+      stop(); cur = card; var m = img.src.match(/\/vi\/([^/]+)\//); if (!m) return;
+      var orig = img.dataset.orig || (img.dataset.orig = img.src), frames = ["hq1", "hq2", "hq3"].map(function(f){ return "https://i.ytimg.com/vi/" + m[1] + "/" + f + ".jpg"; });
+      frames.forEach(function(u){ var p = new Image(); p.src = u; });
+      var k = 0; card.classList.add("pv");
+      timer = setInterval(function(){ img.src = frames[k++ % frames.length]; }, 700);
+      card.addEventListener("pointerleave", function lv(){ card.removeEventListener("pointerleave", lv); stop(); }, {once: true});
+      function stop(){ if (timer) clearInterval(timer); timer = null; if (cur){ var i2 = cur.querySelector("img[data-orig]"); if (i2) i2.src = i2.dataset.orig; cur.classList.remove("pv"); } cur = null; }
+      window.__pvstop = stop;
+    }, {passive: true});
+  }
   if (reduce || !("IntersectionObserver" in window)) return;
   // reveal on scroll (content is visible without JS; the class is only added here)
-  var sel = "main section > h2, main .card, main .lc, main details, main .hk > div, main .sbox, main article section, main .ways li, main .steps li";
+  var sel = "main section > h2, main .card, main .lc, main .card3, main .sh, main details, main .hk > div, main .sbox, main article section, main .ways li, main .steps li, main .card2, main .k";
   var els = Array.prototype.slice.call(document.querySelectorAll(sel)).filter(function(el){ return el.getBoundingClientRect().top > innerHeight * 0.9; });
   if (!els.length) return;
   document.documentElement.classList.add("mo");
@@ -29,10 +45,12 @@
     pending = pending.filter(function(el){ if (el.getBoundingClientRect().top < lim){ el.classList.add("in"); return false; } return true; }); }
   addEventListener("scroll", function(){ requestAnimationFrame(reveal); }, {passive: true}); addEventListener("resize", reveal); reveal();
   // count-up for the stat strip
-  var nums = document.querySelectorAll(".hk b");
+  var nums = document.querySelectorAll(".hk b, .kgrid .k b, .kpi b");
   var cio = new IntersectionObserver(function(es){ es.forEach(function(en){ if (!en.isIntersecting) return; cio.unobserve(en.target);
     var el = en.target, txt = el.textContent, n = parseInt(txt.replace(/[^\d]/g, ""), 10); if (!n || n < 10) return;
     var t0 = performance.now(), dur = 1100; (function step(t){ var p = Math.min(1, (t - t0) / dur), v = Math.round(n * (1 - Math.pow(1 - p, 3)));
       el.textContent = v.toLocaleString("en-US"); if (p < 1) requestAnimationFrame(step); else el.textContent = txt; })(t0); }); }, {threshold: .6});
   Array.prototype.forEach.call(nums, function(b){ cio.observe(b); });
+  // pages that render their numbers after load (dashboard, office): pick them up once
+  setTimeout(function(){ Array.prototype.forEach.call(document.querySelectorAll(".kgrid .k b, .kpi b"), function(b){ if (!b.dataset.cu){ b.dataset.cu = 1; cio.observe(b); } }); }, 700);
 })();
