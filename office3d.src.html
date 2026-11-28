@@ -126,7 +126,7 @@ plant(HALF-0.8,-HALF+0.8);plant(-HALF+0.8,HALF-0.8);plant(HALF-0.8,HALF-0.8);
 
 // zones -> rug positions (world): map grid 0..10 to -9..9
 const W=(g)=>g*1.8-9;
-const ZR={research:[0.6,0.6,4.6,4.6],production:[5.4,0.6,9.4,4.6],visual:[0.6,5.4,4.6,9.4],publish:[5.4,5.4,9.4,9.4]};
+const ZR={research:[0.3,0.6,3.3,4.6],production:[3.5,0.6,6.5,4.6],publish:[6.7,0.6,9.7,4.6],visual:[0.3,5.4,3.3,9.4],growth:[3.5,5.4,6.5,9.4],community:[6.7,5.4,9.7,9.4]};
 D0.zones.forEach(z=>{const r=ZR[z.id];if(!r)return;const w=(r[2]-r[0])*1.8,d=(r[3]-r[1])*1.8;const rc=new THREE.Color(z.color).lerp(new THREE.Color(0xd9d4cc),0.28);const rug=new THREE.Mesh(new THREE.BoxGeometry(w,0.04,d),M(rc,{roughness:1}));rug.position.set(W((r[0]+r[2])/2),0.02,W((r[1]+r[3])/2));rug.receiveShadow=true;scene.add(rug)});
 // agents
 const SK=[0xf1c9a5,0xe0ac84,0xc68b5e,0xf3d2b3,0xd69d74],HR=[0x2b1d16,0x3d2a1e,0x1a1a1a,0x5a3b28,0x20160f];

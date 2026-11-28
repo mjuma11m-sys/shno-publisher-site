@@ -99,7 +99,7 @@ function room(D){
  el("polygon",{points:P([iso(0,0),iso(N,0),iso(N,N),iso(0,N)]),fill:"#c99a62"});
  for(let i=0;i<=N*2;i++){const t=i/2;el("line",{x1:iso(t,0)[0],y1:iso(t,0)[1],x2:iso(t,N)[0],y2:iso(t,N)[1],stroke:"#b88852","stroke-width":1.2,opacity:.8});}
  // zone rugs with border
- const Z={research:[0.6,0.6,4.6,4.6],production:[5.4,0.6,9.4,4.6],visual:[0.6,5.4,4.6,9.4],publish:[5.4,5.4,9.4,9.4]};
+ const Z={research:[0.3,0.6,3.3,4.6],production:[3.5,0.6,6.5,4.6],publish:[6.7,0.6,9.7,4.6],visual:[0.3,5.4,3.3,9.4],growth:[3.5,5.4,6.5,9.4],community:[6.7,5.4,9.7,9.4]};
  D.zones.forEach(z=>{const r=Z[z.id];if(!r)return;el("polygon",{points:P([iso(r[0],r[1]),iso(r[2],r[1]),iso(r[2],r[3]),iso(r[0],r[3])]),fill:z.color,opacity:.82,stroke:mix(z.color,.75),"stroke-width":5,"stroke-linejoin":"round"});
   const c=iso(r[2]-0.15,(r[1]+r[3])/2);});
  // meeting table (center front) + plants

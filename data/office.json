@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27T13:30:00+03:00",
+ "updated": "2026-11-28T12:00:00+03:00",
  "zones": [
   {
    "id": "research",
@@ -12,44 +12,34 @@
    "color": "#f59e0b"
   },
   {
+   "id": "publish",
+   "name": "النشر والاستوديو",
+   "color": "#8b5cf6"
+  },
+  {
    "id": "visual",
    "name": "الصورة والصوت",
    "color": "#10b981"
   },
   {
-   "id": "publish",
-   "name": "النشر والتحليل",
-   "color": "#8b5cf6"
+   "id": "growth",
+   "name": "النمو والبيانات",
+   "color": "#ef4444"
+  },
+  {
+   "id": "community",
+   "name": "المجتمع والتعليم",
+   "color": "#06b6d4"
   }
  ],
  "agents": [
-  {
-   "id": "showrunner",
-   "name": "المنتج المنفذ",
-   "en": "Showrunner",
-   "zone": "production",
-   "x": 6,
-   "y": 1,
-   "status": "working",
-   "task": "خطة حلقة «مثلث برمودا»"
-  },
-  {
-   "id": "autopilot",
-   "name": "الطيار الآلي",
-   "en": "Autopilot",
-   "zone": "production",
-   "x": 8,
-   "y": 1,
-   "status": "scheduled",
-   "task": "شورت اليوم 2:41 م"
-  },
   {
    "id": "researcher",
    "name": "الباحث",
    "en": "Researcher",
    "zone": "research",
-   "x": 1,
-   "y": 1,
+   "x": 0.15,
+   "y": 0.8,
    "status": "working",
    "task": "مصدرين لكل رقم"
   },
@@ -58,8 +48,8 @@
    "name": "الكاتب",
    "en": "Writer",
    "zone": "research",
-   "x": 3,
-   "y": 1,
+   "x": 1.55,
+   "y": 0.8,
    "status": "idle",
    "task": "سكربت باللهجة البحرينية"
   },
@@ -68,8 +58,8 @@
    "name": "المدقق",
    "en": "Fact-checker",
    "zone": "research",
-   "x": 1,
-   "y": 3,
+   "x": 0.15,
+   "y": 2.8,
    "status": "working",
    "task": "مراجعة أرقام GTA 6"
   },
@@ -78,48 +68,38 @@
    "name": "مراجع المعايير",
    "en": "Standards",
    "zone": "research",
-   "x": 3,
-   "y": 3,
+   "x": 1.55,
+   "y": 2.8,
    "status": "idle",
    "task": "حقوق الصور والأسماء"
   },
   {
-   "id": "illustrator",
-   "name": "الرسام",
-   "en": "Illustrator",
-   "zone": "visual",
-   "x": 1,
-   "y": 6,
+   "id": "showrunner",
+   "name": "المنتج المنفذ",
+   "en": "Showrunner",
+   "zone": "production",
+   "x": 3.35,
+   "y": 0.8,
    "status": "working",
-   "task": "صور حقيقية (NASA/Commons) + رسم بالموشن المجاني · Higgsfield لـ GTA بس"
+   "task": "خطة حلقة «مثلث برمودا»"
   },
   {
-   "id": "sound",
-   "name": "مهندس الصوت",
-   "en": "Sound",
-   "zone": "visual",
-   "x": 3,
-   "y": 6,
-   "status": "idle",
-   "task": "موسيقى ومؤثرات لكل فصل"
-  },
-  {
-   "id": "designer",
-   "name": "المصمم",
-   "en": "Designer",
-   "zone": "visual",
-   "x": 1,
-   "y": 8,
-   "status": "working",
-   "task": "أغلفة الحلقات بالصور الحقيقية"
+   "id": "autopilot",
+   "name": "الطيار الآلي",
+   "en": "Autopilot",
+   "zone": "production",
+   "x": 4.75,
+   "y": 0.8,
+   "status": "scheduled",
+   "task": "شورت اليوم 2:41 م"
   },
   {
    "id": "editor",
    "name": "المونتير",
    "en": "Editor",
    "zone": "production",
-   "x": 6,
-   "y": 3,
+   "x": 3.35,
+   "y": 2.8,
    "status": "idle",
    "task": "رندر وفحص الجودة"
   },
@@ -128,8 +108,8 @@
    "name": "صانع الشورتات",
    "en": "Shorts",
    "zone": "production",
-   "x": 8,
-   "y": 3,
+   "x": 4.75,
+   "y": 2.8,
    "status": "idle",
    "task": "3–4 شورتس من كل حلقة"
   },
@@ -138,8 +118,8 @@
    "name": "الناشر",
    "en": "Publisher",
    "zone": "publish",
-   "x": 6,
-   "y": 6,
+   "x": 6.55,
+   "y": 0.8,
    "status": "working",
    "task": "جدولة يوتيوب وتيك توك"
   },
@@ -148,43 +128,148 @@
    "name": "كلود كروم",
    "en": "Browser agent",
    "zone": "publish",
-   "x": 8,
-   "y": 6,
+   "x": 7.95,
+   "y": 0.8,
    "status": "working",
    "task": "يوتيوب ستوديو: الأغلفة"
   },
   {
-   "id": "analyst",
-   "name": "المحلل",
-   "en": "Analyst",
+   "id": "generator",
+   "name": "موظف التوليد",
+   "en": "Generator",
+   "status": "idle",
+   "task": "طلبات الصوت وHiggsfield من تبويب التوليد",
    "zone": "publish",
-   "x": 6,
-   "y": 8,
-   "status": "scheduled",
-   "task": "التقرير الأسبوعي · السبت"
+   "x": 6.55,
+   "y": 2.8
+  },
+  {
+   "id": "motion",
+   "name": "مخرج الموشن",
+   "en": "Motion director",
+   "status": "idle",
+   "task": "طلبات «🎬 موشن» من الاستوديو",
+   "zone": "publish",
+   "x": 7.95,
+   "y": 2.8
+  },
+  {
+   "id": "illustrator",
+   "name": "الرسام",
+   "en": "Illustrator",
+   "zone": "visual",
+   "x": 0.15,
+   "y": 5.6,
+   "status": "working",
+   "task": "صور حقيقية (NASA/Commons) + رسم بالموشن المجاني · Higgsfield لـ GTA بس"
+  },
+  {
+   "id": "sound",
+   "name": "مهندس الصوت",
+   "en": "Sound",
+   "zone": "visual",
+   "x": 1.55,
+   "y": 5.6,
+   "status": "idle",
+   "task": "موسيقى ومؤثرات لكل فصل"
+  },
+  {
+   "id": "designer",
+   "name": "المصمم",
+   "en": "Designer",
+   "zone": "visual",
+   "x": 0.15,
+   "y": 7.6,
+   "status": "working",
+   "task": "أغلفة الحلقات بالصور الحقيقية"
   },
   {
    "zone": "visual",
    "id": "hyperframes",
    "name": "مخرج الإنفوجرافيك",
    "en": "HyperFrames",
-   "x": 2,
-   "y": 6,
+   "x": 1.55,
+   "y": 7.6,
    "status": "working",
    "task": "قالب «رقم اليوم» بـ HyperFrames (مجاني)"
   },
   {
-   "zone": "research",
+   "id": "analyst",
+   "name": "المحلل",
+   "en": "Analyst",
+   "zone": "growth",
+   "x": 3.35,
+   "y": 5.6,
+   "status": "scheduled",
+   "task": "التقرير الأسبوعي · السبت"
+  },
+  {
+   "id": "packager",
+   "name": "مدير التغليف",
+   "en": "Packaging lead",
+   "status": "working",
+   "task": "العنوان والكفر والهوك قبل الإنتاج",
+   "zone": "growth",
+   "x": 4.75,
+   "y": 5.6
+  },
+  {
+   "id": "trends",
+   "name": "رادار الترند",
+   "en": "Trend radar",
+   "status": "working",
+   "task": "5 مواضيع ساخنة يومياً بمصدرين",
+   "zone": "growth",
+   "x": 3.35,
+   "y": 7.6
+  },
+  {
+   "id": "seo",
+   "name": "مدير البحث",
+   "en": "Search (SEO)",
+   "status": "working",
+   "task": "عناوين ووصف وهاشتاقات حسب البحث",
+   "zone": "growth",
+   "x": 4.75,
+   "y": 7.6
+  },
+  {
+   "id": "community",
+   "name": "مدير المجتمع",
+   "en": "Community manager",
+   "status": "working",
+   "task": "مسودات الردود وأسئلة المتابعين",
+   "zone": "community",
+   "x": 6.55,
+   "y": 5.6
+  },
+  {
+   "id": "localizer",
+   "name": "مكتب الترجمة",
+   "en": "Localization",
+   "status": "working",
+   "task": "ترجمة إنقليزية للحلقات والشورتات",
+   "zone": "community",
+   "x": 7.95,
+   "y": 5.6
+  },
+  {
+   "zone": "community",
    "id": "tutor",
    "name": "مدرّس تعلّم كلود",
    "en": "Claude Tutor",
-   "x": 3,
-   "y": 1,
+   "x": 6.55,
+   "y": 7.6,
    "status": "working",
    "task": "دروس كلود: كل ادعاء من الصفحة الرسمية"
   }
  ],
  "feed": [
+  {
+   "t": "2026-11-28 12:00",
+   "k": "team",
+   "text": "توسعة المكتب: مكتبين جديدين (النمو والبيانات · المجتمع والتعليم) و5 موظفين: رادار الترند، مدير التغليف، مدير البحث، مدير المجتمع، مكتب الترجمة"
+  },
   {
    "t": "2026-11-27 13:30",
    "k": "team",
