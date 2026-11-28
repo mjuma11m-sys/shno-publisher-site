@@ -154,7 +154,7 @@ D0.agents.forEach((a,i)=>{
  if(a.status==="blocked"){const l=new THREE.PointLight(0xef5350,.8,3);l.position.set(0,2,0);g.add(l)}
  if(night){const l=new THREE.PointLight(0xffd9a0,.35,3.5);l.position.set(0.8,1.8,0);g.add(l)}
  // label
- const tg=document.createElement("button");tg.type="button";tg.className="tag3 "+a.status;tg.style.setProperty("--z",z.color);tg.innerHTML=`<span class="d" style="background:${ST[a.status][1]}"></span>${a.name}`;tg.setAttribute("aria-label",a.name+": "+a.task);tagsEl.appendChild(tg);
+ const tg=document.createElement("button");tg.type="button";tg.className="tag3 "+a.status;tg.style.setProperty("--z",z.color);tg.innerHTML=`<span class="d" style="background:${ST[a.status][1]}"></span>${a.head?"★ ":""}${a.name}`;tg.setAttribute("aria-label",a.name+": "+a.task);tagsEl.appendChild(tg);
  const rec={a,g,p,armL,armR,head,bc,tg,phase:Math.random()*6};agents.push(rec);
  g.traverse(o=>{if(o.isMesh)o.userData.rec=rec});clickables.push(g);
  tg.addEventListener("click",()=>select(rec));

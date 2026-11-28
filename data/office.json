@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-28T12:00:00+03:00",
+ "updated": "2026-11-28T12:30:00+03:00",
  "zones": [
   {
    "id": "research",
@@ -23,7 +23,7 @@
   },
   {
    "id": "growth",
-   "name": "النمو والبيانات",
+   "name": "النمو والأرباح",
    "color": "#ef4444"
   },
   {
@@ -39,9 +39,10 @@
    "en": "Researcher",
    "zone": "research",
    "x": 0.15,
-   "y": 0.8,
+   "y": 0.7,
    "status": "working",
-   "task": "مصدرين لكل رقم"
+   "task": "مصدرين لكل رقم",
+   "head": true
   },
   {
    "id": "writer",
@@ -49,7 +50,7 @@
    "en": "Writer",
    "zone": "research",
    "x": 1.55,
-   "y": 0.8,
+   "y": 0.7,
    "status": "idle",
    "task": "سكربت باللهجة البحرينية"
   },
@@ -59,7 +60,7 @@
    "en": "Fact-checker",
    "zone": "research",
    "x": 0.15,
-   "y": 2.8,
+   "y": 2.0,
    "status": "working",
    "task": "مراجعة أرقام GTA 6"
   },
@@ -69,9 +70,19 @@
    "en": "Standards",
    "zone": "research",
    "x": 1.55,
-   "y": 2.8,
+   "y": 2.0,
    "status": "idle",
    "task": "حقوق الصور والأسماء"
+  },
+  {
+   "id": "archivist",
+   "name": "أمين الأرشيف",
+   "en": "Archivist",
+   "status": "working",
+   "task": "مكتبة صور ولقطات بحقوق واضحة",
+   "zone": "research",
+   "x": 0.15,
+   "y": 3.3
   },
   {
    "id": "showrunner",
@@ -79,17 +90,28 @@
    "en": "Showrunner",
    "zone": "production",
    "x": 3.35,
-   "y": 0.8,
+   "y": 0.7,
    "status": "working",
-   "task": "خطة حلقة «مثلث برمودا»"
+   "task": "خطة حلقة «مثلث برمودا»",
+   "head": true
+  },
+  {
+   "id": "ops",
+   "name": "مدير العمليات",
+   "en": "Operations lead",
+   "status": "working",
+   "task": "لوحة الإنتاج اليومية والإنذارات",
+   "zone": "production",
+   "x": 4.75,
+   "y": 0.7
   },
   {
    "id": "autopilot",
    "name": "الطيار الآلي",
    "en": "Autopilot",
    "zone": "production",
-   "x": 4.75,
-   "y": 0.8,
+   "x": 3.35,
+   "y": 2.0,
    "status": "scheduled",
    "task": "شورت اليوم 2:41 م"
   },
@@ -98,10 +120,20 @@
    "name": "المونتير",
    "en": "Editor",
    "zone": "production",
-   "x": 3.35,
-   "y": 2.8,
+   "x": 4.75,
+   "y": 2.0,
    "status": "idle",
    "task": "رندر وفحص الجودة"
+  },
+  {
+   "id": "longform",
+   "name": "مونتير الحلقات الطويلة",
+   "en": "Long-form editor",
+   "status": "working",
+   "task": "إيقاع حلقات 12–15 دقيقة",
+   "zone": "production",
+   "x": 3.35,
+   "y": 3.3
   },
   {
    "id": "shorts",
@@ -109,7 +141,7 @@
    "en": "Shorts",
    "zone": "production",
    "x": 4.75,
-   "y": 2.8,
+   "y": 3.3,
    "status": "idle",
    "task": "3–4 شورتس من كل حلقة"
   },
@@ -119,9 +151,10 @@
    "en": "Publisher",
    "zone": "publish",
    "x": 6.55,
-   "y": 0.8,
+   "y": 0.7,
    "status": "working",
-   "task": "جدولة يوتيوب وتيك توك"
+   "task": "جدولة يوتيوب وتيك توك",
+   "head": true
   },
   {
    "id": "chrome",
@@ -129,7 +162,7 @@
    "en": "Browser agent",
    "zone": "publish",
    "x": 7.95,
-   "y": 0.8,
+   "y": 0.7,
    "status": "working",
    "task": "يوتيوب ستوديو: الأغلفة"
   },
@@ -141,7 +174,7 @@
    "task": "طلبات الصوت وHiggsfield من تبويب التوليد",
    "zone": "publish",
    "x": 6.55,
-   "y": 2.8
+   "y": 2.0
   },
   {
    "id": "motion",
@@ -151,15 +184,26 @@
    "task": "طلبات «🎬 موشن» من الاستوديو",
    "zone": "publish",
    "x": 7.95,
-   "y": 2.8
+   "y": 2.0
+  },
+  {
+   "id": "designer",
+   "name": "المصمم",
+   "en": "Designer",
+   "zone": "visual",
+   "x": 0.15,
+   "y": 5.5,
+   "status": "working",
+   "task": "أغلفة الحلقات بالصور الحقيقية",
+   "head": true
   },
   {
    "id": "illustrator",
    "name": "الرسام",
    "en": "Illustrator",
    "zone": "visual",
-   "x": 0.15,
-   "y": 5.6,
+   "x": 1.55,
+   "y": 5.5,
    "status": "working",
    "task": "صور حقيقية (NASA/Commons) + رسم بالموشن المجاني · Higgsfield لـ GTA بس"
   },
@@ -168,20 +212,10 @@
    "name": "مهندس الصوت",
    "en": "Sound",
    "zone": "visual",
-   "x": 1.55,
-   "y": 5.6,
+   "x": 0.15,
+   "y": 6.8,
    "status": "idle",
    "task": "موسيقى ومؤثرات لكل فصل"
-  },
-  {
-   "id": "designer",
-   "name": "المصمم",
-   "en": "Designer",
-   "zone": "visual",
-   "x": 0.15,
-   "y": 7.6,
-   "status": "working",
-   "task": "أغلفة الحلقات بالصور الحقيقية"
   },
   {
    "zone": "visual",
@@ -189,7 +223,7 @@
    "name": "مخرج الإنفوجرافيك",
    "en": "HyperFrames",
    "x": 1.55,
-   "y": 7.6,
+   "y": 6.8,
    "status": "working",
    "task": "قالب «رقم اليوم» بـ HyperFrames (مجاني)"
   },
@@ -199,9 +233,20 @@
    "en": "Analyst",
    "zone": "growth",
    "x": 3.35,
-   "y": 5.6,
+   "y": 5.5,
    "status": "scheduled",
-   "task": "التقرير الأسبوعي · السبت"
+   "task": "التقرير الأسبوعي · السبت",
+   "head": true
+  },
+  {
+   "id": "monetization",
+   "name": "مدير الأرباح",
+   "en": "Monetization lead",
+   "status": "working",
+   "task": "الطريق لبرنامج الشركاء وفحص الأرباح",
+   "zone": "growth",
+   "x": 4.75,
+   "y": 5.5
   },
   {
    "id": "packager",
@@ -210,8 +255,8 @@
    "status": "working",
    "task": "العنوان والكفر والهوك قبل الإنتاج",
    "zone": "growth",
-   "x": 4.75,
-   "y": 5.6
+   "x": 3.35,
+   "y": 6.8
   },
   {
    "id": "trends",
@@ -220,8 +265,8 @@
    "status": "working",
    "task": "5 مواضيع ساخنة يومياً بمصدرين",
    "zone": "growth",
-   "x": 3.35,
-   "y": 7.6
+   "x": 4.75,
+   "y": 6.8
   },
   {
    "id": "seo",
@@ -230,8 +275,8 @@
    "status": "working",
    "task": "عناوين ووصف وهاشتاقات حسب البحث",
    "zone": "growth",
-   "x": 4.75,
-   "y": 7.6
+   "x": 3.35,
+   "y": 8.1
   },
   {
    "id": "community",
@@ -241,7 +286,8 @@
    "task": "مسودات الردود وأسئلة المتابعين",
    "zone": "community",
    "x": 6.55,
-   "y": 5.6
+   "y": 5.5,
+   "head": true
   },
   {
    "id": "localizer",
@@ -251,7 +297,7 @@
    "task": "ترجمة إنقليزية للحلقات والشورتات",
    "zone": "community",
    "x": 7.95,
-   "y": 5.6
+   "y": 5.5
   },
   {
    "zone": "community",
@@ -259,12 +305,17 @@
    "name": "مدرّس تعلّم كلود",
    "en": "Claude Tutor",
    "x": 6.55,
-   "y": 7.6,
+   "y": 6.8,
    "status": "working",
    "task": "دروس كلود: كل ادعاء من الصفحة الرسمية"
   }
  ],
  "feed": [
+  {
+   "t": "2026-11-28 12:30",
+   "k": "team",
+   "text": "المكتب صار منظم: رئيس لكل مكتب (★) و4 موظفين جدد: مدير العمليات، مدير الأرباح، أمين الأرشيف، مونتير الحلقات الطويلة"
+  },
   {
    "t": "2026-11-28 12:00",
    "k": "team",
