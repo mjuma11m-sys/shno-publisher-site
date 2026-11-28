@@ -45,13 +45,13 @@ async function isCron(req: Request): Promise<boolean> {
   return !!data?.key && data.key === k;
 }
 
-// content gate (CLAUDE.md «حياتي» rules): no launch date, countdown, «available now», store links or «يقرر».
-const BANNED = /يوم الإطلاق|موعد الإطلاق|تاريخ الإطلاق|عد تنازلي|نزل الحين|ينزل يوم|متوفر الحين|متوفر الآن|حمّل الحين|حمل الحين|حمّله الحين|باقي\s*\d+\s*(يوم|أيام|ساع)|apps\.apple\.com|play\.google\.com|يقرر|\d+\s*(يناير|فبراير|مارس|أبريل|ابريل|مايو|يونيو|يوليو|أغسطس|اغسطس|سبتمبر|أكتوبر|اكتوبر|نوفمبر|ديسمبر)|\b20\d\d\b/;
+// content gate (CLAUDE.md «حياتي» rules): the app is on the App Store; no launch date or countdown for any update,
+// no «يقرر» (we say «تقدير»), and screenshots carry «* لقطات ببيانات تجريبية».
+const BANNED = /يوم الإطلاق|موعد الإطلاق|تاريخ الإطلاق|عد تنازلي|ينزل يوم|قيد التطوير|نسخة تجريبية|باقي\s*\d+\s*(يوم|أيام|ساع)|يقرر|\d+\s*(يناير|فبراير|مارس|أبريل|ابريل|مايو|يونيو|يوليو|أغسطس|اغسطس|سبتمبر|أكتوبر|اكتوبر|نوفمبر|ديسمبر)|\b20\d\d\b/;
 function gate(caption: string): string | null {
   if (!caption || caption.length > 2200) return "الكابشن فاضي أو أطول من 2200 حرف";
   const m = caption.match(BANNED);
-  if (m) return `الكابشن فيه «${m[0]}» (ممنوع: تاريخ، عد تنازلي، «نزل/متوفر الحين»، رابط متجر، «يقرر»)`;
-  if (!caption.includes("قيد التطوير · نسخة تجريبية")) return "الكابشن ناقصه «قيد التطوير · نسخة تجريبية»";
+  if (m) return `الكابشن فيه «${m[0]}» (ممنوع: تاريخ، عد تنازلي، «يقرر»، و«قيد التطوير» لأن التطبيق على App Store)`;
   if (!caption.includes("* لقطات ببيانات تجريبية")) return "الكابشن ناقصه «* لقطات ببيانات تجريبية»";
   return null;
 }
@@ -135,15 +135,13 @@ async function run() {
   else if (today) log.push("already posted today");
   else if (now.min < SLOT_MIN) log.push("not yet 21:13");
   else {
-    const it = st.left[0];
-    if (!it) log.push("queue empty");
+    // first item that passes the content gate; failing ones stay in the queue (not skipped) until their caption is fixed
+    for (const x of st.left) { const b = gate(x.caption); if (b) log.push(`held ${x.id}: ${b}`); }
+    const it = st.left.find((x) => !gate(x.caption) && (x.asset || x.media));
+    if (!it) log.push("nothing publishable");
     else {
-      const bad = gate(it.caption);
-      const url = it.asset ? `${BASE}/media/${it.asset}` : it.media;
-      if (bad || !url) {
-        await admin.from("salfa_queue_flags").upsert({ item_id: it.id, flag: "skip", at: new Date().toISOString() });
-        log.push(`held ${it.id}: ${bad || "no media"}`);
-      } else {
+      const url = (it.asset ? `${BASE}/media/${it.asset}` : it.media) as string;
+      {
         const params: Record<string, string> = { media_type: "REELS", video_url: url, caption: it.caption, share_to_feed: "true", access_token: t };
         if (it.cover) params.cover_url = it.cover.startsWith("http") ? it.cover : `${BASE}/media/${it.cover}`;
         try {
@@ -165,7 +163,8 @@ async function status() {
   const { t, uid, row } = await token();
   const st = await queueState();
   return { connected: !!(t && uid), username: row?.username || null, expires_at: row?.expires_at || null, on: st.on,
-    next: st.left[0]?.id || null, left: st.left.length, posts: st.posts.slice(0, 15), slot: "21:13" };
+    next: st.left.find((x) => !gate(x.caption))?.id || null, left: st.left.length,
+    held: st.left.filter((x) => gate(x.caption)).map((x) => ({ id: x.id, why: gate(x.caption) })), posts: st.posts.slice(0, 15), slot: "21:13" };
 }
 
 Deno.serve(async (req) => {

@@ -157,7 +157,7 @@
    <details id="hys" hidden><summary class="hint">المتخطّاة</summary><ol id="hysl" class="aqlist" style="margin-top:8px"></ol></details>
    <details id="hyd" hidden><summary class="hint">اللي نزل</summary><ol id="hydl" class="aqlist" style="margin-top:8px"></ol></details></section>
   <section class="sbox" id="ig" data-tp="tp-hayati" style="display:grid;gap:10px"><h2>📸 إنستغرام مباشر (بدون Buffer)</h2>
-   <p class="hint">موقعنا ينشر ريل «حياتي» على إنستغرام بنفسه، من نفس الطابور فوق ونفس زر الإيقاف: ريل واحد باليوم الساعة 9:13 بالليل. يتأكد قبل النشر إن الكابشن ما فيه تاريخ أو «نزل الحين»، وفيه «قيد التطوير · نسخة تجريبية» و«* لقطات ببيانات تجريبية».</p>
+   <p class="hint">موقعنا ينشر ريل «حياتي» على إنستغرام بنفسه، من نفس الطابور فوق ونفس زر الإيقاف: ريل واحد باليوم الساعة 9:13 بالليل. يتأكد قبل النشر إن الكابشن ما فيه تاريخ أو عد تنازلي أو «قيد التطوير» (التطبيق على App Store)، وفيه «* لقطات ببيانات تجريبية». أي ريل كابشنه ما يمر يبقى بالطابور لين ينصلح.</p>
    <div class="aqstats" id="igstats"></div>
    <form id="igf" class="row" novalidate autocomplete="off" hidden><label class="f" style="flex:1 1 260px">رمز الدخول من صفحة مطوّري ميتا (تلصقه إنت، وما ينعرض مرة ثانية)<input type="password" id="igt" autocomplete="off" spellcheck="false" required></label><button class="btn2" type="submit" id="igc">اربط إنستغرام</button></form>
    <div class="row" id="igact" hidden><button class="btn3" type="button" id="igrun">شيّك الحين</button><button class="btn3" type="button" id="igout">فك الربط</button></div>
@@ -316,7 +316,7 @@ const IGST={published:"✅ نزل",processing:"⏳ إنستغرام يجهّزه
 async function loadIG(body){const m=$("igm");try{const r=await call(body||{action:"status"},IGFN);
  $("igf").hidden=r.connected;$("igact").hidden=!r.connected;
  $("igstats").innerHTML=r.connected?`<span>🔗 مربوط: <b>@${esc(r.username||"")}</b></span><span>📦 الجاي: <b>${esc(r.next||"—")}</b></span><span>⏰ ${esc(r.slot)}</span>${r.on?"":"<span>⏸ موقّف</span>"}`:'<span>🔌 مو مربوط بعد</span>';
- $("igl").innerHTML=(r.posts||[]).map(p=>`<li><div><b>${esc(p.item_id||"")}</b> · ${IGST[p.status]||esc(p.status)}${p.permalink?` · <a href="${esc(p.permalink)}" target="_blank" rel="noopener">افتح</a>`:""}${p.error?`<div class="hint">${esc(p.error)}</div>`:""}</div>${p.status==="failed"?`<button class="btn3" type="button" data-igr="${esc(p.item_id)}">جرّب مرة ثانية</button>`:""}</li>`).join("");
+ $("igl").innerHTML=(r.held||[]).map(x=>`<li><div><b>${esc(x.id)}</b> · ⛔ موقوف<div class="hint">${esc(x.why)}</div></div></li>`).join("")+(r.posts||[]).map(p=>`<li><div><b>${esc(p.item_id||"")}</b> · ${IGST[p.status]||esc(p.status)}${p.permalink?` · <a href="${esc(p.permalink)}" target="_blank" rel="noopener">افتح</a>`:""}${p.error?`<div class="hint">${esc(p.error)}</div>`:""}</div>${p.status==="failed"?`<button class="btn3" type="button" data-igr="${esc(p.item_id)}">جرّب مرة ثانية</button>`:""}</li>`).join("");
  document.querySelectorAll("#ig [data-igr]").forEach(b=>b.addEventListener("click",()=>{b.disabled=true;loadIG({action:"retry",id:b.dataset.igr})}));
  if(body&&body.action==="run"){m.className="msg ok";m.textContent=(r.log||[]).join(" · ")||"ما في شي ينتظر"}else if(body){m.className="msg ok";m.textContent="تم"}}
  catch(e){m.className="msg err";m.textContent=e.message}}
