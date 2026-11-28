@@ -1,4 +1,7 @@
 <style>
+@media (max-width:600px){.tag3:not(.sel):not(:hover):not(:focus-visible){font-size:0;padding:5px;gap:0}}
+.roster{display:grid;gap:10px;margin-top:12px;padding:0 18px 18px}.roster h4{margin:0 0 4px;font-size:.9rem;display:flex;align-items:center;gap:8px}.roster h4 i{width:10px;height:10px;border-radius:3px;display:inline-block}.roster .rw{display:flex;flex-wrap:wrap;gap:6px}.roster button{font:inherit;font-size:.85rem;background:var(--bg2);color:var(--fg);border:1px solid var(--line);border-radius:999px;padding:4px 12px;cursor:pointer}.roster button:hover,.roster button[aria-pressed="true"]{border-color:var(--ac);color:var(--ac)}.roster button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+
 .office{display:grid;grid-template-columns:1fr;gap:18px;padding-block:24px 8px}
 .stage3d{position:relative;height:min(72vh,720px);min-height:460px;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:#0b1222;touch-action:none}
 .stage3d canvas{display:block;width:100%;height:100%;cursor:grab}
@@ -54,6 +57,7 @@
   <div class="toast" id="toast" aria-live="polite"></div>
   <div class="hint3">اسحب للف · كبّر بالعجلة أو بإصبعين · اضغط على أي موظف</div>
  </div>
+ <div id="roster" class="roster"></div>
  <aside class="side">
   <div class="panel" id="agent"></div>
   <div class="panel"><h3>القناة <span class="pill" id="upd"></span></h3><div class="kpis" id="kpis"></div></div>
@@ -159,7 +163,7 @@ D0.agents.forEach((a,i)=>{
  const rec={a,g,p,armL,armR,head,bc,tg,phase:Math.random()*6};agents.push(rec);
  g.traverse(o=>{if(o.isMesh)o.userData.rec=rec});clickables.push(g);
  tg.addEventListener("click",()=>select(rec));
-});
+});roster();
 // walker (كلود كروم carries videos between production and publish)
 const chromeRec=agents.find(r=>r.a.id==="chrome");
 const walker=new THREE.Group();scene.add(walker);
@@ -183,6 +187,9 @@ cv.addEventListener("wheel",e=>{e.preventDefault();rad=Math.min(56,Math.max(14,r
 const ray=new THREE.Raycaster(),mv=new THREE.Vector2();
 function pick(e){const r=cv.getBoundingClientRect();mv.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(mv,cam);const hit=ray.intersectObjects(clickables,true)[0];if(hit&&hit.object.userData.rec)select(hit.object.userData.rec)}
 let selected=null;
+function roster(){const D=window.OFFICE,R=document.getElementById("roster");if(!R||!agents.length)return;
+ R.innerHTML='<h3 style="margin:0;font-size:1rem">كل الموظفين حسب المكتب</h3>'+D.zones.map(z=>`<div><h4><i style="background:${z.color}"></i>${z.name}</h4><div class="rw">${D.agents.filter(a=>a.zone===z.id).map(a=>`<button type="button" data-id="${a.id}">${a.head?"★ ":""}${a.name}</button>`).join("")}</div></div>`).join("");
+ R.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{const rec=agents.find(r=>r.a.id===b.dataset.id);if(!rec)return;R.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));select(rec);document.getElementById("agent").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"nearest"})}))}
 function select(rec){selected=rec;agents.forEach(r=>r.tg.classList.toggle("sel",r===rec));show(rec.a,window.OFFICE);target.set(rec.g.position.x,0.8,rec.g.position.z);rad=Math.min(rad,22);auto=false}
 document.getElementById("tour").addEventListener("click",()=>{tour=true;auto=false;tourT=0});
 // toasts from real feed (no invented events)

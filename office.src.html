@@ -1,4 +1,6 @@
 <style>
+.roster{display:grid;gap:10px;margin-top:12px;padding:0 18px 18px}.roster h4{margin:0 0 4px;font-size:.9rem;display:flex;align-items:center;gap:8px}.roster h4 i{width:10px;height:10px;border-radius:3px;display:inline-block}.roster .rw{display:flex;flex-wrap:wrap;gap:6px}.roster button{font:inherit;font-size:.85rem;background:var(--bg2);color:var(--fg);border:1px solid var(--line);border-radius:999px;padding:4px 12px;cursor:pointer}.roster button:hover,.roster button[aria-pressed="true"]{border-color:var(--ac);color:var(--ac)}.roster button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+
 .office{display:grid;grid-template-columns:1fr;gap:18px;padding-block:24px 8px}
 .stage{position:relative;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(180deg,#0f1930 0%,#0b1222 60%);min-width:0}
 .stage-top{position:absolute;inset-inline:0;top:0;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;z-index:2;pointer-events:none}
@@ -48,6 +50,7 @@
   <div class="stage-top"><h2>مكتب سالفة ستوديو<small>فريق وكلاء الذكاء الاصطناعي حق قناة «شنو السالفة؟»</small></h2>
    <div class="chips"><span class="chip2 live"><i></i><span id="working"></span></span><span class="chip2" id="clock"></span></div></div>
   <svg id="iso" viewBox="20 40 1360 900" role="group" aria-label="مخطط المكتب وفريق الوكلاء"></svg>
+  <div id="roster" class="roster"></div>
   <div class="hint">اضغط على أي موظف تشوف شغله</div>
  </div>
  <aside class="side">
@@ -141,13 +144,12 @@ function desk(a,i,D,zc){
  // person in front of the desk, back to the viewer
  const pc=iso(x+w/2-0.1,y+d+0.32);person(g,pc[0],pc[1],a,i,zc);
  // name tag
- const T=iso(x+w/2,y+0.2,118);const tg=el("g",{class:"tag",filter:"url(#lift)"},g);
- const nm=(a.head?"★ ":"")+a.name,cw=Math.max(118,nm.length*14+46),ch=44,cx=T[0]-cw/2,cy=T[1]-ch;
+ const T=iso(x+w/2,y+0.2,(i%2)?96:124);const tg=el("g",{class:"tag",filter:"url(#lift)"},g);
+ const nm=(a.head?"★ ":"")+a.name,cw=Math.max(84,nm.length*9.6+34),ch=28,cx=T[0]-cw/2,cy=T[1]-ch;
  el("rect",{class:"bg",x:cx,y:cy,width:cw,height:ch,rx:12,fill:"#ffffff",stroke:"#e4e7ec","stroke-width":1},tg);
- el("rect",{x:cx,y:cy,width:6,height:ch,rx:3,fill:zc},tg);
- el("circle",{class:"sdot",cx:cx+18,cy:cy+15,r:5.5,fill:ST[a.status][1]},tg);
- el("text",{x:cx+cw/2+6,y:cy+20,fill:"#0b1222","font-family":"Tajawal","font-weight":"900","font-size":"16","text-anchor":"middle"},tg).textContent=nm;
- el("text",{x:cx+cw/2+6,y:cy+36,fill:"#64748b","font-family":"IBM Plex Sans Arabic","font-size":"11","text-anchor":"middle"},tg).textContent=ST[a.status][0];
+ el("rect",{x:cx,y:cy,width:5,height:ch,rx:3,fill:zc},tg);
+ el("circle",{class:"sdot",cx:cx+15,cy:cy+14,r:4.5,fill:ST[a.status][1]},tg);
+ el("text",{x:cx+cw/2+6,y:cy+19,fill:"#0b1222","font-family":"Tajawal","font-weight":"900","font-size":"13","text-anchor":"middle"},tg).textContent=nm;
  el("polygon",{points:P([[T[0]-7,T[1]],[T[0]+7,T[1]],[T[0],T[1]+8]]),fill:"#fff"},tg);
  const pick=()=>{document.querySelectorAll(".desk.sel").forEach(n=>n.classList.remove("sel"));g.classList.add("sel");show(a,D,zc)};
  g.addEventListener("click",pick);g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick()}});
@@ -169,6 +171,8 @@ function render(D){
  [[9.5,0.4],[0.5,9.5],[9.5,9.5],[4.95,4.95]].forEach(p=>items.push({k:p[0]+p[1],f:()=>plant(p[0],p[1])}));
  items.sort((a,b)=>a.k-b.k).forEach(it=>it.f());
  intro(D);
+ const R=document.getElementById("roster");R.innerHTML='<h3 style="margin:0;font-size:1rem">كل الموظفين حسب المكتب</h3>'+D.zones.map(z=>`<div><h4><i style="background:${z.color}"></i>${z.name}</h4><div class="rw">${D.agents.filter(a=>a.zone===z.id).map(a=>`<button type="button" data-id="${a.id}" aria-pressed="false">${a.head?"★ ":""}${a.name}</button>`).join("")}</div></div>`).join("");
+ R.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{const a=D.agents.find(x=>x.id===b.dataset.id);if(!a)return;R.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");document.querySelectorAll(".desk.sel").forEach(n=>n.classList.remove("sel"));const g=[...document.querySelectorAll(".desk")].find(n=>(n.getAttribute("aria-label")||"").startsWith(a.name+":"));if(g)g.classList.add("sel");show(a,D,zc[a.zone]||"#888");document.getElementById("agent").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"nearest"})}));
  document.getElementById("working").textContent=D.agents.filter(a=>a.status==="working").length+" يشتغلون الحين";
  const s=D.stats;document.getElementById("kpis").innerHTML=[[s.subscribers,"مشترك يوتيوب"],[s.views.toLocaleString("en"),"مشاهدة يوتيوب"],[s.videos,"فيديو منشور"],[(s.tiktok_views_7d/1000).toFixed(1)+"K","تيك توك · 7 أيام"]].map(k=>`<div class="kpi"><b>${k[0]}</b><span>${k[1]}</span></div>`).join("");
  document.getElementById("upd").textContent="تحديث "+D.updated.slice(5,10).split("-").reverse().join("/");
