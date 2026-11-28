@@ -19,6 +19,7 @@ page("en.html", "Salfa Studio · About in English", "Salfa Studio is the in-hous
 page("advertise.html", "أعلن معنا · شنو السالفة؟", "الإعلان والرعاية في قناة «شنو السالفة؟» على يوتيوب وتيك توك: الأرقام المباشرة، طرق التعاون، وشروطنا.", open("advertise.src.html").read())
 page("contact.html", "تواصل معنا · شنو السالفة؟", "تواصل مع قناة «شنو السالفة؟»: تصحيح معلومة، سؤال، أو فكرة حلقة.", open("contact.src.html").read())
 page("ideas.html", "أفكار الحلقات · شنو السالفة؟", "اقترح موضوع حلقة لقناة «شنو السالفة؟» وصوّت للأفكار اللي تعجبك.", open("ideas.src.html").read(), nav="ideas.html")
+page("support.html", "ادعمنا · شنو السالفة؟", "شلون تدعم قناة «شنو السالفة؟» البحرينية: اشترك، شارك، علّق، واقترح مواضيع.", open("support.src.html").read(), nav="about.html")
 stamp_index()
 print("pages built")
 page("studio.html", "النشر · Salfa Studio", "صفحة صاحب قناة «شنو السالفة؟» لنشر فيديوهات القناة على يوتيوب وتيك توك بعد مراجعتها.",

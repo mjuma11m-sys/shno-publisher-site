@@ -62,6 +62,7 @@
     <button type="button" class="sbox" data-go="tp-post" style="padding:10px 12px;text-align:start;color:inherit;font:inherit;cursor:pointer"><b id="td-next" style="font-size:1.1em;display:block;line-height:1.6">—</b><span class="hint">النشر الجاي · 8:43 بالليل</span></button>
    </div>
    <form id="ttf" class="row" novalidate style="align-items:end;gap:10px"><label class="f" style="flex:1 1 180px">متابعين تيك توك (من TikTok Studio)<input type="text" inputmode="numeric" id="tt-f" placeholder="مثلاً 250" autocomplete="off"></label><button class="btn3" type="submit">احفظ</button><span class="hint" id="tt-m" role="status"></span></form>
+   <form id="ytmf" class="row" novalidate style="align-items:end;gap:10px;margin-top:8px"><label class="f" style="flex:1 1 160px">ساعات المشاهدة · آخر 365 يوم (YouTube Studio ← Analytics)<input type="text" inputmode="numeric" id="yt-wh" placeholder="مثلاً 120" autocomplete="off"></label><label class="f" style="flex:1 1 160px">مشاهدات الشورتس · آخر 90 يوم<input type="text" inputmode="numeric" id="yt-sv" placeholder="مثلاً 30000" autocomplete="off"></label><button class="btn3" type="submit">احفظ</button><span class="hint" id="yt-m" role="status"></span></form>
   </div>
   <div class="tabs3" role="tablist" aria-label="أقسام صفحة النشر">
    <button type="button" role="tab" data-t="tp-post" aria-selected="true">النشر</button>
@@ -300,10 +301,13 @@ document.querySelectorAll("#today [data-go]").forEach(b=>b.addEventListener("cli
 fetch("https://frowdhbazytcmwhrlnmv.supabase.co/functions/v1/salfa-live",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.youtube)$("td-subs").textContent=Number(d.youtube.subs).toLocaleString("en-US");else return fetch("data/dashboard.json").then(r=>r.json()).then(x=>{$("td-subs").textContent=x.channel.subscribers})}).catch(()=>{});
 setInterval(renderToday,1500);
 // TikTok followers typed in by hand (until the TikTok stats API is connected) -> dashboard + live card
-function loadManual(){call({action:"manual"},QFN).then(r=>{const f=(r.manual||[]).find(x=>x.key==="tiktok_followers");if(f){$("tt-f").value=f.value;$("tt-m").textContent="آخر تحديث "+new Date(f.at).toLocaleDateString("ar-BH",{day:"numeric",month:"short"})}}).catch(()=>{});}
+function loadManual(){call({action:"manual"},QFN).then(r=>{const g=k=>(r.manual||[]).find(x=>x.key===k);const wh=g("yt_watch_hours"),sv=g("yt_shorts_views_90d");if(wh)$("yt-wh").value=wh.value;if(sv)$("yt-sv").value=sv.value;if(wh||sv)$("yt-m").textContent="الهدف: 4000 ساعة أو 10 مليون مشاهدة شورتس";const f=g("tiktok_followers");if(f){$("tt-f").value=f.value;$("tt-m").textContent="آخر تحديث "+new Date(f.at).toLocaleDateString("ar-BH",{day:"numeric",month:"short"})}}).catch(()=>{});}
 $("ttf").addEventListener("submit",async e=>{e.preventDefault();const v=$("tt-f").value.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[,\s٬،.]/g,"");
  if(!/^\d{1,9}$/.test(v)){$("tt-m").textContent="اكتب رقم بس";return}
  try{await call({action:"manual_set",key:"tiktok_followers",value:+v},QFN);$("tt-m").textContent="انحفظ ✓ يطلع بلوحة التحكم"}catch(x){$("tt-m").textContent=x.message}});
+$("ytmf").addEventListener("submit",async e=>{e.preventDefault();const n=s=>s.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[,\s٬،.]/g,"");const a=n($("yt-wh").value),b=n($("yt-sv").value);
+ if((a&&!/^\d{1,9}$/.test(a))||(b&&!/^\d{1,9}$/.test(b))||(!a&&!b)){$("yt-m").textContent="اكتب رقم بس";return}
+ try{if(a)await call({action:"manual_set",key:"yt_watch_hours",value:+a},QFN);if(b)await call({action:"manual_set",key:"yt_shorts_views_90d",value:+b},QFN);$("yt-m").textContent="انحفظ ✓ مدير الأرباح يحسب منه كل سبت"}catch(x){$("yt-m").textContent=x.message}});
 function thumb(u){const m=u.match(/^(https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/)(thumb\/)?([0-9a-f]\/[0-9a-f]{2}\/)([^/]+)(\/[^/]+)?$/);return m?`${m[1]}thumb/${m[3]}${m[4]}/330px-${m[4]}`:u}
 async function loadHeld(){let r;try{r=await call({action:"held"},QFN)}catch(e){return}
  if(!r.held.length){$("hp").hidden=true;return}$("hp").hidden=false;
