@@ -134,11 +134,17 @@
   </form>
   <section class="sbox" id="hy" data-tp="tp-hayati" style="display:grid;gap:10px"><h2>📱 «حياتي»: النشر التلقائي</h2>
    <label class="row" style="gap:10px;align-items:center"><input type="checkbox" id="hyauto" style="width:22px;height:22px"> <b id="hyautot">…</b></label>
-   <p class="hint">كل يوم الساعة 9:13 بالليل (بالبحرين) ينزل ريل واحد من هالطابور، على الحسابات المربوطة بـ Buffer: إنستغرام hayati.bh وتيك توك حياتي (لما ينربطون)، ويوتيوب شورتس على «شنو السالفة؟» ومعاه «إعلان» بالوصف. ما ينزل أي كابشن فيه تاريخ أو «نزل»، ولازم يكون فيه «قيد التطوير · نسخة تجريبية». «قدّمه» يخليه الجاي، و«تخطّى» يشيله.</p>
+   <p class="hint">كل يوم الساعة 9:13 بالليل (بالبحرين) ينزل ريل واحد من هالطابور، إنستغرام hayati.bh مباشر من موقعنا (الصندوق تحت)، وتيك توك حياتي بـ Buffer (لما ينربط)، ويوتيوب شورتس على «شنو السالفة؟» ومعاه «إعلان» بالوصف. ما ينزل أي كابشن فيه تاريخ أو «نزل»، ولازم يكون فيه «قيد التطوير · نسخة تجريبية». «قدّمه» يخليه الجاي، و«تخطّى» يشيله.</p>
    <div class="aqstats" id="hystats"></div>
    <ol id="hyl" class="aqlist"></ol><p class="msg" id="hym" role="status"></p>
    <details id="hys" hidden><summary class="hint">المتخطّاة</summary><ol id="hysl" class="aqlist" style="margin-top:8px"></ol></details>
    <details id="hyd" hidden><summary class="hint">اللي نزل</summary><ol id="hydl" class="aqlist" style="margin-top:8px"></ol></details></section>
+  <section class="sbox" id="ig" data-tp="tp-hayati" style="display:grid;gap:10px"><h2>📸 إنستغرام مباشر (بدون Buffer)</h2>
+   <p class="hint">موقعنا ينشر ريل «حياتي» على إنستغرام بنفسه، من نفس الطابور فوق ونفس زر الإيقاف: ريل واحد باليوم الساعة 9:13 بالليل. يتأكد قبل النشر إن الكابشن ما فيه تاريخ أو «نزل الحين»، وفيه «قيد التطوير · نسخة تجريبية» و«* لقطات ببيانات تجريبية».</p>
+   <div class="aqstats" id="igstats"></div>
+   <form id="igf" class="row" novalidate autocomplete="off" hidden><label class="f" style="flex:1 1 260px">رمز الدخول من صفحة مطوّري ميتا (تلصقه إنت، وما ينعرض مرة ثانية)<input type="password" id="igt" autocomplete="off" spellcheck="false" required></label><button class="btn2" type="submit" id="igc">اربط إنستغرام</button></form>
+   <div class="row" id="igact" hidden><button class="btn3" type="button" id="igrun">شيّك الحين</button><button class="btn3" type="button" id="igout">فك الربط</button></div>
+   <ol id="igl" class="aqlist"></ol><p class="msg" id="igm" role="status"></p></section>
   <section class="sbox" data-tp="tp-gen" style="display:grid;gap:12px"><h2>التوليد</h2>
    <p class="hint">اكتب شنو تبي، وكلود يسويه بالدفعة الجاية (مع النشر اليومي الساعة 8:43 بالليل، أو أسرع لو قلت له «سوّ طلبات التوليد»). اللي يخلص يطلع هني برابط.</p>
    <form id="gf" style="display:grid;gap:10px">
@@ -288,6 +294,18 @@ async function loadHY(body){const m=$("hym");try{const r=await call(body||{actio
  document.querySelectorAll("#hy [data-hq]").forEach(b=>b.addEventListener("click",async()=>{b.disabled=true;await loadHY({action:"hayati_flag",id:b.dataset.hq,flag:b.dataset.f||null});if(m.className!=="msg err"){m.className="msg ok";m.textContent=b.dataset.f==="next"?"بينزل بالنشر الجاي":b.dataset.f==="skip"?"انشال من النشر التلقائي":"رجع لمكانه"}}))}
  catch(e){m.className="msg err";m.textContent=e.message}}
 $("hyauto").addEventListener("change",async ev=>{const on=ev.target.checked;ev.target.disabled=true;await loadHY({action:"hayati_auto",on});ev.target.disabled=false;const m=$("hym");if(m.className!=="msg err"){m.className="msg ok";m.textContent=on?"النشر التلقائي لحياتي رجع يشتغل":"وقّفنا النشر التلقائي لحياتي لين ترجّعه"}});
+const IGFN="https://frowdhbazytcmwhrlnmv.supabase.co/functions/v1/salfa-instagram";
+const IGST={published:"✅ نزل",processing:"⏳ إنستغرام يجهّزه",failed:"⚠️ ما نزل",queued:"بالانتظار",cancelled:"انلغى"};
+async function loadIG(body){const m=$("igm");try{const r=await call(body||{action:"status"},IGFN);
+ $("igf").hidden=r.connected;$("igact").hidden=!r.connected;
+ $("igstats").innerHTML=r.connected?`<span>🔗 مربوط: <b>@${esc(r.username||"")}</b></span><span>📦 الجاي: <b>${esc(r.next||"—")}</b></span><span>⏰ ${esc(r.slot)}</span>${r.on?"":"<span>⏸ موقّف</span>"}`:'<span>🔌 مو مربوط بعد</span>';
+ $("igl").innerHTML=(r.posts||[]).map(p=>`<li><div><b>${esc(p.item_id||"")}</b> · ${IGST[p.status]||esc(p.status)}${p.permalink?` · <a href="${esc(p.permalink)}" target="_blank" rel="noopener">افتح</a>`:""}${p.error?`<div class="hint">${esc(p.error)}</div>`:""}</div>${p.status==="failed"?`<button class="btn3" type="button" data-igr="${esc(p.item_id)}">جرّب مرة ثانية</button>`:""}</li>`).join("");
+ document.querySelectorAll("#ig [data-igr]").forEach(b=>b.addEventListener("click",()=>{b.disabled=true;loadIG({action:"retry",id:b.dataset.igr})}));
+ if(body&&body.action==="run"){m.className="msg ok";m.textContent=(r.log||[]).join(" · ")||"ما في شي ينتظر"}else if(body){m.className="msg ok";m.textContent="تم"}}
+ catch(e){m.className="msg err";m.textContent=e.message}}
+$("igf").addEventListener("submit",async ev=>{ev.preventDefault();const t=$("igt").value.trim();if(!t)return;$("igc").disabled=true;await loadIG({action:"connect",token:t});$("igt").value="";$("igc").disabled=false;await loadIG()});
+$("igrun").addEventListener("click",()=>loadIG({action:"run"}));
+$("igout").addEventListener("click",async()=>{const b=$("igout");if(b.dataset.c!=="1"){b.dataset.c="1";b.textContent="متأكد؟ اضغط مرة ثانية";return}b.dataset.c="";b.textContent="فك الربط";await loadIG({action:"disconnect"});await loadIG()});
 async function loadAQ(body){const m=$("aqm");try{const r=await call(body||{action:"list"},QFN);$("aq").hidden=false;
  $("aqauto").checked=r.auto!==false;$("aqautot").textContent=r.auto!==false?"النشر التلقائي شغّال":"النشر التلقائي موقّف ⏸";
  const sch=r.scheduled||[];$("aqsch").hidden=!sch.length;$("aqschl").innerHTML=sch.map((x,i)=>aqRow(x,i,"date")).join("");
@@ -370,11 +388,11 @@ async function loadHeld(){let r;try{r=await call({action:"held"},QFN)}catch(e){r
   b.disabled=true;m.className="msg";m.textContent="جاري الرفع…";
   try{const u=await call({action:"photo_url",id:h.id,type:f.type},QFN);const {error}=await SB.storage.from("salfa-photos").uploadToSignedUrl(u.path,u.token,f,{contentType:f.type});if(error)throw error;
    await call({action:"photo_done",id:h.id,path:u.path,credit:cr},QFN);m.className="msg ok";m.textContent="انرفعت ✓ النشر اليومي بيسوي الفيديو";loadHeld()}catch(e){m.className="msg err";m.textContent=e.message||"ما انرفعت"}finally{b.disabled=false}}))}
-async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="هالصفحة لصاحب القناة بس"&&getTS()){try{localStorage.removeItem("salfa_session")}catch(x){}boot();return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;$("nick").textContent="شنو السالفة؟";$("av").innerHTML='<img src="assets/icon-96.png" alt="">';loadTI();loadBuffer();loadAQ();loadHY();loadGen();loadComments();loadManual();loadHeld();loadInbox();loadIdeas();loadHits();loadAdmins();return}$("gerr").textContent=e.message;return}
+async function load(){$("gerr").textContent="";$("conn").hidden=true;$("setup").hidden=true;try{S=await call({action:"state"})}catch(e){if(e.message==="SETUP"){$("setup").hidden=false;$("f").hidden=true;$("miss").innerHTML=(e.missing||[]).map(k=>`<li><code>${esc(k)}</code></li>`).join("");return}if(e.message==="هالصفحة لصاحب القناة بس"&&getTS()){try{localStorage.removeItem("salfa_session")}catch(x){}boot();return}if(e.message==="NOT_CONNECTED"){$("conn").hidden=false;$("f").hidden=true;$("nick").textContent="شنو السالفة؟";$("av").innerHTML='<img src="assets/icon-96.png" alt="">';loadTI();loadBuffer();loadAQ();loadHY();loadIG();loadGen();loadComments();loadManual();loadHeld();loadInbox();loadIdeas();loadHits();loadAdmins();return}$("gerr").textContent=e.message;return}
  const c=S.creator;$("nick").textContent=c.creator_nickname||"";$("user").textContent=c.creator_username?"@"+c.creator_username:"";
  $("av").innerHTML=c.creator_avatar_url?`<img src="${esc(c.creator_avatar_url)}" alt="">`:"؟";
  let locked=false;for(const k of ["comment","duet","stitch"]){const d=!!c[k+"_disabled"];$("c-"+k).disabled=d;$("t-"+k).setAttribute("aria-disabled",d);locked=locked||d}$("lockhint").hidden=!locked;
- renderHistory(S.history||[]);loadTI();loadBuffer();loadAQ();loadHY();loadComments();loadManual();loadHeld();loadAdmins();loadInbox();loadIdeas();loadHits();$("dr").hidden=!S.drafts;show()}
+ renderHistory(S.history||[]);loadTI();loadBuffer();loadAQ();loadHY();loadIG();loadComments();loadManual();loadHeld();loadAdmins();loadInbox();loadIdeas();loadHits();$("dr").hidden=!S.drafts;show()}
 async function startTT(errEl){const a=new Uint8Array(24);crypto.getRandomValues(a);const st="studio-"+Array.from(a,b=>"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b%62]).join("");
  try{sessionStorage.setItem("tt_state",st)}catch(e){}try{const j=await call({action:"auth_url",state:st});location.href=j.url}catch(e){errEl.className="msg err";errEl.textContent=e.message==="SETUP"?"الإعداد ما خلص: ناقص "+(e.missing||[]).join("، "):e.message}}
 // supabase-js runs onAuthStateChange callbacks while it holds its auth lock: awaiting any SB.auth call inside one
