@@ -1,4 +1,11 @@
 <style>
+.aqstats{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}.aqstats span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:.88rem}.aqstats b{color:var(--ac)}
+.aqlist{list-style:none;margin:0;padding:0;display:grid;gap:8px}.aqlist li{display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:10px 12px;min-width:0}
+.aqlist .when{display:grid;place-items:center;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 4px;line-height:1.25}.aqlist .when b{font:900 1.15rem "Tajawal",sans-serif;color:var(--ac)}.aqlist .when small{font-size:.72rem;color:var(--mut)}
+.aqlist .what{min-width:0;display:grid;gap:6px}.aqlist .what .cap{overflow-wrap:anywhere}.aqlist .what .acts{display:flex;flex-wrap:wrap;gap:6px}
+.aqlist [hidden]{display:none!important}
+@media (max-width:520px){.aqlist li{grid-template-columns:70px 1fr}}
+
 .st [hidden]{display:none!important}
 .st{padding-block:28px 8px;display:grid;gap:18px}
 .st h1{margin:0;font:900 clamp(1.6rem,3vw,2.2rem)/1.2 "Tajawal",sans-serif}
@@ -87,13 +94,13 @@
     <div class="row"><button class="btn2" type="button" id="bgo">انشر الحين</button><span class="msg" id="bmsg" role="status"></span></div>
     <ul id="bhist" class="hint" style="margin:0;padding-inline-start:18px;line-height:1.9"></ul>
    </div></div>
-  <div class="sbox" id="aq" data-tp="tp-post" hidden><h2>النشر التلقائي الجاي</h2>
+  <div class="sbox" id="aq" data-tp="tp-post" hidden><h2>🗓️ جدول النشر</h2><div class="aqstats" id="aqstats"></div>
    <label class="row" style="gap:10px;align-items:center;margin:4px 0 6px"><input type="checkbox" id="aqauto" style="width:22px;height:22px"> <b id="aqautot">النشر التلقائي شغّال</b></label>
-   <p class="hint">كل يوم الساعة 8:43 بالليل (بتوقيت البحرين) ينزل فيديو واحد على تيك توك (ويوتيوب إذا مسموح). «بكرة» يقدّمه للنشر الجاي، «📅 جدول» يحدد له يوم، و«تخطّى» يشيله من النشر التلقائي. لو طفّيت النشر التلقائي، ما ينزل شي لين ترجّعه.</p>
-   <div id="aqsch" hidden><h3 style="margin:10px 0 4px;font-size:1rem">📅 المجدولة</h3><ol id="aqschl" style="margin:0;padding-inline-start:22px;display:grid;gap:8px"></ol></div>
-   <h3 style="margin:10px 0 4px;font-size:1rem">بالدور</h3>
-   <ol id="aql" style="margin:0;padding-inline-start:22px;display:grid;gap:8px"></ol><p class="msg" id="aqm" role="status"></p>
-   <details id="aqs" hidden><summary class="hint">المتخطّاة</summary><ul id="aqsl" style="margin:8px 0 0;padding-inline-start:20px;display:grid;gap:6px"></ul></details></div>
+   <p class="hint">كل شورت تحت عنده موعد نشره. كل يوم ينزل شورتين من الطابور (11:47 الصبح و8:43 بالليل)، وفوقهم شورت جديد من الطيار الآلي (2:41 الظهر)، على تيك توك ويوتيوب. «قدّمه» يخليه الجاي، «📅» يثبّت له يوم، و«تخطّى» يشيله. لو طفّيت النشر التلقائي، ما ينزل شي لين ترجّعه.</p>
+   <div id="aqsch" hidden><h3 style="margin:10px 0 4px;font-size:1rem">📅 المجدولة</h3><ol id="aqschl" class="aqlist"></ol></div>
+   <h3 style="margin:10px 0 4px;font-size:1rem">الجاي بالترتيب</h3>
+   <ol id="aql" class="aqlist"></ol><p class="msg" id="aqm" role="status"></p>
+   <details id="aqs" hidden><summary class="hint">المتخطّاة</summary><ol id="aqsl" class="aqlist" style="margin-top:8px"></ol></details></div>
   <div class="sbox" id="ti" data-tp="tp-post" hidden><h2>📡 رادار الفريق</h2>
    <p class="hint" id="tirules"></p>
    <details id="titr" hidden><summary><b id="tid"></b></summary><pre id="titx" dir="auto" style="white-space:pre-wrap;font:inherit;font-size:.9rem;margin:8px 0 0;max-height:420px;overflow:auto"></pre></details>
@@ -249,14 +256,22 @@ async function loadTI(){try{const r=await fetch("data/team-intel.json",{cache:"n
  if(TI.trend){$("titr").hidden=false;$("tid").textContent="مواضيع اليوم · "+TI.trend.date;$("titx").textContent=TI.trend.text+(TI.trend.package?"\n\n— التغليف —\n"+TI.trend.package:"")}else $("tinone").hidden=false;
  if($("aql").children.length)loadAQ()}catch(e){}}
 function scoreTag(id){const s=TI&&TI.scores&&TI.scores[id];if(!s)return"";return ` <span class="hint" title="${esc(s.tip||"تقدير من أرقامنا")}">${s.weak?"⚠️":"✅"} ${s.pred}%${s.weak&&s.tip?" · "+esc(s.tip):""}</span>`}
-function aqRow(x,i){const tag=x.flag==="next"?' <span class="tc" style="background:var(--ac);color:#1a1300">بكرة</span>':x.flag==="date"?` <span class="tc" style="background:var(--ac);color:#1a1300">${esc(fmtDue(x.due))}</span>`:(i===0?' <span class="hint">(الليلة/بكرة)</span>':"");
- const b=x.flag==="skip"?`<button class="btn3" type="button" data-q="${esc(x.id)}" data-f="">رجّعه</button>`:(x.flag==="next"||x.flag==="date")?`<button class="btn3" type="button" data-q="${esc(x.id)}" data-f="">إلغاء</button>`:`<button class="btn3" type="button" data-q="${esc(x.id)}" data-f="next">بكرة</button><button class="btn3" type="button" data-d="${esc(x.id)}">📅 جدول</button><button class="btn3" type="button" data-q="${esc(x.id)}" data-f="skip">تخطّى</button>`;
- return `<li><div class="row" style="justify-content:space-between;gap:8px"><span style="min-width:0;flex:1 1 220px"><b>${esc(x.id)}</b> · ${esc(x.caption.slice(0,70))}${tag}${scoreTag(x.id)}</span><span class="row" style="gap:6px">${b}</span></div><div class="row" data-dp="${esc(x.id)}" hidden style="gap:6px;margin-top:6px"><input type="date" min="${bhDay(1)}" max="${bhDay(90)}" value="${bhDay(1)}" aria-label="يوم النشر"><button class="btn2" type="button" data-ds="${esc(x.id)}">ثبّت اليوم</button></div></li>`}
+const SLOTS=[[11,47,"الصبح"],[20,43,"بالليل"]];
+function slotAt(n){const now=new Date(Date.now()+3*36e5);let d=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate())),k=0;const mins=now.getUTCHours()*60+now.getUTCMinutes();
+ while(k<SLOTS.length&&SLOTS[k][0]*60+SLOTS[k][1]<=mins)k++;let left=n;while(true){if(k>=SLOTS.length){k=0;d=new Date(d.getTime()+864e5)}if(left===0)break;left--;k++}return{d,label:SLOTS[k][2]}}
+function whenBox(x,i,mode){const f=(d,o)=>d.toLocaleDateString("ar-BH",Object.assign({timeZone:"UTC"},o));let d,lab;
+ if(x.flag==="date"){d=new Date(x.due+"T12:00:00Z");lab="مثبّت"}else if(mode==="skip"){return '<div class="when"><b>—</b><small>متخطّى</small></div>'}else{const s=slotAt(i);d=s.d;lab=s.label}
+ return `<div class="when"><small>${esc(f(d,{weekday:"long"}))}</small><b>${esc(f(d,{day:"numeric"}))}</b><small>${esc(f(d,{month:"short"}))} · ${esc(lab)}</small></div>`}
+function aqRow(x,i,mode){const tag=x.flag==="next"?' <span class="tc" style="background:var(--ac);color:#1a1300">الجاي</span>':"";
+ const b=x.flag==="skip"?`<button class="btn3" type="button" data-q="${esc(x.id)}" data-f="">رجّعه</button>`:(x.flag==="next"||x.flag==="date")?`<button class="btn3" type="button" data-q="${esc(x.id)}" data-f="">إلغاء</button>`:`<button class="btn3" type="button" data-q="${esc(x.id)}" data-f="next">⏫ قدّمه</button><button class="btn3" type="button" data-d="${esc(x.id)}">📅</button><button class="btn3" type="button" data-q="${esc(x.id)}" data-f="skip">تخطّى</button>`;
+ return `<li>${whenBox(x,i,mode)}<div class="what"><span class="cap"><b>${esc(x.caption.split("#")[0].trim().slice(0,90))}</b>${tag}${scoreTag(x.id)}<br><small class="hint">${esc(x.id)}</small></span><span class="acts">${b}</span><div class="row" data-dp="${esc(x.id)}" hidden style="gap:6px"><input type="date" min="${bhDay(1)}" max="${bhDay(90)}" value="${bhDay(1)}" aria-label="يوم النشر"><button class="btn2" type="button" data-ds="${esc(x.id)}">ثبّت اليوم</button></div></div></li>`}
 async function loadAQ(body){const m=$("aqm");try{const r=await call(body||{action:"list"},QFN);$("aq").hidden=false;
  $("aqauto").checked=r.auto!==false;$("aqautot").textContent=r.auto!==false?"النشر التلقائي شغّال":"النشر التلقائي موقّف ⏸";
- const sch=r.scheduled||[];$("aqsch").hidden=!sch.length;$("aqschl").innerHTML=sch.map(aqRow).join("");
- $("aql").innerHTML=r.next.length?r.next.map(aqRow).join(""):'<li class="hint">ما فيه شي بالطابور.</li>';
- $("aqs").hidden=!r.skipped.length;$("aqsl").innerHTML=r.skipped.map(aqRow).join("");
+ const sch=r.scheduled||[];$("aqsch").hidden=!sch.length;$("aqschl").innerHTML=sch.map((x,i)=>aqRow(x,i,"date")).join("");
+ const tot=r.total!=null?r.total:r.next.length,pd=r.perDay||2,days=Math.ceil(tot/pd),end=slotAt(Math.max(0,tot-1)).d.toLocaleDateString("ar-BH",{day:"numeric",month:"long",timeZone:"UTC"});
+ $("aqstats").innerHTML=`<span>📦 بالطابور: <b>${tot}</b></span><span>⚡ ${pd} باليوم + شورت الطيار الآلي</span><span>🏁 يخلص تقريباً: <b>${tot?end:"—"}</b> (${days} يوم)</span>`;
+ $("aql").innerHTML=r.next.length?r.next.map((x,i)=>aqRow(x,i)).join(""):'<li class="hint" style="display:block">ما فيه شي بالطابور. الطيار الآلي يكمّل ينزّل شورت جديد كل يوم.</li>';
+ $("aqs").hidden=!r.skipped.length;$("aqsl").innerHTML=r.skipped.map((x,i)=>aqRow(x,i,"skip")).join("");
  document.querySelectorAll("#aq [data-q]").forEach(b=>b.addEventListener("click",async()=>{b.disabled=true;await loadAQ({action:"flag",id:b.dataset.q,flag:b.dataset.f||null});if(m.className!=="msg err"){m.className="msg ok";m.textContent=b.dataset.f==="next"?"بينزل بالنشر الجاي":b.dataset.f==="skip"?"انشال من النشر التلقائي":"رجع لمكانه"}}));
  document.querySelectorAll("#aq [data-d]").forEach(b=>b.addEventListener("click",()=>{const p=document.querySelector(`#aq [data-dp="${b.dataset.d}"]`);p.hidden=!p.hidden;if(!p.hidden)p.querySelector("input").focus()}));
  document.querySelectorAll("#aq [data-ds]").forEach(b=>b.addEventListener("click",async()=>{const d=document.querySelector(`#aq [data-dp="${b.dataset.ds}"] input`).value;b.disabled=true;
